@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { CartPage, CheckoutPage, DetailsPage, FavoritesPage, HomePage, LoginPage, ProductsPage, RegisterPage } from '../pages';
+import { CartPage, CheckoutPage, DetailsPage, FavoritesPage, HomePage, LoginPage, NotFoundPage, ProductsPage, RegisterPage } from '../pages';
 
 function App() {
     return (
@@ -13,6 +13,7 @@ function App() {
                 <Route path='/cart' element={<CartPage />} />
                 <Route path='/checkout' element={<CheckoutPage />} />
                 <Route path='/favorites' element={<FavoritesPage />} />
+                <Route path='*' element={<NotFoundPage />} />
             </Routes>
         </Router>
     );

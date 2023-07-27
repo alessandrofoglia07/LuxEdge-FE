@@ -1,9 +1,13 @@
 import React from 'react';
+import Navbar from '@/components/Navbar';
 
 const HomePage: React.FC<any> = () => {
     return (
         <div id='HomePage'>
-            <h1>HomePage</h1>
+            <header>
+                <Navbar />
+            </header>
+            <main className='bg-slate-100 h-screen'></main>
         </div>
     );
 };
