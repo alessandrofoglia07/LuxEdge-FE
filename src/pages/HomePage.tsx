@@ -4,10 +4,8 @@ import Navbar from '@/components/Navbar';
 const HomePage: React.FC<any> = () => {
     return (
         <div id='HomePage'>
-            <header>
-                <Navbar />
-            </header>
-            <main className='bg-slate-100 h-screen'></main>
+            <Navbar />
+            <main className='h-screen'></main>
         </div>
     );
 };

@@ -8,6 +8,13 @@ export default {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans]
             }
+        },
+        screens: {
+            sm: '640px',
+            md: '768px',
+            navLimit: '932px',
+            lg: '1024px',
+            xl: '1280px'
         }
     },
     plugins: []
