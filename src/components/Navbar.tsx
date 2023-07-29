@@ -1,8 +1,9 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Popover, Transition, Dialog, Disclosure } from '@headlessui/react';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { ChevronDownIcon, StarIcon, ShoppingCartIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/20/solid';
+import { ChevronDownIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/20/solid';
+import { ShoppingCartIcon, StarIcon } from '@heroicons/react/24/outline';
 import useWindowWidth from '@/hooks/useWindowWidth';
+import { AuthContext } from '@/context/AuthContext';
 
 const Category = ({ children, className }: { children: React.ReactNode; className?: string }) => {
     return <a className={`text-black font-bold py-1 ${className}`}>{children}</a>;
@@ -21,14 +22,23 @@ const categories = ['Beds', 'Bookshelves', 'Chairs', 'Desks', 'Drawers', 'Sofas'
 const Navbar: React.FC<any> = () => {
     const width = useWindowWidth();
 
+    const { accessToken, userInfo } = useContext(AuthContext);
+
     const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+    const [loggedIn, setLoggedIn] = useState<boolean>(true);
+
+    useEffect(() => {
+        if (userInfo && accessToken) {
+            setLoggedIn(true);
+        } else {
+            setLoggedIn(false);
+        }
+    }, [userInfo, accessToken]);
 
     // xl: >1280px => desktop
     // lg: >1024px => desktop
     // 932px => change to mobile
     // sm: >640px => mobile
-
-    // If user authenticated, show Favs and Cart instead of Login and Register
 
     return (
         <header>
@@ -98,20 +108,25 @@ const Navbar: React.FC<any> = () => {
                     </ul>
                 </div>
                 <div id='right' className={`flex items-center ${width > 932 ? '' : 'hidden'}`}>
-                    <a id='Login' href='/login' className='font-bold text-lg lg:mx-4 sm:mx-2'>
-                        Login
-                    </a>
-                    <a id='Register' href='register' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600 mx-4'>
-                        Register
-                    </a>
-                    {/*
-                    <a id='Favorites' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600 flex items-center gap-2'>
-                        Favorites <StarIcon className='w-6 text-yellow-300' />
-                    </a>
-                     <a id='Cart' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600 flex items-center gap-2'>
-                        Cart <ShoppingCartIcon className='w-6' />
-                    </a>
-                */}
+                    {loggedIn ? (
+                        <>
+                            <a id='Favorites' href='/favorites' className='font-bold text-lg lg:mx-4 sm:mx-2 flex items-center gap-1'>
+                                Favorites <StarIcon className='w-6 mb-1' />
+                            </a>
+                            <a id='Cart' href='/cart' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600 flex items-center gap-2 mr-4'>
+                                Cart <ShoppingCartIcon className='w-[1.3rem]' />
+                            </a>
+                        </>
+                    ) : (
+                        <>
+                            <a id='Login' href='/login' className='font-bold text-lg lg:mx-4 sm:mx-2'>
+                                Login
+                            </a>
+                            <a id='Register' href='/register' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600 mx-4'>
+                                Register
+                            </a>
+                        </>
+                    )}
                 </div>
                 <div id='mobile-btn' className={`flex ${width > 932 ? 'hidden' : ''} mx-12 inline-flex items-center justify-center rounded-md text-gray-700`}>
                     <button onClick={() => setMobileMenuOpen(true)}>
@@ -174,28 +189,29 @@ const Navbar: React.FC<any> = () => {
                             </li>
                         </ul>
                         <ul id='account' className='self-center items-start flex flex-col w-full h-full gap-4 mt-12'>
-                            <li className='flex items-center px-1'>
-                                <a href='/login' className='font-bold text-xl'>
-                                    Login
-                                </a>
-                            </li>
-                            <li className='flex items-center px-1'>
-                                <a id='Register' href='/register' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600'>
-                                    Register
-                                </a>
-                            </li>
-                            {/*
-                                <li className='flex items-center px-1'>
-                                    <a id='Favorites' href='/favorites' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600'>
-                                        Favorites <StarIcon className='w-6 text-yellow-300' />
+                            {loggedIn ? (
+                                <>
+                                    <a id='Favorites' href='/favorites' className='ml-1 font-bold text-lg lg:mx-4 sm:mx-2 flex items-center gap-1'>
+                                        Favorites <StarIcon className='w-6 mb-1' />
                                     </a>
-                                </li>
-                                <li className='flex items-center px-1'>
-                                    <a id='Cart' href='/cart' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600'>
-                                        Cart <ShoppingCartIcon className='w-6' />
-                                    </a>    
-                                </li>
-                            */}
+                                    <a id='Cart' href='/cart' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600 flex items-center gap-2 mr-4'>
+                                        Cart <ShoppingCartIcon className='w-[1.3rem]' />
+                                    </a>
+                                </>
+                            ) : (
+                                <>
+                                    <li className='flex items-center px-1 ml-1'>
+                                        <a href='/login' className='font-bold text-xl'>
+                                            Login
+                                        </a>
+                                    </li>
+                                    <li className='flex items-center px-1'>
+                                        <a id='Register' href='/register' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600'>
+                                            Register
+                                        </a>
+                                    </li>
+                                </>
+                            )}
                         </ul>
                     </div>
                 </Dialog.Panel>
