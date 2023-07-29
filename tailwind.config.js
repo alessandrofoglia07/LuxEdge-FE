@@ -7,14 +7,13 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans]
+            },
+            screens: {
+                'nav-limit': '932px',
+                '-md': { max: '767px' },
+                '-sm': { max: '639px' },
+                '-lg': { max: '1023px' }
             }
-        },
-        screens: {
-            sm: '640px',
-            md: '768px',
-            navLimit: '932px',
-            lg: '1024px',
-            xl: '1280px'
         }
     },
     plugins: []

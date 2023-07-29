@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { LoginRes, UserInfo } from '@/types';
 
-const url = `${import.meta.env.API_URL}/user`;
+const url = `${import.meta.env.VITE_API_URL}/api/user`;
 
 /** Register function */
 const register = async (username: string, email: string, password: string): Promise<string> => {

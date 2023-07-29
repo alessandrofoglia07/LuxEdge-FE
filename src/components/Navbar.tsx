@@ -42,7 +42,7 @@ const Navbar: React.FC<any> = () => {
 
     return (
         <header>
-            <nav id='Navbar' className='w-full shadow-md flex items-center justify-between z-10 h-16 bg-slate-100 fixed'>
+            <nav id='Navbar' className='w-full shadow-md flex items-center justify-between z-10 h-16 bg-white fixed'>
                 <div id='left'>
                     <div id='logo' className='flex items-center justify-self-start'>
                         <h1 className='sm:px-10 px-7 text-4xl font-extrabold tracking-tight cursor-pointer'>
