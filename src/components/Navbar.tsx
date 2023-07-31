@@ -46,7 +46,7 @@ const Navbar: React.FC<any> = () => {
                 <div id='left'>
                     <div id='logo' className='flex items-center justify-self-start'>
                         <h1 className='sm:px-10 px-7 text-4xl font-extrabold tracking-tight cursor-pointer'>
-                            Lux<span className='text-blue-500 hover:text-blue-600'>Edge</span>
+                            Lux<span className='text-primary-base hover:text-primary-hover'>Edge</span>
                         </h1>
                     </div>
                 </div>
@@ -70,7 +70,7 @@ const Navbar: React.FC<any> = () => {
                                     <>
                                         <Popover.Button
                                             className={`font-bold text-xl flex items-center my-2 py-1 px-4 focus-visible:outline-none ${
-                                                open ? 'bg-blue-200 text-blue-600 rounded-xl' : ''
+                                                open ? 'bg-blue-200 text-primary-hover rounded-xl' : ''
                                             }`}>
                                             Categories <ChevronDownIcon className={`${open ? 'rotate-180 transform' : ''} w-8 ml-2`} />
                                         </Popover.Button>
@@ -113,7 +113,7 @@ const Navbar: React.FC<any> = () => {
                             <a id='Favorites' href='/favorites' className='font-bold text-lg lg:mx-4 sm:mx-2 flex items-center gap-1'>
                                 Favorites <StarIcon className='w-6 mb-1' />
                             </a>
-                            <a id='Cart' href='/cart' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600 flex items-center gap-2 mr-4'>
+                            <a id='Cart' href='/cart' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primatext-primary-base hover:bg-primarytext-primary-hover flex items-center gap-2 mr-4'>
                                 Cart <ShoppingCartIcon className='w-[1.3rem]' />
                             </a>
                         </>
@@ -122,7 +122,7 @@ const Navbar: React.FC<any> = () => {
                             <a id='Login' href='/login' className='font-bold text-lg lg:mx-4 sm:mx-2'>
                                 Login
                             </a>
-                            <a id='Register' href='/register' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600 mx-4'>
+                            <a id='Register' href='/register' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primatext-primary-base hover:bg-primarytext-primary-hover mx-4'>
                                 Register
                             </a>
                         </>
@@ -164,7 +164,7 @@ const Navbar: React.FC<any> = () => {
                                     <>
                                         <Disclosure.Button
                                             className={`font-bold text-xl flex items-center py-1 px-4 -mx-3 focus-visible:outline-none ${
-                                                open ? 'bg-blue-200 text-blue-600 rounded-xl' : ''
+                                                open ? 'bg-blue-200 text-primary-hover rounded-xl' : ''
                                             }`}>
                                             Categories
                                             <ChevronDownIcon className={`${open ? 'rotate-180' : ''} 'h-6 w-6 flex-none'`} aria-hidden='true' />
@@ -194,7 +194,7 @@ const Navbar: React.FC<any> = () => {
                                     <a id='Favorites' href='/favorites' className='ml-1 font-bold text-lg lg:mx-4 sm:mx-2 flex items-center gap-1'>
                                         Favorites <StarIcon className='w-6 mb-1' />
                                     </a>
-                                    <a id='Cart' href='/cart' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600 flex items-center gap-2 mr-4'>
+                                    <a id='Cart' href='/cart' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primatext-primary-base hover:bg-primarytext-primary-hover flex items-center gap-2 mr-4'>
                                         Cart <ShoppingCartIcon className='w-[1.3rem]' />
                                     </a>
                                 </>
@@ -206,7 +206,7 @@ const Navbar: React.FC<any> = () => {
                                         </a>
                                     </li>
                                     <li className='flex items-center px-1'>
-                                        <a id='Register' href='/register' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-blue-500 hover:bg-blue-600'>
+                                        <a id='Register' href='/register' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primatext-primary-base hover:bg-primarytext-primary-hover'>
                                             Register
                                         </a>
                                     </li>

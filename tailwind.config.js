@@ -13,6 +13,13 @@ export default {
                 '-md': { max: '767px' },
                 '-sm': { max: '639px' },
                 '-lg': { max: '1023px' }
+            },
+            colors: {
+                primary: {
+                    'base': '#3b82f6',
+                    'hover': "#2563eb",
+                    'light': '#60a5fa'
+                }
             }
         }
     },

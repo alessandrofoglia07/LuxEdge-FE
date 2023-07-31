@@ -2,12 +2,12 @@ import React from 'react';
 import Navbar from '@/components/Navbar';
 
 const Highlight = ({ children, lighter = false }: { children: React.ReactNode; lighter?: boolean }) => (
-    <span className={`${lighter ? 'text-blue-400 hover:text-blue-500' : 'text-blue-500 hover:text-blue-600'}`}>{children}</span>
+    <span className={`${lighter ? 'text-primary-light hover:text-primary-base' : 'text-primary-base hover:text-primary-hover'}`}>{children}</span>
 );
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
     <li className='font-bold text-xl'>
-        <span className='text-blue-500 text-2xl'>•</span> {children}
+        <span className='text-primary-base text-2xl'>•</span> {children}
     </li>
 );
 
@@ -31,7 +31,7 @@ const HomePage: React.FC<any> = () => {
                             <h4 className='font-bold text-4xl tracking-normal select-none'>
                                 <LuxEdge /> takes care of your <Highlight lighter>home</Highlight> <br /> so you can take care of your <Highlight lighter>life</Highlight>.
                             </h4>
-                            <button className='font-bold text-2xl capitalize px-10 py-3 rounded-xl text-white bg-blue-500 hover:bg-blue-600 mt-12'>our products</button>
+                            <button className='font-bold text-2xl capitalize px-10 py-3 rounded-xl text-white bg-primary-base hover:bg-primary-hover mt-12'>our products</button>
                             <ul className='mt-4 ml-1 flex flex-col items-start'>
                                 <CustomLi>Comfort.</CustomLi>
                                 <CustomLi>Luxury.</CustomLi>
