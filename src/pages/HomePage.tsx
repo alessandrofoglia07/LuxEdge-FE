@@ -1,9 +1,8 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
-
-const Highlight = ({ children, lighter = false }: { children: React.ReactNode; lighter?: boolean }) => (
-    <span className={`${lighter ? 'text-primary-light hover:text-primary-base' : 'text-primary-base hover:text-primary-hover'}`}>{children}</span>
-);
+import { HomeIcon, CubeIcon, BanknotesIcon } from '@heroicons/react/24/outline';
+import Highlight from '@/components/Highlight';
+import Benefit from '@/components/Benefit';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
     <li className='font-bold text-xl'>
@@ -29,7 +28,7 @@ const HomePage: React.FC<any> = () => {
                                 Switch from a <Highlight>house</Highlight>, <br /> to a <Highlight>home</Highlight>.
                             </h1>
                             <h4 className='font-bold text-4xl tracking-normal select-none'>
-                                <LuxEdge /> takes care of your <Highlight lighter>home</Highlight> <br /> so you can take care of your <Highlight lighter>life</Highlight>.
+                                <LuxEdge /> takes care of your <Highlight lighter>home</Highlight> <br /> so you can take care of your <Highlight>life</Highlight>.
                             </h4>
                             <button className='font-bold text-2xl capitalize px-10 py-3 rounded-xl text-white bg-primary-base hover:bg-primary-hover mt-12'>our products</button>
                             <ul className='mt-4 ml-1 flex flex-col items-start'>
@@ -68,7 +67,16 @@ const HomePage: React.FC<any> = () => {
                         </div>
                     </div>
                 </section>
-                <section id='benefits'></section>
+                <section id='benefits' className='flex flex-col items-center w-full py-20'>
+                    <h1 className='font-extrabold text-5xl tracking-tight select-none'>
+                        <Highlight>Our Benefits</Highlight>
+                    </h1>
+                    <div id='benefits-container' className='flex justify-evenly w-full mt-16'>
+                        <Benefit Icon={HomeIcon} title='Comfort' subtitle='Our furniture is designed to be comfortable and ergonomic.' />
+                        <Benefit Icon={CubeIcon} title='Luxury' subtitle='Our designs are defined by experts modern and luxorious.' />
+                        <Benefit Icon={BanknotesIcon} title='Low-price' subtitle='Our furniture is affordable and high quality.' />
+                    </div>
+                </section>
                 <section id='suggested-products'></section>
                 <section id='testimonials'></section>
                 <section id='end'></section>

@@ -113,7 +113,10 @@ const Navbar: React.FC<any> = () => {
                             <a id='Favorites' href='/favorites' className='font-bold text-lg lg:mx-4 sm:mx-2 flex items-center gap-1'>
                                 Favorites <StarIcon className='w-6 mb-1' />
                             </a>
-                            <a id='Cart' href='/cart' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base hover:bg-primarytext-primary-hover flex items-center gap-2 mr-4'>
+                            <a
+                                id='Cart'
+                                href='/cart'
+                                className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base hover:bg-primarytext-primary-hover flex items-center gap-2 mr-4'>
                                 Cart <ShoppingCartIcon className='w-[1.3rem]' />
                             </a>
                         </>
@@ -194,7 +197,10 @@ const Navbar: React.FC<any> = () => {
                                     <a id='Favorites' href='/favorites' className='ml-1 font-bold text-lg lg:mx-4 sm:mx-2 flex items-center gap-1'>
                                         Favorites <StarIcon className='w-6 mb-1' />
                                     </a>
-                                    <a id='Cart' href='/cart' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base hover:bg-primarytext-primary-hover flex items-center gap-2 mr-4'>
+                                    <a
+                                        id='Cart'
+                                        href='/cart'
+                                        className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base hover:bg-primarytext-primary-hover flex items-center gap-2 mr-4'>
                                         Cart <ShoppingCartIcon className='w-[1.3rem]' />
                                     </a>
                                 </>
@@ -206,7 +212,10 @@ const Navbar: React.FC<any> = () => {
                                         </a>
                                     </li>
                                     <li className='flex items-center px-1'>
-                                        <a id='Register' href='/register' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base hover:bg-primarytext-primary-hover'>
+                                        <a
+                                            id='Register'
+                                            href='/register'
+                                            className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base hover:bg-primarytext-primary-hover'>
                                             Register
                                         </a>
                                     </li>
