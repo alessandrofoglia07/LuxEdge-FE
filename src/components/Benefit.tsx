@@ -5,7 +5,7 @@ const Benefit = ({ Icon, title, subtitle }: { Icon: React.ForwardRefExoticCompon
     const [hover, setHover] = useState<boolean>(false);
 
     return (
-        <div className='flex flex-col items-center w-1/4'>
+        <div className='flex flex-col items-center lg:w-1/4 -lg:mt-4'>
             <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
                 <Highlight lighter force={hover}>
                     <Icon className='w-16 h-16' />

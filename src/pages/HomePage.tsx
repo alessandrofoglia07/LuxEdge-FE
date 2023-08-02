@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import { HomeIcon, CubeIcon, BanknotesIcon } from '@heroicons/react/24/outline';
 import Highlight from '@/components/Highlight';
 import Benefit from '@/components/Benefit';
+import axios from 'axios';
+import { Product } from '@/types';
+import ProductCard from '@/components/ProductCard';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
     <li className='font-bold text-xl'>
@@ -16,7 +19,64 @@ const LuxEdge = () => (
     </span>
 );
 
+const mockProducts: Product[] = [
+    {
+        _id: '1',
+        name: 'Chair',
+        description: 'A nice chair',
+        price: 100,
+        imagePath: 'chairs/chair1.jpg',
+        tags: ['chair'],
+        sold: 100,
+        available: true,
+        reviews: [],
+        score: 4.8,
+        createdAt: new Date(),
+        updatedAt: new Date()
+    },
+    {
+        _id: '2',
+        name: 'Chair',
+        description: 'A nice chair',
+        price: 100,
+        imagePath: 'chairs/chair2.jpg',
+        tags: ['chair'],
+        sold: 100,
+        available: true,
+        reviews: [],
+        score: 3.8,
+        createdAt: new Date(),
+        updatedAt: new Date()
+    },
+    {
+        _id: '3',
+        name: 'Chair',
+        description: 'A nice chair',
+        price: 100,
+        imagePath: 'chairs/chair3.jpg',
+        tags: ['chair'],
+        sold: 100,
+        available: true,
+        reviews: [],
+        score: 4.6,
+        createdAt: new Date(),
+        updatedAt: new Date()
+    }
+];
+
 const HomePage: React.FC<any> = () => {
+    const url = `${import.meta.env.VITE_API_URL}/api/products/suggested`;
+
+    const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            await axios.get(url);
+            // setProducts(res.data);
+            setProducts(mockProducts);
+        })();
+    }, [url]);
+
     return (
         <div id='HomePage'>
             <Navbar />
@@ -71,13 +131,17 @@ const HomePage: React.FC<any> = () => {
                     <h1 className='font-extrabold text-5xl tracking-tight select-none'>
                         <Highlight>Our Benefits</Highlight>
                     </h1>
-                    <div id='benefits-container' className='flex justify-evenly w-full mt-16'>
+                    <div id='benefits-container' className='flex -lg:flex-col justify-evenly w-full mt-16'>
                         <Benefit Icon={HomeIcon} title='Comfort' subtitle='Our furniture is designed to be comfortable and ergonomic.' />
                         <Benefit Icon={CubeIcon} title='Luxury' subtitle='Our designs are defined by experts modern and luxorious.' />
                         <Benefit Icon={BanknotesIcon} title='Low-price' subtitle='Our furniture is affordable and high quality.' />
                     </div>
                 </section>
-                <section id='suggested-products'></section>
+                <section id='suggested-products' className='bg-slate-200 p-4 flex gap-8'>
+                    <ProductCard product={products[0]} />
+                    <ProductCard product={products[1]} />
+                    <ProductCard product={products[2]} />
+                </section>
                 <section id='testimonials'></section>
                 <section id='end'></section>
             </main>
