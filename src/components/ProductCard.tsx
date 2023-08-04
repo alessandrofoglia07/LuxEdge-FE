@@ -40,7 +40,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
     }, [_]);
 
     return (
-        <div id='ProductCard' className='w-96 h-[38rem] bg-white rounded-lg'>
+        <div id='ProductCard' className='w-96 min-w-[24rem] h-[38rem] bg-white rounded-lg'>
             {product ? (
                 <>
                     <div id='top' className='w-full h-1/2 flex justify-center items-center pt-4'>
@@ -48,6 +48,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                             className='h-[calc(100%-1rem)] w-[calc(100%-5rem)] object-cover rounded-lg border-slate-200 drop-shadow-xl border-2'
                             src={toUrl(product.imagePath)}
                             alt={product.name}
+                            draggable={false}
                         />
                     </div>
                     <div id='center' className='py-8 flex flex-col items-center'>
@@ -80,6 +81,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                             className='h-[calc(100%-1rem)] w-[calc(100%-5rem)] object-cover rounded-lg border-slate-200 drop-shadow-xl border-2 animate-pulse'
                             src='/productPlaceholder.jpg'
                             alt='placeholder'
+                            draggable={false}
                         />
                     </div>
                     <div id='center' className='py-8 flex flex-col items-center'>

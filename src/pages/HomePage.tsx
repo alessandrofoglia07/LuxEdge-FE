@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
-import { HomeIcon, CubeIcon, BanknotesIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, CubeIcon, BanknotesIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import Highlight from '@/components/Highlight';
 import Benefit from '@/components/Benefit';
 import axios from 'axios';
@@ -9,7 +9,7 @@ import ProductCard from '@/components/ProductCard';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
     <li className='font-bold text-xl'>
-        <span className='text-primary-base text-2xl'>•</span> {children}
+        <span className='text-white text-2xl'>•</span> {children}
     </li>
 );
 
@@ -61,13 +61,79 @@ const mockProducts: Product[] = [
         score: 4.6,
         createdAt: new Date(),
         updatedAt: new Date()
+    },
+    {
+        _id: '4',
+        name: 'Chair',
+        description: 'A nice chair',
+        price: 100,
+        imagePath: 'chairs/chair4.jpg',
+        tags: ['chair'],
+        sold: 100,
+        available: true,
+        reviews: [],
+        score: 4.2,
+        createdAt: new Date(),
+        updatedAt: new Date()
+    },
+    {
+        _id: '5',
+        name: 'Chair',
+        description: 'A nice chair',
+        price: 100,
+        imagePath: 'chairs/chair5.jpg',
+        tags: ['chair'],
+        sold: 100,
+        available: true,
+        reviews: [],
+        score: 4.9,
+        createdAt: new Date(),
+        updatedAt: new Date()
     }
 ];
 
 const HomePage: React.FC<any> = () => {
     const url = `${import.meta.env.VITE_API_URL}/api/products/suggested`;
 
+    const [scroll, setScroll] = useState(0);
+    const [maxScroll, setMaxScroll] = useState(0);
     const [products, setProducts] = useState<Product[]>([]);
+
+    const handleArrowClick = (direction: 'left' | 'right') => {
+        const container = document.getElementById('products-container');
+        if (!container) return;
+
+        const scrollAmount = 400;
+
+        if (direction === 'left') {
+            container.scrollLeft -= scrollAmount;
+        } else {
+            container.scrollLeft += scrollAmount;
+        }
+    };
+
+    useEffect(() => {
+        setTimeout(() => {
+            const container = document.getElementById('products-container');
+            if (!container) return;
+
+            const handleScroll = () => {
+                setScroll(container.scrollLeft);
+                if (maxScroll === 0) {
+                    setMaxScroll(container.scrollWidth - container.clientWidth);
+                }
+            };
+
+            setScroll(container.scrollLeft);
+            setMaxScroll(container.scrollWidth - container.clientWidth);
+
+            container.addEventListener('scroll', handleScroll);
+
+            return () => {
+                container.removeEventListener('scroll', handleScroll);
+            };
+        }, 100);
+    }, [products]);
 
     useEffect(() => {
         (async () => {
@@ -98,7 +164,7 @@ const HomePage: React.FC<any> = () => {
                             </ul>
                         </div>
                     </div>
-                    <div className='-lg:w-full lg:w-1/2 lg:right-0 -lg:mt-4 lg:absolute lg:h-[calc(100vh-4rem)] flex items-center justify-center'>
+                    <div className='-lg:w-full lg:w-1/2 lg:right-0 -lg:mt-4 lg:relative lg:h-[calc(100vh-4rem)] flex items-center justify-center'>
                         <img src='/homepageBed.jpg' alt='hero img' className='mb-16 lg:w-[50vw] -lg:h-[50vw] lg:h-[50vh] -lg:w-screen object-cover' draggable='false' />
                     </div>
                 </section>
@@ -137,10 +203,23 @@ const HomePage: React.FC<any> = () => {
                         <Benefit Icon={BanknotesIcon} title='Low-price' subtitle='Our furniture is affordable and high quality.' />
                     </div>
                 </section>
-                <section id='suggested-products' className='bg-slate-200 p-4 flex gap-8'>
-                    <ProductCard product={products[0]} />
-                    <ProductCard product={products[1]} />
-                    <ProductCard product={products[2]} />
+                <section id='suggested-products' className='bg-slate-200 flex flex-col w-full py-8 -lg:items-center'>
+                    <h1 className='pt-6 pb-2 lg:px-8 font-extrabold text-5xl tracking-tight'>Our bestseller products</h1>
+                    <div id='products-container' className='flex gap-8 overflow-x-scroll scroll-smooth items-center w-full p-4'>
+                        {scroll > 0 && (
+                            <button onClick={() => handleArrowClick('left')} className='bg-primary-light rounded-full p-2 absolute left-5 z-50'>
+                                <ArrowLeftIcon className='h-8 w-8 text-white' />
+                            </button>
+                        )}
+                        {products.map((product, i) => (
+                            <ProductCard key={i} product={product} />
+                        ))}
+                        {scroll < maxScroll && (
+                            <button onClick={() => handleArrowClick('right')} className='bg-primary-light rounded-full p-2 absolute right-5 z-50'>
+                                <ArrowRightIcon className='h-8 w-8 text-white' />
+                            </button>
+                        )}
+                    </div>
                 </section>
                 <section id='testimonials'></section>
                 <section id='end'></section>
