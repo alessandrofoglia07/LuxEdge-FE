@@ -214,7 +214,7 @@ const HomePage: React.FC<any> = () => {
                         {products.map((product, i) => (
                             <ProductCard key={i} product={product} />
                         ))}
-                        {scroll < maxScroll && (
+                        {Math.round(scroll) < Math.round(maxScroll) && (
                             <button onClick={() => handleArrowClick('right')} className='bg-primary-light rounded-full p-2 absolute right-5 z-50'>
                                 <ArrowRightIcon className='h-8 w-8 text-white' />
                             </button>
