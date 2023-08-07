@@ -40,7 +40,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
     }, [_]);
 
     return (
-        <div id='ProductCard' className='w-96 min-w-[24rem] h-[38rem] bg-white rounded-lg'>
+        <div id='ProductCard' className='w-96 min-w-[24rem] h-[36rem] bg-white rounded-lg'>
             {product ? (
                 <>
                     <div id='top' className='w-full h-1/2 flex justify-center items-center pt-4'>
@@ -54,7 +54,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                     <div id='center' className='py-8 flex flex-col items-center'>
                         <h1 className='font-extrabold text-3xl tracking-wider select-none'>{product.name}</h1>
                         <p className='font-semibold opacity-50 pt-2'>{product.description}</p>
-                        <h4 className='font-bold text-3xl py-6 select-none'>
+                        <h4 className='font-bold text-3xl py-4 select-none'>
                             <Highlight>${product.price}</Highlight>
                         </h4>
                         <div id='score'>
@@ -87,7 +87,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                     <div id='center' className='py-8 flex flex-col items-center'>
                         <div className='font-extrabold text-3xl tracking-wider select-none animate-pulse bg-slate-300 text-slate-300 my-2 rounded-xl'>placeholder</div>
                         <div className='font-semibold opacity-50 animate-pulse bg-slate-300 text-slate-300 rounded-xl'>You will soon see the product</div>
-                        <h4 className='font-bold text-3xl py-6 select-none text-slate-400 animate-pulse'>$100</h4>
+                        <h4 className='font-bold text-3xl py-4 select-none text-slate-400 animate-pulse'>$100</h4>
                         <div id='score'>
                             <Rating rating={5} />
                         </div>

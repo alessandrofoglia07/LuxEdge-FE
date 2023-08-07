@@ -4,8 +4,9 @@ import { HomeIcon, CubeIcon, BanknotesIcon, ArrowLeftIcon, ArrowRightIcon } from
 import Highlight from '@/components/Highlight';
 import Benefit from '@/components/Benefit';
 import axios from 'axios';
-import { Product } from '@/types';
+import { Product, Testimonial as TestimonialType } from '@/types';
 import ProductCard from '@/components/ProductCard';
+import Testimonial from '@/components/Testimonial';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
     <li className='font-bold text-xl'>
@@ -89,6 +90,27 @@ const mockProducts: Product[] = [
         score: 4.9,
         createdAt: new Date(),
         updatedAt: new Date()
+    }
+];
+
+const mockTestimonials: TestimonialType[] = [
+    {
+        pfpPath: '/testimonials/testimonial1.jpg',
+        rating: 4.5,
+        author: 'John Doe',
+        text: 'The craftsmanship of the bedroom set is superb, and it has transformed my bedroom into a cozy and stylish oasis.'
+    },
+    {
+        pfpPath: '/testimonials/testimonial2.jpg',
+        rating: 5,
+        author: 'Jane Doe',
+        text: 'I found the perfect sofa for my living room, and it far exceeded my expectations in terms of quality and comfort. It looks and feels like a luxurious piece, yet it fits well within my budget.'
+    },
+    {
+        pfpPath: '/testimonials/testimonial3.jpg',
+        rating: 4.5,
+        author: 'Johnny Doe',
+        text: 'The quality of the furniture is top-notch, and the designs are absolutely stunning. The chairs are not only comfortable but also add a touch of elegance to my dining area.'
     }
 ];
 
@@ -221,7 +243,16 @@ const HomePage: React.FC<any> = () => {
                         )}
                     </div>
                 </section>
-                <section id='testimonials'></section>
+                <section id='testimonials' className='py-10 flex flex-col items-center'>
+                    <h1 className='py-8 lg:px-10 font-extrabold text-5xl tracking-tight text-center select-none'>
+                        <Highlight>What clients say</Highlight>
+                    </h1>
+                    <div id='testimonials-container' className='flex -lg:flex-col -lg:items-center -lg:gap-8 lg:justify-evenly w-full'>
+                        {mockTestimonials.map((testimonial, i) => (
+                            <Testimonial testimonial={testimonial} key={i} />
+                        ))}
+                    </div>
+                </section>
                 <section id='end'></section>
             </main>
         </div>

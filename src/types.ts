@@ -40,3 +40,10 @@ export interface Product {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface Testimonial {
+    pfpPath: string;
+    author: string;
+    text: string;
+    rating: number;
+}
