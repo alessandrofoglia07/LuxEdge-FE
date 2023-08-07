@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Product, Testimonial as TestimonialType } from '@/types';
 import ProductCard from '@/components/ProductCard';
 import Testimonial from '@/components/Testimonial';
+import Img from '@/components/CustomImg';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
     <li className='font-bold text-xl'>
@@ -187,12 +188,12 @@ const HomePage: React.FC<any> = () => {
                         </div>
                     </div>
                     <div className='-lg:w-full lg:w-1/2 lg:right-0 -lg:mt-4 lg:relative lg:h-[calc(100vh-4rem)] flex items-center justify-center'>
-                        <img src='/homepageBed.jpg' alt='hero img' className='mb-16 lg:w-[50vw] -lg:h-[50vw] lg:h-[50vh] -lg:w-screen object-cover' draggable='false' />
+                        <Img src='/homepageBed.jpg' alt='hero-img' className='mb-16 lg:w-[50vw] -lg:h-[50vw] lg:h-[50vh] -lg:w-screen' />
                     </div>
                 </section>
                 <section id='problem-solution' className='bg-slate-200 py-8 flex -lg:flex-col'>
                     <div className='-lg:w-full lg:w-1/2 flex items-center justify-center'>
-                        <img src='/homepageDesk.jpg' alt='desk' className='mb-16 lg:w-[50vw] -lg:h-[70vw] lg:h-[70vh] -lg:w-screen object-cover' draggable='false' />
+                        <Img src='/homepageDesk.jpg' alt='desk' className='mb-16 lg:w-[50vw] -lg:h-[70vw] lg:h-[70vh] -lg:w-screen' />
                     </div>
                     <div className='-lg:w-full lg:w-1/2 flex items-center'>
                         <div className='flex flex-col -lg:px-8 mb-16'>

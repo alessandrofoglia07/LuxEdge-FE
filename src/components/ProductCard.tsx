@@ -5,6 +5,7 @@ import Highlight from './Highlight';
 import Rating from './Rating';
 import { ShoppingCartIcon, StarIcon } from '@heroicons/react/20/solid';
 import authAxios from '@/api/authAxiosApi';
+import Img from './CustomImg';
 
 interface Props {
     product: Product;
@@ -44,12 +45,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
             {product ? (
                 <>
                     <div id='top' className='w-full h-1/2 flex justify-center items-center pt-4'>
-                        <img
-                            className='h-[calc(100%-1rem)] w-[calc(100%-5rem)] object-cover rounded-lg border-slate-200 drop-shadow-xl border-2'
-                            src={toUrl(product.imagePath)}
-                            alt={product.name}
-                            draggable={false}
-                        />
+                        <Img className='h-[calc(100%-1rem)] w-[calc(100%-5rem)] rounded-lg border-slate-200 drop-shadow-xl border-2' src={toUrl(product.imagePath)} alt={product.name} />
                     </div>
                     <div id='center' className='py-8 flex flex-col items-center'>
                         <h1 className='font-extrabold text-3xl tracking-wider select-none'>{product.name}</h1>
@@ -77,11 +73,10 @@ const ProductCard: React.FC<Props> = (_: Props) => {
             ) : (
                 <>
                     <div id='top' className='w-full h-1/2 flex justify-center items-center pt-4'>
-                        <img
-                            className='h-[calc(100%-1rem)] w-[calc(100%-5rem)] object-cover rounded-lg border-slate-200 drop-shadow-xl border-2 animate-pulse'
+                        <Img
+                            className='h-[calc(100%-1rem)] w-[calc(100%-5rem)] rounded-lg border-slate-200 drop-shadow-xl border-2 animate-pulse'
                             src='/productPlaceholder.jpg'
                             alt='placeholder'
-                            draggable={false}
                         />
                     </div>
                     <div id='center' className='py-8 flex flex-col items-center'>
