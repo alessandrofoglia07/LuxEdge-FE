@@ -19,6 +19,7 @@ module.exports = {
             {
                 patterns: ['@mui/*/*/*']
             }
-        ]
+        ],
+        'react-hooks/exhaustive-deps': 'off'
     }
 };

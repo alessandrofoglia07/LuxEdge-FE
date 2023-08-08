@@ -7,12 +7,14 @@ const Benefit = ({ Icon, title, subtitle }: { Icon: React.ForwardRefExoticCompon
     return (
         <div className='flex flex-col items-center lg:w-1/4 -lg:mt-4'>
             <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-                <Highlight lighter force={hover}>
+                <Highlight effect lighter force={hover}>
                     <Icon className='w-16 h-16' />
                 </Highlight>
             </div>
             <h2 onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className='text-4xl font-extrabold py-3 select-none'>
-                <Highlight force={hover}>{title}</Highlight>
+                <Highlight effect force={hover}>
+                    {title}
+                </Highlight>
             </h2>
             <h6 className='text-xl text-center font-semibold'>{subtitle}</h6>
         </div>

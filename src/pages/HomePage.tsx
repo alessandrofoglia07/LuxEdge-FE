@@ -17,7 +17,7 @@ const CustomLi = ({ children }: { children: React.ReactNode }) => (
 
 const LuxEdge = () => (
     <span className='tracking-tighter font-extrabold'>
-        Lux<Highlight>Edge</Highlight>
+        Lux<Highlight effect>Edge</Highlight>
     </span>
 );
 
@@ -174,12 +174,18 @@ const HomePage: React.FC<any> = () => {
                     <div className='-lg:w-full lg:w-1/2 lg:left-0 lg:h-[calc(100vh-4rem)] lg:ml-16 flex flex-col justify-center -lg:items-center'>
                         <div className='mb-16 lg:px-16 -lg:px-2 -lg:flex -lg:flex-col -lg:items-center -lg:text-center'>
                             <h1 className='font-extrabold text-7xl select-none tracking-tighter mb-8'>
-                                Switch from a <Highlight>house</Highlight>, <br /> to a <Highlight>home</Highlight>.
+                                Switch from a <Highlight effect>house</Highlight>, <br /> to a <Highlight effect>home</Highlight>.
                             </h1>
                             <h4 className='font-bold text-4xl tracking-normal select-none'>
-                                <LuxEdge /> takes care of your <Highlight lighter>home</Highlight> <br /> so you can take care of your <Highlight>life</Highlight>.
+                                <LuxEdge /> takes care of your{' '}
+                                <Highlight effect lighter>
+                                    home
+                                </Highlight>{' '}
+                                <br /> so you can take care of your <Highlight effect>life</Highlight>.
                             </h4>
-                            <button className='font-bold text-2xl capitalize px-10 py-3 rounded-xl text-white bg-primary-base hover:bg-primary-hover mt-12'>our products</button>
+                            <a href='products' className='font-bold inline-block text-2xl capitalize px-10 py-3 rounded-xl text-white bg-primary-base hover:bg-primary-hover mt-12'>
+                                our products
+                            </a>
                             <ul className='mt-4 ml-1 flex flex-col items-start'>
                                 <CustomLi>Comfort.</CustomLi>
                                 <CustomLi>Luxury.</CustomLi>
@@ -216,7 +222,7 @@ const HomePage: React.FC<any> = () => {
                         </div>
                     </div>
                 </section>
-                <section id='benefits' className='flex flex-col items-center w-full py-20'>
+                <section id='benefits' className='flex flex-col items-center w-full py-20 lg:py-28'>
                     <h1 className='font-extrabold text-5xl tracking-tight select-none'>
                         <Highlight>Our Benefits</Highlight>
                     </h1>
@@ -254,7 +260,15 @@ const HomePage: React.FC<any> = () => {
                         ))}
                     </div>
                 </section>
-                <section id='end'></section>
+                <section id='final-call-to-action' className='bg-slate-200 flex flex-col items-center py-16'>
+                    <h1 className='text-center py-8 text-6xl font-extrabold'>
+                        Time to check <Highlight>yourself!</Highlight>
+                    </h1>
+                    <a href='/products' className='capitalize inline-block py-4 my-4 bg-primary-base hover:bg-primary-hover text-white rounded-lg px-16 font-extrabold text-2xl'>
+                        our products
+                    </a>
+                </section>
+                <footer></footer>
             </main>
         </div>
     );
