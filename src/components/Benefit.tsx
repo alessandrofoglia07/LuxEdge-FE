@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import Highlight from './Highlight';
 
-const Benefit = ({ Icon, title, subtitle }: { Icon: React.ForwardRefExoticComponent<Omit<React.SVGProps<SVGSVGElement>, 'ref'>>; title: string; subtitle: string }) => {
+interface Props {
+    Icon: React.ForwardRefExoticComponent<Omit<React.SVGProps<SVGSVGElement>, 'ref'>>;
+    title: string;
+    subtitle: string;
+}
+
+const Benefit: React.FC<Props> = ({ Icon, title, subtitle }: Props) => {
     const [hover, setHover] = useState<boolean>(false);
 
     return (

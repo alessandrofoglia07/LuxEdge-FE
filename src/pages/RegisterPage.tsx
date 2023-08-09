@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RegisterPage: React.FC<any> = () => {
+const RegisterPage: React.FC = () => {
     return (
         <div id='RegisterPage'>
             <h1>RegisterPage</h1>

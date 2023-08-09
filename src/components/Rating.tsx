@@ -1,6 +1,10 @@
 import { useId } from 'react';
 
-const Star = ({ variant }: { variant: 'filled' | 'empty' | 'half' }) => {
+interface StarProps {
+    variant: 'filled' | 'empty' | 'half';
+}
+
+const Star: React.FC<StarProps> = ({ variant }: StarProps) => {
     const id = useId();
 
     let c1, c2;
@@ -31,7 +35,13 @@ const Star = ({ variant }: { variant: 'filled' | 'empty' | 'half' }) => {
     );
 };
 
-const Rating = ({ rating, max = 5, className = '' }: { rating: number; max?: number; className?: string }) => {
+interface Props {
+    rating: number;
+    max?: number;
+    className?: string;
+}
+
+const Rating: React.FC<Props> = ({ rating, max = 5, className = '' }: Props) => {
     return (
         <div className={`flex items-centers ${className}`}>
             {Array.from({ length: Math.floor(rating) }, (_, i) => (

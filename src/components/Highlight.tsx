@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-const Highlight = ({ children, lighter = false, force, effect = false }: { children: React.ReactNode; lighter?: boolean; force?: boolean; effect?: boolean }) => {
+interface Props {
+    children: React.ReactNode;
+    lighter?: boolean;
+    force?: boolean;
+    effect?: boolean;
+}
+
+const Highlight: React.FC<Props> = ({ children, lighter = false, force, effect = false }: Props) => {
     const [hover, setHover] = useState<boolean>(false);
 
     useEffect(() => {

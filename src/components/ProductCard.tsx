@@ -25,8 +25,14 @@ const ProductCard: React.FC<Props> = (_: Props) => {
         try {
             const res = await authAxios.get('/lists/favs');
             setFavsList(res.data);
-        } catch (err: any) {
-            throw new Error(err);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                throw err;
+            } else if (typeof err === 'string') {
+                throw new Error(err);
+            } else {
+                console.log(err);
+            }
         }
     };
 
@@ -48,7 +54,9 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                         <Img className='h-[calc(100%-1rem)] w-[calc(100%-5rem)] rounded-lg border-slate-200 drop-shadow-xl border-2' src={toUrl(product.imagePath)} alt={product.name} />
                     </div>
                     <div id='center' className='py-8 flex flex-col items-center'>
-                        <h1 className='font-extrabold text-3xl tracking-wider select-none'>{product.name}</h1>
+                        <a href={`/products/${product.name}`} className='font-extrabold text-3xl tracking-wider select-none'>
+                            {product.name}
+                        </a>
                         <p className='font-semibold opacity-50 pt-2'>{product.description}</p>
                         <h4 className='font-bold text-3xl py-4 select-none'>
                             <Highlight>${product.price}</Highlight>

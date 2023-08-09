@@ -4,6 +4,7 @@ import { ChevronDownIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/20/solid
 import { ShoppingCartIcon, StarIcon } from '@heroicons/react/24/outline';
 import useWindowWidth from '@/hooks/useWindowWidth';
 import { AuthContext } from '@/context/AuthContext';
+import categories from '@/assets/productCategories';
 
 const Category = ({ children, className }: { children: React.ReactNode; className?: string }) => {
     return <a className={`text-black font-bold py-1 ${className}`}>{children}</a>;
@@ -17,9 +18,7 @@ const HSpacer = () => <hr className='mr-6' />;
 
 const VSpacer = () => <div className='border-r-2 border-r-slate-300 h-1/2' />;
 
-const categories = ['Beds', 'Bookshelves', 'Chairs', 'Desks', 'Drawers', 'Sofas', 'Tables', 'Bedrooms', 'Living rooms'];
-
-const Navbar: React.FC<any> = () => {
+const Navbar: React.FC = () => {
     const width = useWindowWidth();
 
     const { accessToken, userInfo } = useContext(AuthContext);
