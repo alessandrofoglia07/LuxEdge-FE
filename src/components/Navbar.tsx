@@ -6,12 +6,25 @@ import useWindowWidth from '@/hooks/useWindowWidth';
 import { AuthContext } from '@/context/AuthContext';
 import categories from '@/assets/productCategories';
 
-const Category = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-    return <a className={`text-black font-bold py-1 ${className}`}>{children}</a>;
+interface CategoryProps {
+    children: string;
+    className?: string;
+}
+
+const Category: React.FC<CategoryProps> = ({ children, className }: CategoryProps) => {
+    return (
+        <a href={`/products?tags=${children.toLowerCase()}`} className={`text-black font-bold py-1 ${className}`}>
+            {children}
+        </a>
+    );
 };
 
-const MobileCategory = ({ children, className }: { children: React.ReactNode; className?: string }) => {
-    return <a className={`text-black text-lg font-bold py-1 ${className}`}>{children}</a>;
+const MobileCategory: React.FC<CategoryProps> = ({ children, className }: CategoryProps) => {
+    return (
+        <a href={`/products?tags=${children.toLowerCase()}`} className={`text-black text-lg font-bold py-1 ${className}`}>
+            {children}
+        </a>
+    );
 };
 
 const HSpacer = () => <hr className='mr-6' />;

@@ -8,17 +8,13 @@ import { Product, Testimonial as TestimonialType } from '@/types';
 import ProductCard from '@/components/ProductCard';
 import Testimonial from '@/components/Testimonial';
 import Img from '@/components/CustomImg';
+import Footer from '@/components/Footer';
+import LuxEdge from '@/components/LuxEdgeLogo';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
     <li className='font-bold text-xl'>
         <span className='text-white text-2xl'>•</span> {children}
     </li>
-);
-
-const LuxEdge = () => (
-    <span className='tracking-tighter font-extrabold'>
-        Lux<Highlight effect>Edge</Highlight>
-    </span>
 );
 
 const mockProducts: Product[] = [
@@ -115,7 +111,7 @@ const mockTestimonials: TestimonialType[] = [
     }
 ];
 
-const HomePage: React.FC<any> = () => {
+const HomePage: React.FC = () => {
     const url = `${import.meta.env.VITE_API_URL}/api/products/suggested`;
 
     const [scroll, setScroll] = useState(0);
@@ -268,7 +264,7 @@ const HomePage: React.FC<any> = () => {
                         our products
                     </a>
                 </section>
-                <footer></footer>
+                <Footer />
             </main>
         </div>
     );
