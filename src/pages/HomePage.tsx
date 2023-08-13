@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar';
 import { HomeIcon, CubeIcon, BanknotesIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import Highlight from '@/components/Highlight';
 import Benefit from '@/components/Benefit';
-import axios from 'axios';
+// import axios from 'axios';
 import { Product, Testimonial as TestimonialType } from '@/types';
 import ProductCard from '@/components/ProductCard';
 import Testimonial from '@/components/Testimonial';
@@ -156,7 +156,7 @@ const HomePage: React.FC = () => {
 
     useEffect(() => {
         (async () => {
-            await axios.get(url);
+            // await axios.get(url);
             // setProducts(res.data);
             setProducts(mockProducts);
         })();
