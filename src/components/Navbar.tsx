@@ -1,9 +1,9 @@
-import React, { Fragment, useState, useContext, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Popover, Transition, Dialog, Disclosure } from '@headlessui/react';
 import { ChevronDownIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/20/solid';
 import { ShoppingCartIcon, StarIcon } from '@heroicons/react/24/outline';
 import useWindowWidth from '@/hooks/useWindowWidth';
-import { AuthContext } from '@/context/AuthContext';
+import useRedux from '@/hooks/useRedux';
 import categories from '@/assets/productCategories';
 
 interface CategoryProps {
@@ -34,7 +34,7 @@ const VSpacer = () => <div className='border-r-2 border-r-slate-300 h-1/2' />;
 const Navbar: React.FC = () => {
     const width = useWindowWidth();
 
-    const { accessToken, userInfo } = useContext(AuthContext);
+    const { accessToken, userInfo } = useRedux('auth');
 
     const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
     const [loggedIn, setLoggedIn] = useState<boolean>(true);

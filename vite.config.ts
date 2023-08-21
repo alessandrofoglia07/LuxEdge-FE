@@ -15,6 +15,7 @@ export default defineConfig({
         },
         host: '0.0.0.0',
         strictPort: true,
-        port: 3000
+        port: 3000,
+        open: true
     }
 });

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { LoginRes, UserInfo } from '@/types';
+import { LoginRes, UserInfo as IUserInfo } from '@/types';
 
 const url = `${import.meta.env.VITE_API_URL}/api/user`;
 
@@ -27,12 +27,6 @@ const login = async (email: string, password: string): Promise<LoginRes> => {
     }
 };
 
-/** Refresh token */
-const refreshAccessToken = async (refreshToken: string): Promise<string> => {
-    const res = await axios.post(`${url}/refresh-token`, { refreshToken });
-    return res.data.accessToken;
-};
-
 /** Forgot password */
 const forgotPassword = async (email: string): Promise<string> => {
     const res = await axios.post(`${url}/forgot-password`, { email });
@@ -45,66 +39,93 @@ const resetPassword = async (userId: string, password: string): Promise<string> 
     return res.data.message;
 };
 
-/** Set user info */
-const setUserInfo = (userInfo: UserInfo) => {
-    localStorage.setItem('user', JSON.stringify(userInfo));
-};
+/** UserInfo class (Located in localStorage) */
+class UserInfo {
+    /** Set `UserInfo` (localStorage)
+     * @important Don't use this function outside of Redux reducers
+     * @param userInfo - User info
+     */
+    public static set(userInfo: IUserInfo) {
+        localStorage.setItem('user', JSON.stringify(userInfo));
+    }
 
-/** Get user info */
-const getUserInfo = (): UserInfo | null => {
-    const userInfo = localStorage.getItem('user');
-    return userInfo ? JSON.parse(userInfo) : null;
-};
+    /** Get `UserInfo` (localStorage)
+     * @important Don't use this function outside of Redux reducers
+     */
+    public static get(): IUserInfo | null {
+        const userInfo = localStorage.getItem('user');
+        return userInfo ? JSON.parse(userInfo) : null;
+    }
 
-/** Remove user info */
-const removeUserInfo = () => {
-    localStorage.removeItem('user');
-};
+    /** Remove `UserInfo` (localStorage)
+     * @important Don't use this function outside of Redux reducers
+     */
+    public static remove() {
+        localStorage.removeItem('user');
+    }
+}
 
-/** Set access token */
-const setAccessToken = (accessToken: string) => {
-    Cookies.set('access_token', accessToken, { expires: new Date(Date.now() + 15 * 60 * 1000) }); // 15 minutes
-};
+/** AccessToken class (Located in cookies) */
+class AccessToken {
+    /** Set `accessToken` (cookies)
+     * @param accessToken - Access token
+     * @important Don't use this function outside of Redux reducers
+     */
+    public static set(accessToken: string) {
+        Cookies.set('access_token', accessToken, { expires: new Date(Date.now() + 15 * 60 * 1000) }); // 15 minutes
+    }
 
-/** Get access token */
-const getAccessToken = (): string | null => {
-    return Cookies.get('access_token') || null;
-};
+    /** Get `accessToken` (cookies)
+     * @important Don't use this function outside of Redux reducers
+     */
+    public static get() {
+        return Cookies.get('access_token') || null;
+    }
 
-/** Remove access token */
-const removeAccessToken = () => {
-    Cookies.remove('access_token');
-};
+    /** Remove `accessToken` (cookies)
+     * @important Don't use this function outside of Redux reducers
+     */
+    public static remove() {
+        Cookies.remove('access_token');
+    }
 
-/** Set refresh token */
-const setRefreshToken = (refreshToken: string) => {
-    Cookies.set('refresh_token', refreshToken, { expires: 30 }); // 30 days
-};
+    /** Refresh `accessToken` (cookies)
+     * @important Don't use this function outside of Redux reducers / Interceptors
+     * @param refreshToken - Refresh token (If not provided, it will be retrieved from cookies)
+     * @returns New access token
+     */
+    public static async refresh(refreshToken?: string) {
+        if (!refreshToken) {
+            refreshToken = Cookies.get('refresh_token');
+            if (!refreshToken) throw new Error('No refresh token');
+        }
+        const res = await axios.post(`${url}/refresh-token`, { refreshToken });
+        return res.data.accessToken;
+    }
+}
 
-/** Get refresh token */
-const getRefreshToken = (): string | null => {
-    return Cookies.get('refresh_token') || null;
-};
+/** RefreshToken class (Located in cookies) */
+class RefreshToken {
+    /** Set `refreshToken` (cookies)
+     * @important Don't use this function outside of Redux reducers
+     */
+    public static set(refreshToken: string) {
+        Cookies.set('refresh_token', refreshToken, { expires: 30 }); // 30 days
+    }
 
-/** Remove refresh token */
-const removeRefreshToken = () => {
-    Cookies.remove('refresh_token');
-};
+    /** Get `refreshToken` (cookies)
+     * @important Don't use this function outside of Redux reducers
+     */
+    public static get(): string | null {
+        return Cookies.get('refresh_token') || null;
+    }
 
-export {
-    register,
-    activateAccount,
-    login,
-    refreshAccessToken,
-    forgotPassword,
-    resetPassword,
-    setUserInfo,
-    getUserInfo,
-    removeUserInfo,
-    setAccessToken,
-    getAccessToken,
-    removeAccessToken,
-    setRefreshToken,
-    getRefreshToken,
-    removeRefreshToken,
-};
+    /** Remove `refreshToken` (cookies)
+     * @important Don't use this function outside of Redux reducers
+     */
+    public static remove() {
+        Cookies.remove('refresh_token');
+    }
+}
+
+export { register, activateAccount, login, forgotPassword, resetPassword, UserInfo, AccessToken, RefreshToken };

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '@/context/AuthContext';
+import React, { useState, useEffect } from 'react';
+import useRedux from '@/hooks/useRedux';
 import { Product } from '@/types';
 import Highlight from './Highlight';
 import Rating from './Rating';
 import { ShoppingCartIcon, StarIcon } from '@heroicons/react/20/solid';
-import authAxios from '@/api/authAxiosApi';
+import authAxios from '@/api/authAxios';
 import Img from './CustomImg';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const ProductCard: React.FC<Props> = (_: Props) => {
-    const { accessToken } = useContext(AuthContext);
+    const { accessToken } = useRedux('auth');
 
     const [product, setProduct] = useState<Product | null>(null);
     const [favsList, setFavsList] = useState<Product[] | null>(null);

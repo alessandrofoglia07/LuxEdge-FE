@@ -198,7 +198,7 @@ const HomePage: React.FC = () => {
                         <Img src='/homepageDesk.jpg' alt='desk' className='mb-16 lg:w-[50vw] -lg:h-[70vw] lg:h-[70vh] -lg:w-screen' />
                     </div>
                     <div className='-lg:w-full lg:w-1/2 flex items-center'>
-                        <div className='flex flex-col -lg:px-8 mb-16'>
+                        <div className='flex flex-col -lg:px-8 lg:pr-8 mb-16'>
                             <h2 className='font-extrabold text-5xl tracking-tight my-8'>The problem</h2>
                             <h6 className='text-2xl mb-8 font-semibold'>
                                 Today it is nearly impossible to find nice <Highlight>modern</Highlight> furniture that is also <Highlight>affordable</Highlight> and{' '}
