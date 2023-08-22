@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { AccessToken } from './authApi';
+import AccessToken from '@/redux/persist/AccessToken';
 import store from '@/redux/store';
-import { logout, setToken } from '@/redux/auth/authSlice';
+import { logout, setToken } from '@/redux/slices/authSlice';
 
 /** Axios instance with Authorization header.
  * If the request fails with 401 status code, it tries to refresh the access token.

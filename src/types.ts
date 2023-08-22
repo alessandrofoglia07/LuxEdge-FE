@@ -16,16 +16,6 @@ export interface UserInfo {
     active: boolean;
 }
 
-export interface AuthContextType {
-    accessToken: string | null;
-    /** User info stored in localStorage */
-    userInfo: UserInfo | null;
-    register: (username: string, email: string, password: string) => Promise<void>;
-    login: (email: string, password: string) => Promise<void>;
-    logout: () => void;
-    loading: boolean;
-}
-
 export interface Product {
     _id: string;
     name: string;

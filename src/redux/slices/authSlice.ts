@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserInfo as IUserInfo } from '@/types';
-import { UserInfo, AccessToken, RefreshToken } from '@/api/authApi';
+import UserInfo from '../persist/UserInfo';
+import AccessToken from '../persist/AccessToken';
+import RefreshToken from '../persist/RefreshToken';
 
 interface AuthState {
     userInfo: IUserInfo | null;
