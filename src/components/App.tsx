@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import PrivateRoutes from '@/components/PrivateRoute';
 import { CartPage, CheckoutPage, DetailsPage, FavoritesPage, HomePage, LoginPage, NotFoundPage, ProductsPage, RegisterPage } from '@/pages';
-import useRedux from '@/hooks/useRedux';
+import useSelector from '@/hooks/useSelector';
 
 function App() {
-    const { accessToken } = useRedux('auth');
+    const { accessToken } = useSelector((state) => state.auth);
     const isAuth = !!accessToken;
 
     return (

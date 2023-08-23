@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 
+/** useWindowsWidth custom hook
+ * @returns {number} width
+ */
 const useWindowWidth = () => {
     const [width, setWidth] = useState(window.innerWidth);
 

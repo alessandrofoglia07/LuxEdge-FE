@@ -3,7 +3,7 @@ import { Popover, Transition, Dialog, Disclosure } from '@headlessui/react';
 import { ChevronDownIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/20/solid';
 import { ShoppingCartIcon, StarIcon } from '@heroicons/react/24/outline';
 import useWindowWidth from '@/hooks/useWindowWidth';
-import useRedux from '@/hooks/useRedux';
+import useSelector from '@/hooks/useSelector';
 import categories from '@/assets/productCategories';
 
 interface CategoryProps {
@@ -34,7 +34,7 @@ const VSpacer = () => <div className='border-r-2 border-r-slate-300 h-1/2' />;
 const Navbar: React.FC = () => {
     const width = useWindowWidth();
 
-    const { accessToken, userInfo } = useRedux('auth');
+    const { accessToken, userInfo } = useSelector((state) => state.auth);
 
     const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
     const [loggedIn, setLoggedIn] = useState<boolean>(true);
@@ -57,7 +57,7 @@ const Navbar: React.FC = () => {
             <nav id='Navbar' className='w-full shadow-md flex items-center justify-between z-10 h-16 bg-white fixed'>
                 <div id='left'>
                     <div id='logo' className='flex items-center justify-self-start'>
-                        <h1 className='sm:px-10 px-7 text-4xl font-extrabold tracking-tight cursor-pointer'>
+                        <h1 className='sm:px-10 px-7 text-4xl font-extrabold tracking-tight cursor-pointer select-none'>
                             Lux<span className='text-primary-base hover:text-primary-hover'>Edge</span>
                         </h1>
                     </div>
@@ -65,13 +65,13 @@ const Navbar: React.FC = () => {
                 <div id='center' className={`w-full h-full lg:mx-[0] xl:mx-[12%] ${width > 932 ? '' : 'hidden'}`}>
                     <ul id='navlinks' className='self-center items-center justify-self-center flex justify-evenly w-full h-full'>
                         <li className='flex items-center pr-4 sm-pl-0 lg:pl-16 my-3'>
-                            <a href='/' className='font-bold text-xl'>
+                            <a href='/' className='font-bold text-xl select-none'>
                                 Home
                             </a>
                         </li>
                         <VSpacer />
                         <li className='flex items-center my-3 px-4'>
-                            <a href='/products' className='font-bold text-xl'>
+                            <a href='/products' className='font-bold text-xl select-none'>
                                 Products
                             </a>
                         </li>
@@ -81,7 +81,7 @@ const Navbar: React.FC = () => {
                                 {({ open }) => (
                                     <>
                                         <Popover.Button
-                                            className={`font-bold text-xl flex items-center my-2 py-1 px-4 focus-visible:outline-none ${
+                                            className={`font-bold text-xl flex items-center my-2 py-1 px-4 focus-visible:outline-none select-none ${
                                                 open ? 'bg-blue-200 text-primary-hover rounded-xl' : ''
                                             }`}>
                                             Categories <ChevronDownIcon className={`${open ? 'rotate-180 transform' : ''} w-8 ml-2`} />
@@ -113,7 +113,7 @@ const Navbar: React.FC = () => {
                         </li>
                         <VSpacer />
                         <li className='flex items-center my-3 px-4'>
-                            <a href='/contact' className='font-bold text-xl w-max'>
+                            <a href='/contact' className='font-bold text-xl w-max select-none'>
                                 Contact us
                             </a>
                         </li>
@@ -122,22 +122,25 @@ const Navbar: React.FC = () => {
                 <div id='right' className={`flex items-center ${width > 932 ? '' : 'hidden'}`}>
                     {loggedIn ? (
                         <>
-                            <a id='Favorites' href='/favorites' className='font-bold text-lg lg:mx-4 sm:mx-2 flex items-center gap-1'>
+                            <a id='Favorites' href='/favorites' className='font-bold text-lg lg:mx-4 sm:mx-2 flex items-center gap-1 select-none'>
                                 Favorites <StarIcon className='w-6 mb-1' />
                             </a>
                             <a
                                 id='Cart'
                                 href='/cart'
-                                className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base hover:bg-primarytext-primary-hover flex items-center gap-2 mr-4'>
+                                className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base select-none hover:bg-primarytext-primary-hover flex items-center gap-2 mr-4'>
                                 Cart <ShoppingCartIcon className='w-[1.3rem]' />
                             </a>
                         </>
                     ) : (
                         <>
-                            <a id='Login' href='/login' className='font-bold text-lg lg:mx-4 sm:mx-2'>
+                            <a id='Login' href='/login' className='font-bold text-lg lg:mx-4 sm:mx-2 select-none'>
                                 Login
                             </a>
-                            <a id='Register' href='/register' className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base hover:bg-primarytext-primary-hover mx-4'>
+                            <a
+                                id='Register'
+                                href='/register'
+                                className='font-bold text-lg px-4 py-2 select-none rounded-xl text-white bg-primary-base hover:bg-primarytext-primary-hover mx-4'>
                                 Register
                             </a>
                         </>
@@ -165,12 +168,12 @@ const Navbar: React.FC = () => {
                     <div id='content' className='flow-root mt-8'>
                         <ul id='navlinks' className='self-center items-start flex flex-col w-full h-full gap-4'>
                             <li className='flex items-center px-1'>
-                                <a href='/' className='font-bold text-xl'>
+                                <a href='/' className='font-bold text-xl select-none'>
                                     Home
                                 </a>
                             </li>
                             <li className='flex items-center px-1'>
-                                <a href='/products' className='font-bold text-xl'>
+                                <a href='/products' className='font-bold text-xl select-none'>
                                     Products
                                 </a>
                             </li>
@@ -178,7 +181,7 @@ const Navbar: React.FC = () => {
                                 {({ open }) => (
                                     <>
                                         <Disclosure.Button
-                                            className={`font-bold text-xl flex items-center py-1 px-4 -mx-3 focus-visible:outline-none ${
+                                            className={`font-bold text-xl flex items-center py-1 px-4 -mx-3 focus-visible:outline-none select-none ${
                                                 open ? 'bg-blue-200 text-primary-hover rounded-xl' : ''
                                             }`}>
                                             Categories
@@ -198,7 +201,7 @@ const Navbar: React.FC = () => {
                                 )}
                             </Disclosure>
                             <li className='flex items-center px-1'>
-                                <a href='/contact' className='font-bold text-xl'>
+                                <a href='/contact' className='font-bold text-xl select-none'>
                                     Contact us
                                 </a>
                             </li>
@@ -206,20 +209,20 @@ const Navbar: React.FC = () => {
                         <ul id='account' className='self-center items-start flex flex-col w-full h-full gap-4 mt-12'>
                             {loggedIn ? (
                                 <>
-                                    <a id='Favorites' href='/favorites' className='ml-1 font-bold text-lg lg:mx-4 sm:mx-2 flex items-center gap-1'>
+                                    <a id='Favorites' href='/favorites' className='ml-1 font-bold text-lg lg:mx-4 select-none sm:mx-2 flex items-center gap-1'>
                                         Favorites <StarIcon className='w-6 mb-1' />
                                     </a>
                                     <a
                                         id='Cart'
                                         href='/cart'
-                                        className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base hover:bg-primarytext-primary-hover flex items-center gap-2 mr-4'>
+                                        className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base select-none hover:bg-primarytext-primary-hover flex items-center gap-2 mr-4'>
                                         Cart <ShoppingCartIcon className='w-[1.3rem]' />
                                     </a>
                                 </>
                             ) : (
                                 <>
                                     <li className='flex items-center px-1 ml-1'>
-                                        <a href='/login' className='font-bold text-xl'>
+                                        <a href='/login' className='font-bold text-xl select-none'>
                                             Login
                                         </a>
                                     </li>
@@ -227,7 +230,7 @@ const Navbar: React.FC = () => {
                                         <a
                                             id='Register'
                                             href='/register'
-                                            className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base hover:bg-primarytext-primary-hover'>
+                                            className='font-bold text-lg px-4 py-2 rounded-xl select-none text-white bg-primary-base hover:bg-primarytext-primary-hover'>
                                             Register
                                         </a>
                                     </li>
