@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import useRedux from '@/hooks/useRedux';
+import useSelector from '@/hooks/useSelector';
 import { Product } from '@/types';
 import Highlight from './Highlight';
 import Rating from './Rating';
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const ProductCard: React.FC<Props> = (_: Props) => {
-    const { accessToken } = useRedux('auth');
+    const { accessToken } = useSelector((state) => state.auth);
 
     const [product, setProduct] = useState<Product | null>(null);
     const [favsList, setFavsList] = useState<Product[] | null>(null);

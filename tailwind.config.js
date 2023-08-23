@@ -20,6 +20,9 @@ export default {
                     hover: '#2563eb',
                     light: '#60a5fa'
                 }
+            },
+            backgroundImage: {
+                'login-bg': "url('/loginbg.jpg')"
             }
         }
     },

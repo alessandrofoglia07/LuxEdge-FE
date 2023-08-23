@@ -232,7 +232,7 @@ const HomePage: React.FC = () => {
                     <h1 className='pt-6 pb-2 lg:px-8 font-extrabold text-5xl tracking-tight'>Our bestseller products</h1>
                     <div id='products-container' className='flex gap-8 overflow-x-scroll scroll-smooth items-center w-full p-4'>
                         {scroll > 0 && (
-                            <button onClick={() => handleArrowClick('left')} className='bg-primary-light rounded-full p-2 absolute left-5 z-50'>
+                            <button onClick={() => handleArrowClick('left')} className='bg-primary-light rounded-full p-1.5 absolute left-5 z-50'>
                                 <ArrowLeftIcon className='h-8 w-8 text-white' />
                             </button>
                         )}
@@ -240,7 +240,7 @@ const HomePage: React.FC = () => {
                             <ProductCard key={i} product={product} />
                         ))}
                         {Math.round(scroll) < Math.round(maxScroll) && (
-                            <button onClick={() => handleArrowClick('right')} className='bg-primary-light rounded-full p-2 absolute right-5 z-50'>
+                            <button onClick={() => handleArrowClick('right')} className='bg-primary-light rounded-full p-1.5 absolute right-5 z-50'>
                                 <ArrowRightIcon className='h-8 w-8 text-white' />
                             </button>
                         )}
