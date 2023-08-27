@@ -5,26 +5,22 @@ interface Props {
     className?: string;
     id?: string;
     style?: React.CSSProperties;
-    lighter?: boolean;
-    monochrome?: boolean;
-    monochromeRev?: boolean;
+    version?: 'standard' | 'lighter' | 'white' | 'black';
 }
 
-const LuxEdge: React.FC<Props> = ({ className = '', id, style, lighter = false, monochrome = false, monochromeRev = false }: Props) =>
-    monochrome ? (
+const LuxEdge: React.FC<Props> = ({ className = '', id, style, version = 'standard' }: Props) =>
+    version === 'white' ? (
         <span id={id} style={style} className={`tracking-tighter font-extrabold text-slate-100 ${className}`}>
-            Lux
-            <span className='text-gray-900'>Edge</span>
+            LuxEdge
         </span>
-    ) : monochromeRev ? (
+    ) : version === 'black' ? (
         <span id={id} style={style} className={`tracking-tighter font-extrabold text-gray-900 ${className}`}>
-            Lux
-            <span className='text-slate-100'>Edge</span>
+            LuxEdge
         </span>
     ) : (
         <span id={id} style={style} className={`tracking-tighter font-extrabold ${className}`}>
             Lux
-            <Highlight effect={true} lighter={lighter}>
+            <Highlight effect={true} lighter={version === 'lighter'}>
                 Edge
             </Highlight>
         </span>
