@@ -5,6 +5,7 @@ import { ShoppingCartIcon, StarIcon } from '@heroicons/react/24/outline';
 import useWindowWidth from '@/hooks/useWindowWidth';
 import useSelector from '@/hooks/useSelector';
 import categories from '@/assets/productCategories';
+import Button from './CustomElements/StyledButton';
 
 interface CategoryProps {
     children: string;
@@ -122,27 +123,21 @@ const Navbar: React.FC = () => {
                 <div id='right' className={`flex items-center ${width > 932 ? '' : 'hidden'}`}>
                     {loggedIn ? (
                         <>
-                            <a id='Favorites' href='/favorites' className='font-bold text-lg lg:mx-4 sm:mx-2 flex items-center gap-1 select-none'>
+                            <Button id='Favorites' href='/favorites' classNameOverride className='font-bold text-lg lg:mx-4 sm:mx-2 flex items-center gap-1 select-none'>
                                 Favorites <StarIcon className='w-6 mb-1' />
-                            </a>
-                            <a
-                                id='Cart'
-                                href='/cart'
-                                className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base select-none hover:bg-primarytext-primary-hover flex items-center gap-2 mr-4'>
+                            </Button>
+                            <Button id='Cart' href='/cart'>
                                 Cart <ShoppingCartIcon className='w-[1.3rem]' />
-                            </a>
+                            </Button>
                         </>
                     ) : (
                         <>
-                            <a id='Login' href='/login' className='font-bold text-lg lg:mx-4 sm:mx-2 select-none'>
+                            <Button id='Login' href='/login' classNameOverride className='font-bold text-lg lg:mx-4 sm:mx-2 select-none'>
                                 Login
-                            </a>
-                            <a
-                                id='Register'
-                                href='/register'
-                                className='font-bold text-lg px-4 py-2 select-none rounded-xl text-white bg-primary-base hover:bg-primarytext-primary-hover mx-4'>
+                            </Button>
+                            <Button id='Register' href='/register'>
                                 Register
-                            </a>
+                            </Button>
                         </>
                     )}
                 </div>
@@ -209,30 +204,32 @@ const Navbar: React.FC = () => {
                         <ul id='account' className='self-center items-start flex flex-col w-full h-full gap-4 mt-12'>
                             {loggedIn ? (
                                 <>
-                                    <a id='Favorites' href='/favorites' className='ml-1 font-bold text-lg lg:mx-4 select-none sm:mx-2 flex items-center gap-1'>
+                                    <Button id='Favorites' href='/favorites' classNameOverride className='ml-1 font-bold text-lg lg:mx-4 select-none sm:mx-2 flex items-center gap-1'>
                                         Favorites <StarIcon className='w-6 mb-1' />
-                                    </a>
-                                    <a
+                                    </Button>
+                                    <Button
                                         id='Cart'
                                         href='/cart'
+                                        classNameOverride
                                         className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base select-none hover:bg-primarytext-primary-hover flex items-center gap-2 mr-4'>
                                         Cart <ShoppingCartIcon className='w-[1.3rem]' />
-                                    </a>
+                                    </Button>
                                 </>
                             ) : (
                                 <>
                                     <li className='flex items-center px-1 ml-1'>
-                                        <a href='/login' className='font-bold text-xl select-none'>
+                                        <Button href='/login' classNameOverride className='font-bold text-xl select-none'>
                                             Login
-                                        </a>
+                                        </Button>
                                     </li>
                                     <li className='flex items-center px-1'>
-                                        <a
+                                        <Button
                                             id='Register'
                                             href='/register'
+                                            classNameOverride
                                             className='font-bold text-lg px-4 py-2 rounded-xl select-none text-white bg-primary-base hover:bg-primarytext-primary-hover'>
                                             Register
-                                        </a>
+                                        </Button>
                                     </li>
                                 </>
                             )}
