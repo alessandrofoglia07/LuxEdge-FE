@@ -38,7 +38,7 @@ const Input: React.FC<Props> = (props: Props) => {
                     </button>
                 ) : null}
             </div>
-            {props.error && <p className='text-sm text-red-600 px-1 tracking-tight'>{props.helperText}</p>}
+            {props.error && <p className='text-sm text-red-600 px-1 tracking-tight absolute'>{props.helperText}</p>}
         </div>
     );
 };
