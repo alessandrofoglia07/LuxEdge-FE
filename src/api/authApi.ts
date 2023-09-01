@@ -33,8 +33,8 @@ const forgotPassword = async (email: string): Promise<string> => {
 };
 
 /** Reset password */
-const resetPassword = async (userId: string, password: string): Promise<string> => {
-    const res = await axios.post(`${url}/reset-password/${userId}`, { password });
+const resetPassword = async (userId: string, token: string, password: string): Promise<string> => {
+    const res = await axios.post(`${url}/reset-password/${userId}/${token}`, { password });
     return res.data.message;
 };
 

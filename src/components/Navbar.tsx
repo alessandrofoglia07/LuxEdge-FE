@@ -55,12 +55,14 @@ const Navbar: React.FC = () => {
 
     return (
         <header>
+            {/* START DESKTOP MENU */}
+
             <nav id='Navbar' className='w-full shadow-md flex items-center justify-between z-10 h-16 bg-white fixed'>
                 <div id='left'>
                     <div id='logo' className='flex items-center justify-self-start'>
-                        <h1 className='sm:px-10 px-7 text-4xl font-extrabold tracking-tight cursor-pointer select-none'>
+                        <a className='sm:px-10 px-7 text-4xl font-extrabold tracking-tight cursor-pointer select-none' href='/'>
                             Lux<span className='text-primary-base hover:text-primary-hover'>Edge</span>
-                        </h1>
+                        </a>
                     </div>
                 </div>
                 <div id='center' className={`w-full h-full lg:mx-[0] xl:mx-[12%] ${width > 932 ? '' : 'hidden'}`}>
@@ -123,19 +125,19 @@ const Navbar: React.FC = () => {
                 <div id='right' className={`flex items-center ${width > 932 ? '' : 'hidden'}`}>
                     {loggedIn ? (
                         <>
-                            <Button id='Favorites' href='/favorites' classNameOverride className='font-bold text-lg lg:mx-4 sm:mx-2 flex items-center gap-1 select-none'>
+                            <Button id='Favorites' href='/favorites' as='a' secondary>
                                 Favorites <StarIcon className='w-6 mb-1' />
                             </Button>
-                            <Button id='Cart' href='/cart'>
+                            <Button id='Cart' href='/cart' as='a' className='flex items-center gap-4'>
                                 Cart <ShoppingCartIcon className='w-[1.3rem]' />
                             </Button>
                         </>
                     ) : (
                         <>
-                            <Button id='Login' href='/login' classNameOverride className='font-bold text-lg lg:mx-4 sm:mx-2 select-none'>
+                            <Button id='Login' href='/login' as='a' secondary>
                                 Login
                             </Button>
-                            <Button id='Register' href='/register'>
+                            <Button id='Register' href='/register' as='a'>
                                 Register
                             </Button>
                         </>
@@ -148,6 +150,11 @@ const Navbar: React.FC = () => {
                     </button>
                 </div>
             </nav>
+
+            {/* END DESKTOP MENU */}
+
+            {/* START MOBILE MENU */}
+
             <Dialog as='div' open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)}>
                 <div className='fixed inset-0 z-10' />
                 <Dialog.Panel className='fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-slate-100 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
@@ -204,30 +211,22 @@ const Navbar: React.FC = () => {
                         <ul id='account' className='self-center items-start flex flex-col w-full h-full gap-4 mt-12'>
                             {loggedIn ? (
                                 <>
-                                    <Button id='Favorites' href='/favorites' classNameOverride className='ml-1 font-bold text-lg lg:mx-4 select-none sm:mx-2 flex items-center gap-1'>
+                                    <Button id='Favorites' as='a' href='/favorites' secondary>
                                         Favorites <StarIcon className='w-6 mb-1' />
                                     </Button>
-                                    <Button
-                                        id='Cart'
-                                        href='/cart'
-                                        classNameOverride
-                                        className='font-bold text-lg px-4 py-2 rounded-xl text-white bg-primary-base select-none hover:bg-primarytext-primary-hover flex items-center gap-2 mr-4'>
+                                    <Button id='Cart' href='/cart' as='a' className='flex items-center gap-2 mx-0 mr-4'>
                                         Cart <ShoppingCartIcon className='w-[1.3rem]' />
                                     </Button>
                                 </>
                             ) : (
                                 <>
                                     <li className='flex items-center px-1 ml-1'>
-                                        <Button href='/login' classNameOverride className='font-bold text-xl select-none'>
+                                        <Button href='/login' as='a' secondary className='font-bold text-xl select-none'>
                                             Login
                                         </Button>
                                     </li>
                                     <li className='flex items-center px-1'>
-                                        <Button
-                                            id='Register'
-                                            href='/register'
-                                            classNameOverride
-                                            className='font-bold text-lg px-4 py-2 rounded-xl select-none text-white bg-primary-base hover:bg-primarytext-primary-hover'>
+                                        <Button id='Register' href='/register' as='a' className='mx-0'>
                                             Register
                                         </Button>
                                     </li>
@@ -237,6 +236,8 @@ const Navbar: React.FC = () => {
                     </div>
                 </Dialog.Panel>
             </Dialog>
+
+            {/* END MOBILE MENU */}
         </header>
     );
 };

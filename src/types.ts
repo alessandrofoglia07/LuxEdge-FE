@@ -6,6 +6,7 @@ export interface LoginRes {
     username: string;
     role: 'user' | 'admin';
     active: boolean;
+    message: string;
 }
 
 export interface UserInfo {
