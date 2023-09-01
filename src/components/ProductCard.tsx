@@ -6,9 +6,11 @@ import Rating from './Rating';
 import { ShoppingCartIcon, StarIcon } from '@heroicons/react/20/solid';
 import authAxios from '@/api/authAxios';
 import Img from './CustomImg';
+import { motion } from 'framer-motion';
 
 interface Props {
     product: Product;
+    i?: number;
 }
 
 const ProductCard: React.FC<Props> = (_: Props) => {
@@ -46,8 +48,31 @@ const ProductCard: React.FC<Props> = (_: Props) => {
         setProduct(_.product);
     }, [_]);
 
+    const Container = ({ children }: { children: React.ReactNode }) =>
+        typeof _.i !== 'number' ? (
+            <div id='ProductCard' className='w-96 min-w-[24rem] h-[36rem] bg-white rounded-lg'>
+                {children}
+            </div>
+        ) : (
+            <motion.div
+                initial={{
+                    opacity: 0
+                }}
+                whileInView={{
+                    opacity: 1,
+                    transition: {
+                        delay: _.i * 0.2,
+                        duration: 0.5
+                    }
+                }}
+                id='ProductCard'
+                className='w-96 min-w-[24rem] h-[36rem] bg-white rounded-lg'>
+                {children}
+            </motion.div>
+        );
+
     return (
-        <div id='ProductCard' className='w-96 min-w-[24rem] h-[36rem] bg-white rounded-lg'>
+        <Container>
             {product ? (
                 <>
                     <div id='top' className='w-full h-1/2 flex justify-center items-center pt-4'>
@@ -105,7 +130,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                     </div>
                 </>
             )}
-        </div>
+        </Container>
     );
 };
 
