@@ -1,11 +1,8 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 
 const NotFoundPage: React.FC = () => {
-    return (
-        <div id='NotFoundPage'>
-            <h1>NotFoundPage</h1>
-        </div>
-    );
+    return <Navigate to='/' />;
 };
 
 export default NotFoundPage;
