@@ -10,6 +10,7 @@ import { z } from 'zod';
 import { detect } from 'curse-filter';
 import Notification from '@/components/Notification';
 import { AxiosError } from 'axios';
+import { motion } from 'framer-motion';
 
 const bannedUsernames = ['post', 'comment', 'admin', 'administrator', 'moderator', 'mod', 'user', 'users'];
 
@@ -150,7 +151,17 @@ const RegisterPage: React.FC = () => {
                         <LuxEdge version='white' id='logo' className='text-4xl' />
                     </div>
                     <div id='center' className='h-max w-full flex items-center'>
-                        <h2 className='text-center text-[2.7rem] font-bold text-white px-6 tracking-tight'>Get started.</h2>
+                        <motion.h2
+                            initial={{ opacity: 0 }}
+                            animate={{
+                                opacity: 1,
+                                transition: {
+                                    delay: 0.5
+                                }
+                            }}
+                            className='text-center text-[2.7rem] font-bold text-white px-6 tracking-tight'>
+                            Get started.
+                        </motion.h2>
                         <div
                             className='w-0 h-0 ml-auto'
                             style={{ borderTop: '30px solid transparent', borderBottom: '30px solid transparent', borderRight: '30px solid rgb(255 255 255)' }}
