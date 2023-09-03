@@ -57,7 +57,7 @@ const Navbar: React.FC = () => {
         <header>
             {/* START DESKTOP MENU */}
 
-            <nav id='Navbar' className='w-full shadow-md flex items-center justify-between z-10 h-16 bg-white fixed'>
+            <nav id='Navbar' className='w-full shadow-md flex items-center justify-between z-50 h-16 bg-white fixed'>
                 <div id='left'>
                     <div id='logo' className='flex items-center justify-self-start'>
                         <a className='sm:px-10 px-7 text-4xl font-extrabold tracking-tight cursor-pointer select-none' href='/'>
@@ -98,7 +98,7 @@ const Navbar: React.FC = () => {
                                             leaveFrom='opacity-100 translate-y-1'
                                             leaveTo='opacity-0 translate-y-0'>
                                             <Popover.Panel className='absolute z-20'>
-                                                <div className='flex flex-col pl-6 justify-center w-48 h-fit gap-1 bg-white rounded-md shadow-lg border-2 border-slate-500 py-4'>
+                                                <div className='flex flex-col pl-6 justify-center w-48 h-fit gap-1 bg-white rounded-md shadow-lg border-2 border-slate-300 py-4'>
                                                     {categories.map((category, i) => {
                                                         return (
                                                             <div key={i}>

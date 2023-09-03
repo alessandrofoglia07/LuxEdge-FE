@@ -48,7 +48,11 @@ const List: React.FC<ListProps> = ({ title, items }: ListProps) => (
     </div>
 );
 
-const Footer: React.FC = () => {
+interface FooterProps {
+    className?: string;
+}
+
+const Footer: React.FC<FooterProps> = ({ className }: FooterProps) => {
     const [email, setEmail] = useState('');
 
     const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -57,7 +61,7 @@ const Footer: React.FC = () => {
     };
 
     return (
-        <footer className='flex flex-col w-full items-center'>
+        <footer className={`flex flex-col w-full items-center ${className}`}>
             <div className='bg-slate-700 flex justify-evenly flex-wrap gap-4 w-full py-8 px-4'>
                 <List title={<LuxEdge className='select-none text-3xl pb-4 text-slate-200' />} items={items1} />
                 <List title='Products' items={items2} />

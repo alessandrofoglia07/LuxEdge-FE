@@ -6,11 +6,9 @@ import Rating from './Rating';
 import { ShoppingCartIcon, StarIcon } from '@heroicons/react/20/solid';
 import authAxios from '@/api/authAxios';
 import Img from './CustomImg';
-import { motion } from 'framer-motion';
 
 interface Props {
     product: Product;
-    i?: number;
 }
 
 const ProductCard: React.FC<Props> = (_: Props) => {
@@ -48,42 +46,32 @@ const ProductCard: React.FC<Props> = (_: Props) => {
         setProduct(_.product);
     }, [_]);
 
-    const Container = ({ children }: { children: React.ReactNode }) =>
-        typeof _.i !== 'number' ? (
-            <div id='ProductCard' className='w-96 min-w-[24rem] h-[36rem] bg-white rounded-lg'>
-                {children}
-            </div>
-        ) : (
-            <motion.div
-                initial={{
-                    opacity: 0
-                }}
-                whileInView={{
-                    opacity: 1,
-                    transition: {
-                        delay: _.i * 0.2,
-                        duration: 0.5
-                    }
-                }}
-                id='ProductCard'
-                className='w-96 min-w-[24rem] h-[36rem] bg-white rounded-lg'>
-                {children}
-            </motion.div>
-        );
+    const Container = ({ children }: { children: React.ReactNode }) => (
+        <div id='ProductCard' className='md:w-96 flex flex-col items-center md:min-w-[24rem] md:h-[36rem] w-min h-[28rem] bg-white rounded-lg'>
+            {children}
+        </div>
+    );
 
+    {
+        /* TODO: Make the component responsive when product is undefined */
+    }
     return (
         <Container>
             {product ? (
                 <>
-                    <div id='top' className='w-full h-1/2 flex justify-center items-center pt-4'>
-                        <Img className='h-[calc(100%-1rem)] w-[calc(100%-5rem)] rounded-lg border-slate-200 drop-shadow-xl border-2' src={toUrl(product.imagePath)} alt={product.name} />
+                    <div id='top' className='md:w-full md:h-1/2 w-48 h-48 flex justify-center items-center md:pt-4'>
+                        <Img
+                            className='md:h-[calc(100%-1rem)] md:w-[calc(100%-5rem)] w-full h-full rounded-lg border-slate-200 drop-shadow-xl border-2'
+                            src={toUrl(product.imagePath)}
+                            alt={product.name}
+                        />
                     </div>
-                    <div id='center' className='py-8 flex flex-col items-center'>
-                        <a href={`/products/${product.name}`} className='font-extrabold text-3xl tracking-wider select-none'>
+                    <div id='center' className='md:py-8 py-2 flex flex-col items-center'>
+                        <a href={`/products/${product.name}`} className='font-extrabold md:text-3xl text-2xl tracking-wider select-none'>
                             {product.name}
                         </a>
-                        <p className='font-semibold opacity-50 pt-2'>{product.description}</p>
-                        <h4 className='font-bold text-3xl py-4 select-none'>
+                        <p className='font-semibold opacity-50 md:pt-2'>{product.description}</p>
+                        <h4 className='font-bold md:text-3xl text-2xl md:py-4 py-2 select-none'>
                             <Highlight>${product.price}</Highlight>
                         </h4>
                         <div id='score'>
@@ -92,7 +80,8 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                     </div>
                     <div id='bottom' className='w-full h-12 flex justify-evenly lg:px-2'>
                         <button id='cart' className='w-2/3 bg-primary-base hover:bg-primary-hover h-full flex items-center justify-evenly text-white rounded-lg lg:px-8'>
-                            Add to Cart <ShoppingCartIcon className='w-6 h-6' />
+                            <span className='-md:hidden'>Add to Cart </span>
+                            <ShoppingCartIcon className='w-6 h-6' />
                         </button>
                         <button
                             id='favs'

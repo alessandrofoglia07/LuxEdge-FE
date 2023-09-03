@@ -4,113 +4,20 @@ import { HomeIcon, CubeIcon, BanknotesIcon, ArrowLeftIcon, ArrowRightIcon } from
 import Highlight from '@/components/Highlight';
 import Benefit from '@/components/Benefit';
 // import axios from 'axios';
-import { Product, Testimonial as TestimonialType } from '@/types';
 import ProductCard from '@/components/ProductCard';
 import Testimonial from '@/components/Testimonial';
 import Img from '@/components/CustomImg';
 import Footer from '@/components/Footer';
 import LuxEdge from '@/components/LuxEdgeLogo';
 import { motion } from 'framer-motion';
+import { mockProducts, mockTestimonials } from '@/assets/mock';
+import { Product } from '@/types';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
     <li className='font-bold text-xl'>
         <span className='text-white text-2xl'>•</span> {children}
     </li>
 );
-
-const mockProducts: Product[] = [
-    {
-        _id: '1',
-        name: 'Chair',
-        description: 'A nice chair',
-        price: 100,
-        imagePath: 'chairs/chair1.jpg',
-        tags: ['chair'],
-        sold: 100,
-        available: true,
-        reviews: [],
-        score: 4.8,
-        createdAt: new Date(),
-        updatedAt: new Date()
-    },
-    {
-        _id: '2',
-        name: 'Chair',
-        description: 'A nice chair',
-        price: 100,
-        imagePath: 'chairs/chair2.jpg',
-        tags: ['chair'],
-        sold: 100,
-        available: true,
-        reviews: [],
-        score: 3.8,
-        createdAt: new Date(),
-        updatedAt: new Date()
-    },
-    {
-        _id: '3',
-        name: 'Chair',
-        description: 'A nice chair',
-        price: 100,
-        imagePath: 'chairs/chair3.jpg',
-        tags: ['chair'],
-        sold: 100,
-        available: true,
-        reviews: [],
-        score: 4.6,
-        createdAt: new Date(),
-        updatedAt: new Date()
-    },
-    {
-        _id: '4',
-        name: 'Chair',
-        description: 'A nice chair',
-        price: 100,
-        imagePath: 'chairs/chair4.jpg',
-        tags: ['chair'],
-        sold: 100,
-        available: true,
-        reviews: [],
-        score: 4.2,
-        createdAt: new Date(),
-        updatedAt: new Date()
-    },
-    {
-        _id: '5',
-        name: 'Chair',
-        description: 'A nice chair',
-        price: 100,
-        imagePath: 'chairs/chair5.jpg',
-        tags: ['chair'],
-        sold: 100,
-        available: true,
-        reviews: [],
-        score: 4.9,
-        createdAt: new Date(),
-        updatedAt: new Date()
-    }
-];
-
-const mockTestimonials: TestimonialType[] = [
-    {
-        pfpPath: '/testimonials/testimonial1.jpg',
-        rating: 4.5,
-        author: 'John Doe',
-        text: 'The craftsmanship of the bedroom set is superb, and it has transformed my bedroom into a cozy and stylish oasis.'
-    },
-    {
-        pfpPath: '/testimonials/testimonial2.jpg',
-        rating: 5,
-        author: 'Jane Doe',
-        text: 'I found the perfect sofa for my living room, and it far exceeded my expectations in terms of quality and comfort. It looks and feels like a luxurious piece, yet it fits well within my budget.'
-    },
-    {
-        pfpPath: '/testimonials/testimonial3.jpg',
-        rating: 4.5,
-        author: 'Johnny Doe',
-        text: 'The quality of the furniture is top-notch, and the designs are absolutely stunning. The chairs are not only comfortable but also add a touch of elegance to my dining area.'
-    }
-];
 
 const benefits = [
     {
@@ -177,7 +84,7 @@ const HomePage: React.FC = () => {
         (async () => {
             // await axios.get(url);
             // setProducts(res.data);
-            setProducts(mockProducts);
+            setProducts(mockProducts.slice(0, 5));
         })();
     }, [url]);
 
@@ -248,8 +155,9 @@ const HomePage: React.FC = () => {
                                                 duration: 0.8,
                                                 delay: 2 + i * 0.8
                                             }
-                                        }}>
-                                        <CustomLi key={i}>{item}</CustomLi>
+                                        }}
+                                        key={i}>
+                                        <CustomLi>{item}</CustomLi>
                                     </motion.div>
                                 ))}
                             </ul>
@@ -403,7 +311,7 @@ const HomePage: React.FC = () => {
                             </button>
                         )}
                         {products.map((product, i) => (
-                            <ProductCard key={i} i={i} product={product} />
+                            <ProductCard key={i} product={product} />
                         ))}
                         {Math.round(scroll) < Math.round(maxScroll) && (
                             <button onClick={() => handleArrowClick('right')} className='bg-primary-light rounded-full p-1.5 absolute right-5 z-50'>
@@ -440,8 +348,9 @@ const HomePage: React.FC = () => {
                                         delay: i * 0.2,
                                         duration: 0.5
                                     }
-                                }}>
-                                <Testimonial testimonial={testimonial} key={i} />
+                                }}
+                                key={i}>
+                                <Testimonial testimonial={testimonial} />
                             </motion.div>
                         ))}
                     </div>
