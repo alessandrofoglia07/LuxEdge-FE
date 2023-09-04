@@ -10,6 +10,7 @@ import Footer from '@/components/Footer';
 import Option from '@/components/Option';
 import { mockProducts } from '@/assets/mock';
 import ProductCard from '@/components/ProductCard';
+import { useSearchParams } from 'react-router-dom';
 
 const sortOptions = [
     { id: 1, name: 'Recommend' },
@@ -20,23 +21,24 @@ const sortOptions = [
 ];
 
 const PriceRanges = [
-    { name: 'Under $50', checked: false },
-    { name: '$50 to $100', checked: false },
-    { name: '$100 to $200', checked: false },
-    { name: '$200 to $500', checked: false },
-    { name: '$500 to $1000', checked: false },
-    { name: 'Over $1000', checked: false }
+    { name: 'Under $50', checked: false, url: 'under50' },
+    { name: '$50 to $100', checked: false, url: '50to100' },
+    { name: '$100 to $200', checked: false, url: '100to200' },
+    { name: '$200 to $500', checked: false, url: '200to500' },
+    { name: '$500 to $1000', checked: false, url: '500to1000' },
+    { name: 'Over $1000', checked: false, url: 'over1000' }
 ];
 
 const RatingRanges = [
-    { name: '3 Stars', checked: false },
-    { name: '4 Stars', checked: false },
-    { name: '5 Stars', checked: false }
+    { name: '3 Stars', checked: false, url: '3stars' },
+    { name: '4 Stars', checked: false, url: '4stars' },
+    { name: '5 Stars', checked: false, url: '5stars' }
 ];
 
 interface Category {
     name: string;
     checked: boolean;
+    url: string;
 }
 
 const ProductsPage: React.FC = () => {
@@ -44,14 +46,88 @@ const ProductsPage: React.FC = () => {
     const [page, setPage] = useState<number>(1);
     const [products, setProducts] = useState<Product[]>([]);
     const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
-    const [selectedCategories, setSelectedCategories] = useState<Category[]>(categories.map((category) => ({ name: category, checked: false })));
+    const [selectedCategories, setSelectedCategories] = useState<Category[]>(
+        categories.map((category) => ({ name: category, checked: false, url: category.toLowerCase().replace(/\s/g, '') }))
+    );
     const [selectedPriceRanges, setSelectedPriceRanges] = useState<Category[]>(PriceRanges);
     const [selectedRatingRanges, setSelectedRatingRanges] = useState<Category[]>(RatingRanges);
+
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const getStateFromURL = () => {
+        const tags = searchParams.get('tags')?.split(' ');
+        const priceRanges = searchParams.get('price')?.split(' ');
+        const ratingRanges = searchParams.get('rating')?.split(' ');
+        if (tags) {
+            setSelectedCategories((prev) => {
+                return prev.map((prevCategory) => (tags.includes(prevCategory.url) ? { ...prevCategory, checked: true } : prevCategory));
+            });
+        }
+        if (priceRanges) {
+            setSelectedPriceRanges((prev) => {
+                return prev.map((prevPriceRange) => (priceRanges.includes(prevPriceRange.url) ? { ...prevPriceRange, checked: true } : prevPriceRange));
+            });
+        }
+        if (ratingRanges) {
+            setSelectedRatingRanges((prev) => {
+                return prev.map((prevRatingRange) => (ratingRanges.includes(prevRatingRange.url) ? { ...prevRatingRange, checked: true } : prevRatingRange));
+            });
+        }
+    };
 
     useEffect(() => {
         setProductsCount(mockProducts.length);
         setProducts(mockProducts.slice((page - 1) * 12, page * 12));
+        getStateFromURL();
     }, []);
+
+    const updateURL = () => {
+        const tags = selectedCategories.filter((category) => category.checked).map((category) => category.url);
+        const priceRanges = selectedPriceRanges.filter((priceRange) => priceRange.checked).map((priceRange) => priceRange.url);
+        const ratingRanges = selectedRatingRanges.filter((ratingRange) => ratingRange.checked).map((ratingRange) => ratingRange.url);
+
+        if (tags.length > 0) {
+            searchParams.set('tags', tags.join(' '));
+        } else {
+            searchParams.delete('tags');
+        }
+
+        if (priceRanges.length > 0) {
+            searchParams.set('price', priceRanges.join(' '));
+        } else {
+            searchParams.delete('price');
+        }
+
+        if (ratingRanges.length > 0) {
+            searchParams.set('rating', ratingRanges.join(' '));
+        } else {
+            searchParams.delete('rating');
+        }
+
+        setSearchParams(searchParams);
+    };
+
+    useEffect(() => {
+        updateURL();
+    }, [selectedCategories, selectedPriceRanges, selectedRatingRanges]);
+
+    const handleCategoryChange = (category: Category) => {
+        setSelectedCategories((prev) => {
+            return prev.map((prevCategory) => (prevCategory.name === category.name ? { ...prevCategory, checked: !prevCategory.checked } : prevCategory));
+        });
+    };
+
+    const handlePriceRangeChange = (priceRange: Category) => {
+        setSelectedPriceRanges((prev) => {
+            return prev.map((prevPriceRange) => (prevPriceRange.name === priceRange.name ? { ...prevPriceRange, checked: !prevPriceRange.checked } : prevPriceRange));
+        });
+    };
+
+    const handleRatingRangeChange = (ratingRange: Category) => {
+        setSelectedRatingRanges((prev) => {
+            return prev.map((prevRatingRange) => (prevRatingRange.name === ratingRange.name ? { ...prevRatingRange, checked: !prevRatingRange.checked } : prevRatingRange));
+        });
+    };
 
     return (
         <div id='ProductsPage'>
@@ -113,17 +189,7 @@ const ProductsPage: React.FC = () => {
                                         <b>Categories</b>
                                     </h2>
                                     {selectedCategories.map((category, i) => (
-                                        <Option
-                                            key={i}
-                                            checked={category.checked}
-                                            onClick={() =>
-                                                setSelectedCategories((prev) =>
-                                                    prev.map((prevCategory) =>
-                                                        prevCategory.name === category.name ? { ...prevCategory, checked: !prevCategory.checked } : prevCategory
-                                                    )
-                                                )
-                                            }
-                                            className='py-1'>
+                                        <Option key={i} checked={category.checked} onClick={() => handleCategoryChange(category)} className='py-1'>
                                             {category.name}
                                         </Option>
                                     ))}
@@ -133,17 +199,7 @@ const ProductsPage: React.FC = () => {
                                         <b>Price</b>
                                     </h2>
                                     {selectedPriceRanges.map((priceRange, i) => (
-                                        <Option
-                                            key={i}
-                                            checked={priceRange.checked}
-                                            onClick={() =>
-                                                setSelectedPriceRanges((prev) =>
-                                                    prev.map((prevPriceRange) =>
-                                                        prevPriceRange.name === priceRange.name ? { ...prevPriceRange, checked: !prevPriceRange.checked } : prevPriceRange
-                                                    )
-                                                )
-                                            }
-                                            className='py-1'>
+                                        <Option key={i} checked={priceRange.checked} onClick={() => handlePriceRangeChange(priceRange)} className='py-1'>
                                             {priceRange.name}
                                         </Option>
                                     ))}
@@ -153,17 +209,7 @@ const ProductsPage: React.FC = () => {
                                         <b>Rating</b>
                                     </h2>
                                     {selectedRatingRanges.map((ratingRange, i) => (
-                                        <Option
-                                            key={i}
-                                            checked={ratingRange.checked}
-                                            onClick={() =>
-                                                setSelectedRatingRanges((prev) =>
-                                                    prev.map((prevRatingRange) =>
-                                                        prevRatingRange.name === ratingRange.name ? { ...prevRatingRange, checked: !prevRatingRange.checked } : prevRatingRange
-                                                    )
-                                                )
-                                            }
-                                            className='py-1'>
+                                        <Option key={i} checked={ratingRange.checked} onClick={() => handleRatingRangeChange(ratingRange)} className='py-1'>
                                             {ratingRange.name}
                                         </Option>
                                     ))}
