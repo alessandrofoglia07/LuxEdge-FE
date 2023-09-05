@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect, Fragment } from 'react';
 import Navbar from '@/components/Navbar';
 import categories from '@/assets/productCategories';
 import { Product } from '@/types';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import Footer from '@/components/Footer';
 import Option from '@/components/Option';
-import { mockProducts } from '@/assets/mock';
 import ProductCard from '@/components/ProductCard';
 import { useSearchParams } from 'react-router-dom';
 
@@ -58,6 +56,7 @@ const ProductsPage: React.FC = () => {
         const tags = searchParams.get('tags')?.split(' ');
         const priceRanges = searchParams.get('price')?.split(' ');
         const ratingRanges = searchParams.get('rating')?.split(' ');
+        const page = searchParams.get('page') || '1';
         if (tags) {
             setSelectedCategories((prev) => {
                 return prev.map((prevCategory) => (tags.includes(prevCategory.url) ? { ...prevCategory, checked: true } : prevCategory));
@@ -73,11 +72,10 @@ const ProductsPage: React.FC = () => {
                 return prev.map((prevRatingRange) => (ratingRanges.includes(prevRatingRange.url) ? { ...prevRatingRange, checked: true } : prevRatingRange));
             });
         }
+        setPage(parseInt(page));
     };
 
     useEffect(() => {
-        setProductsCount(mockProducts.length);
-        setProducts(mockProducts.slice((page - 1) * 12, page * 12));
         getStateFromURL();
     }, []);
 
@@ -85,6 +83,8 @@ const ProductsPage: React.FC = () => {
         const tags = selectedCategories.filter((category) => category.checked).map((category) => category.url);
         const priceRanges = selectedPriceRanges.filter((priceRange) => priceRange.checked).map((priceRange) => priceRange.url);
         const ratingRanges = selectedRatingRanges.filter((ratingRange) => ratingRange.checked).map((ratingRange) => ratingRange.url);
+
+        searchParams.set('page', page.toString());
 
         if (tags.length > 0) {
             searchParams.set('tags', tags.join(' '));
@@ -110,6 +110,47 @@ const ProductsPage: React.FC = () => {
     useEffect(() => {
         updateURL();
     }, [selectedCategories, selectedPriceRanges, selectedRatingRanges]);
+
+    const fetchProducts = async (tags: string, price: string, rating: string, sort: string, limit: string, page: string) => {
+        try {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/search?tags=${tags}&price=${price}&rating=${rating}&sort=${sort}&limit=${limit}&page=${page}`);
+            setProducts(res.data.products);
+            setProductsCount(res.data.totCount);
+        } catch (err: unknown) {
+            if (err instanceof AxiosError) {
+                throw err.response?.data;
+            } else if (typeof err === 'string') {
+                throw new Error(err);
+            } else {
+                console.log(err);
+            }
+        }
+    };
+
+    useEffect(() => {
+        const tags = selectedCategories
+            .filter((category) => category.checked)
+            .map((category) => category.url)
+            .join(',');
+        const priceRanges = selectedPriceRanges
+            .filter((priceRange) => priceRange.checked)
+            .map((priceRange) => priceRange.url)
+            .join(',');
+        const ratingRanges = selectedRatingRanges
+            .filter((ratingRange) => ratingRange.checked)
+            .map((ratingRange) => ratingRange.url)
+            .join(',');
+
+        const sortMap = new Map<string, string>([
+            [sortOptions[0].name, 'recommend'],
+            [sortOptions[1].name, 'price_asc'],
+            [sortOptions[2].name, 'price_desc'],
+            [sortOptions[3].name, 'newest'],
+            [sortOptions[4].name, 'oldest']
+        ]);
+
+        fetchProducts(tags, priceRanges, ratingRanges, sortMap.get(selectedSort.name) || 'recommend', '12', page.toString());
+    }, [page, selectedSort, selectedCategories, selectedPriceRanges, selectedRatingRanges]);
 
     const handleCategoryChange = (category: Category) => {
         setSelectedCategories((prev) => {
@@ -140,7 +181,7 @@ const ProductsPage: React.FC = () => {
                     <div id='mid' className='w-full self-center h-max flex -md:flex-col -md:gap-4 items-center justify-between py-4 px-4'>
                         <h6>
                             <span className='font-semibold'>
-                                Showing {1 + (page - 1) * 12} - {12 + (page - 1) * 12}
+                                Showing {Math.min(1 + (page - 1) * 12, productsCount)} - {Math.min(12 + (page - 1) * 12, productsCount)}
                             </span>{' '}
                             out of {productsCount} products
                         </h6>
