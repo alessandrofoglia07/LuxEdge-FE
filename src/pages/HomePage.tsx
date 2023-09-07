@@ -3,14 +3,14 @@ import Navbar from '@/components/Navbar';
 import { HomeIcon, CubeIcon, BanknotesIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import Highlight from '@/components/Highlight';
 import Benefit from '@/components/Benefit';
-// import axios from 'axios';
+import axios from 'axios';
 import ProductCard from '@/components/ProductCard';
 import Testimonial from '@/components/Testimonial';
 import Img from '@/components/CustomImg';
 import Footer from '@/components/Footer';
 import LuxEdge from '@/components/LuxEdgeLogo';
 import { motion } from 'framer-motion';
-import { mockProducts, mockTestimonials } from '@/assets/mock';
+import { mockTestimonials } from '@/assets/mock';
 import { Product } from '@/types';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
@@ -38,7 +38,7 @@ const benefits = [
 ];
 
 const HomePage: React.FC = () => {
-    const url = `${import.meta.env.VITE_API_URL}/api/products/suggested`;
+    const url = `${import.meta.env.VITE_API_URL}/api/products/search?limit=5&sort=recommend`;
 
     const [scroll, setScroll] = useState(0);
     const [maxScroll, setMaxScroll] = useState(0);
@@ -82,9 +82,19 @@ const HomePage: React.FC = () => {
 
     useEffect(() => {
         (async () => {
-            // await axios.get(url);
-            // setProducts(res.data);
-            setProducts(mockProducts.slice(0, 5));
+            try {
+                const res = await axios.get(url);
+                setProducts(res.data.products);
+                console.log(res.data);
+            } catch (err: unknown) {
+                if (err instanceof Error) {
+                    throw err;
+                } else if (typeof err === 'string') {
+                    throw new Error(err);
+                } else {
+                    console.log(err);
+                }
+            }
         })();
     }, [url]);
 
