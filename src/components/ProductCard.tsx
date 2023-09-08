@@ -18,7 +18,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
     const [favsList, setFavsList] = useState<Product[] | null>(null);
 
     const toUrl = (path: string) => {
-        return `${import.meta.env.VITE_API_URL}/${path}`;
+        return `${import.meta.env.VITE_API_URL}/products/${path}`;
     };
 
     const getFavsList = async () => {
