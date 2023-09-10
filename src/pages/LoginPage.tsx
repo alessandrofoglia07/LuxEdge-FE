@@ -73,7 +73,8 @@ const LoginPage: React.FC = () => {
                     id='presentation'
                     className={`w-96 h-[36rem] rounded-lg rounded-r-none -md:hidden bg-gradient-to-br from-blue-500 to-blue-700
                         flex flex-col justify-between
-                        before:bg-white before:opacity-0 before:absolute before:w-96 before:h-full`}>
+                        before:bg-white before:opacity-0 before:absolute before:w-96 before:h-full`}
+                    viewport={{ once: true }}>
                     <div id='top' className='h-12 w-max px-4 py-2'>
                         <LuxEdge version='white' id='logo' className='text-4xl' />
                     </div>
@@ -86,6 +87,7 @@ const LoginPage: React.FC = () => {
                                     delay: 0.5
                                 }
                             }}
+                            viewport={{ once: true }}
                             className='text-center text-[2.7rem] font-bold text-white px-4 tracking-tight'>
                             Welcome back.
                         </motion.h2>

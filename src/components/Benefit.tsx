@@ -13,7 +13,11 @@ const Benefit: React.FC<Props> = ({ Icon, title, subtitle, i }: Props) => {
     const [hover, setHover] = useState<boolean>(false);
 
     return (
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1, transition: { duration: 0.5, delay: 0.7 + i * 0.5 } }} className='flex flex-col items-center lg:w-1/4 -lg:mt-4'>
+        <motion.div
+            initial={{ opacity: 0 }}
+            viewport={{ once: true }}
+            whileInView={{ opacity: 1, transition: { duration: 0.5, delay: 0.7 + i * 0.5 } }}
+            className='flex flex-col items-center lg:w-1/4 -lg:mt-4'>
             <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
                 <Highlight effect lighter force={hover}>
                     <Icon className='w-16 h-16' />

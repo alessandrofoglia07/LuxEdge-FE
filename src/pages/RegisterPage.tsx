@@ -159,6 +159,7 @@ const RegisterPage: React.FC = () => {
                                     delay: 0.5
                                 }
                             }}
+                            viewport={{ once: true }}
                             className='text-center text-[2.7rem] font-bold text-white px-6 tracking-tight'>
                             Get started.
                         </motion.h2>

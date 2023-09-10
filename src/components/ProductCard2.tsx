@@ -5,6 +5,7 @@ import { Product } from '@/types';
 import { StarIcon } from '@heroicons/react/20/solid';
 import authAxios from '@/api/authAxios';
 import Img from './CustomElements/CustomImg';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     product: Product;
@@ -12,6 +13,7 @@ interface Props {
 
 const ProductCard: React.FC<Props> = (_: Props) => {
     const { accessToken } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
 
     const [product, setProduct] = useState<Product | null>(null);
     const [favsList, setFavsList] = useState<Product[] | null>(null);
@@ -35,6 +37,15 @@ const ProductCard: React.FC<Props> = (_: Props) => {
         }
     };
 
+    const handleFavorite = async () => {
+        if (!accessToken) {
+            navigate('/login');
+        } else {
+            // TODO: add
+            console.log(product, 'Product fav clicked');
+        }
+    };
+
     useEffect(() => {
         if (accessToken) {
             getFavsList();
@@ -46,23 +57,24 @@ const ProductCard: React.FC<Props> = (_: Props) => {
     }, [_]);
 
     return (
-        <div id='ProductCard' className='w-96 aspect-square group'>
+        <div id='ProductCard' className='md:w-96 md:h-96 w-64 h-64 aspect-square group rounded-lg'>
             {product ? (
                 <>
-                    <Img src={toUrl(product.imagePath)} alt={product.name} className='w-full aspect-square rounded-lg shadow-md' />
-                    <div className='flex group-hover:opacity-100 transition-opacity duration-300 opacity-0 p-2 flex-col -translate-y-full text-end items-end w-[21.9rem] rounded-b-lg bg-black bg-opacity-25 absolute'>
-                        <a href={`/products/details/${product._id}`} className='text-2xl font-bold text-white mb-2'>
+                    <a href={`/products/details/${product.name}`} className='w-full h-full rounded-lg'>
+                        <Img src={toUrl(product.imagePath)} alt={product.name} className='w-full aspect-square rounded-lg shadow-md' />
+                    </a>
+                    <div className='flex group-hover:opacity-100 transition-opacity duration-300 md:opacity-0 p-2 flex-col -translate-y-full text-end items-end w-full rounded-b-lg bg-black bg-opacity-25'>
+                        <a href={`/products/details/${product.name}`} className='text-2xl font-bold text-white mb-2'>
                             {product.name}
                         </a>
-                        {favsList ? (
-                            <button
-                                id='favs'
-                                className={`w-10 aspect-square grid place-items-center bg-black bg-opacity-20 hover:bg-opacity-30 transition-all rounded-lg ${
-                                    favsList?.some((p) => p._id === product._id) ? 'text-yellow-400' : 'text-white'
-                                }`}>
-                                <StarIcon className='w-6 h-6' />
-                            </button>
-                        ) : null}
+                        <button
+                            id='favs'
+                            className={`w-10 aspect-square grid place-items-center bg-black bg-opacity-20 hover:bg-opacity-30 transition-all duration-200 rounded-lg ${
+                                favsList?.some((p) => p._id === product._id) ? 'text-yellow-400' : 'text-slate-200 hover:text-slate-50'
+                            }`}
+                            onClick={handleFavorite}>
+                            <StarIcon className='w-6 h-6' />
+                        </button>
                     </div>
                 </>
             ) : (
