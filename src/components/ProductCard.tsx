@@ -5,7 +5,7 @@ import Highlight from './Highlight';
 import Rating from './Rating';
 import { ShoppingCartIcon, StarIcon } from '@heroicons/react/20/solid';
 import authAxios from '@/api/authAxios';
-import Img from './CustomImg';
+import Img from './CustomElements/CustomImg';
 
 interface Props {
     product: Product;
@@ -47,7 +47,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
     }, [_]);
 
     const Container = ({ children }: { children: React.ReactNode }) => (
-        <div id='ProductCard' className='md:w-96 flex flex-col items-center md:min-w-[24rem] md:h-[36rem] w-min h-[28rem] bg-white rounded-lg'>
+        <div id='ProductCard' className='md:w-96 flex flex-col items-center md:min-w-[24rem] md:min-h-[36rem] md:h-fit w-min h-[28rem] bg-white rounded-lg'>
             {children}
         </div>
     );
@@ -66,8 +66,8 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                             alt={product.name}
                         />
                     </div>
-                    <div id='center' className='md:py-8 py-2 flex flex-col items-center'>
-                        <a href={`/products/${product.name}`} className='font-extrabold md:text-3xl text-2xl tracking-wider select-none'>
+                    <div id='center' className='md:py-8 py-2 px-4 flex flex-col items-center'>
+                        <a href={`/products/${product.name}`} className='text-center font-extrabold md:text-3xl text-2xl tracking-wide select-none'>
                             {product.name}
                         </a>
                         <p className='font-semibold opacity-50 md:pt-2'>{product.description}</p>
