@@ -1,7 +1,7 @@
 import React from 'react';
 import { Testimonial as TestimonialType } from '@/types';
 import Rating from './Rating';
-import Img from './CustomImg';
+import Img from './CustomElements/CustomImg';
 
 interface Props {
     testimonial: TestimonialType;

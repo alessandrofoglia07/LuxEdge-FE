@@ -24,7 +24,7 @@ const Input: React.FC<Props> = (props: Props) => {
     return (
         <div id='input' className={props.containerClassName}>
             <div
-                className={`bg-slate-200 px-6 py-3 flex items-center select-none gap-4 rounded-lg focus-within:outline focus-within:outline-blue-500 focus-within:outline-offset-1 ${
+                className={`bg-slate-200 transition-all duration-[20ms] px-6 py-3 flex items-center select-none gap-4 rounded-lg focus-within:outline focus-within:outline-blue-500 focus-within:outline-offset-1 ${
                     props.containerClassName?.includes('w-') && 'w-full [&>input]:w-full'
                 }`}>
                 <input type={type} className={`bg-slate-200 text-lg tracking-tight py-[.25rem] leading-3 outline-none ${props.className}`} {...inputProps} />

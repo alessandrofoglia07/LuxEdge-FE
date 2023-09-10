@@ -61,7 +61,7 @@ const Highlight: React.FC<Props> = ({ children, lighter = false, force, effect =
     }
 
     return (
-        <span onMouseEnter={handleHover} onMouseLeave={handleLeave} className={className}>
+        <span onMouseEnter={handleHover} onMouseLeave={handleLeave} className={`${className} transition-all duration-200`}>
             {children}
         </span>
     );

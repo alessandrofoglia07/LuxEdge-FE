@@ -4,9 +4,9 @@ import { HomeIcon, CubeIcon, BanknotesIcon, ArrowLeftIcon, ArrowRightIcon } from
 import Highlight from '@/components/Highlight';
 import Benefit from '@/components/Benefit';
 import axios from 'axios';
-import ProductCard from '@/components/ProductCard';
+import ProductCard from '@/components/ProductCard2';
 import Testimonial from '@/components/Testimonial';
-import Img from '@/components/CustomImg';
+import Img from '@/components/CustomElements/CustomImg';
 import Footer from '@/components/Footer';
 import LuxEdge from '@/components/LuxEdgeLogo';
 import { motion } from 'framer-motion';
@@ -150,7 +150,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 href='products'
-                                className='font-bold inline-block text-2xl capitalize px-10 py-3 rounded-xl text-white bg-primary-base hover:bg-primary-hover mt-12'>
+                                className='transition-color duration-200 font-bold inline-block text-2xl capitalize px-10 py-3 rounded-xl text-white bg-primary-base hover:bg-primary-hover mt-12'>
                                 our products
                             </motion.a>
                             <ul className='mt-4 ml-1 flex flex-col items-start'>
@@ -405,7 +405,7 @@ const HomePage: React.FC = () => {
                             }
                         }}
                         href='/products'
-                        className='capitalize inline-block py-4 my-4 bg-primary-base hover:bg-primary-hover text-white rounded-lg px-16 font-extrabold text-2xl'>
+                        className='transition-colors duration-200 capitalize inline-block py-4 my-4 bg-primary-base hover:bg-primary-hover text-white rounded-lg px-16 font-extrabold text-2xl'>
                         our products
                     </motion.a>
                 </section>

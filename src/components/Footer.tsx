@@ -41,7 +41,7 @@ const List: React.FC<ListProps> = ({ title, items }: ListProps) => (
     <div className='flex flex-col gap-[0.1rem]'>
         {typeof title === 'string' ? <h3 className='font-bold text-2xl pt-1 text-slate-200 select-none pb-3'>{title}</h3> : title}
         {items.map(({ name, url }: Item, i) => (
-            <a key={i} href={url} className='font-semibold w-max tracking-tight text-lg text-slate-500 hover:text-slate-400'>
+            <a key={i} href={url} className='transition-all font-semibold w-max tracking-tight text-lg text-slate-500 hover:text-slate-400'>
                 {name}
             </a>
         ))}
