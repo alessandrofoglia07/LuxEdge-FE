@@ -1,12 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme');
 
-export default {
+/** @type {import('tailwindcss').Config} */
+const theme = {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Inter', ...defaultTheme.fontFamily.sans]
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
+                luxury: ['Playfair Display', ...defaultTheme.fontFamily.serif]
             },
             screens: {
                 'nav-limit': '932px',
@@ -16,15 +18,21 @@ export default {
             },
             colors: {
                 primary: {
-                    base: '#3b82f6',
-                    hover: '#2563eb',
-                    light: '#60a5fa'
+                    base: '#445069',
+                    hover: '#252B48',
+                    light: '#5B9A8B',
+                    background: '#F7E987'
                 }
             },
             backgroundImage: {
                 'login-bg': "url('/loginbg.jpg')"
+            },
+            letterSpacing: {
+                luxury: '-4px'
             }
         }
     },
     plugins: []
 };
+
+export default theme;

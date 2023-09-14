@@ -60,11 +60,11 @@ const ProductCard: React.FC<Props> = (_: Props) => {
         <div id='ProductCard' className='md:w-96 md:h-96 w-64 h-64 aspect-square group rounded-lg'>
             {product ? (
                 <>
-                    <a href={`/products/details/${product.name}`} className='w-full h-full rounded-lg'>
-                        <Img src={toUrl(product.imagePath)} alt={product.name} className='w-full aspect-square rounded-lg shadow-md' />
+                    <a href={`/products/details/${product.name}`} className='w-full h-full rounded-lg' draggable='false'>
+                        <Img src={toUrl(product.imagePath)} alt={product.name} className='w-full aspect-square rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300' />
                     </a>
                     <div className='flex group-hover:opacity-100 transition-opacity duration-300 md:opacity-0 p-2 flex-col -translate-y-full text-end items-end w-full rounded-b-lg bg-black bg-opacity-25'>
-                        <a href={`/products/details/${product.name}`} className='text-2xl font-bold text-white mb-2'>
+                        <a href={`/products/details/${product.name}`} className='text-2xl font-bold text-white mb-2 tracking-tight'>
                             {product.name}
                         </a>
                         <button
@@ -72,7 +72,8 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                             className={`w-10 aspect-square grid place-items-center bg-black bg-opacity-20 hover:bg-opacity-30 transition-all duration-200 rounded-lg ${
                                 favsList?.some((p) => p._id === product._id) ? 'text-yellow-400' : 'text-slate-200 hover:text-slate-50'
                             }`}
-                            onClick={handleFavorite}>
+                            onClick={handleFavorite}
+                        >
                             <StarIcon className='w-6 h-6' />
                         </button>
                     </div>

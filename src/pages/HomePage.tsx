@@ -15,8 +15,8 @@ import { Product } from '@/types';
 import useWindowWidth from '@/hooks/useWindowWidth';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
-    <li className='font-bold text-xl'>
-        <span className='text-white text-2xl'>•</span> {children}
+    <li className='font-bold text-2xl'>
+        <span className='text-primary-base text-2xl'>•</span> {children}
     </li>
 );
 
@@ -126,7 +126,8 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='font-extrabold text-7xl select-none tracking-tighter mb-8'>
+                                className='font-extrabold text-7xl mb-8 font-luxury tracking-luxury'
+                            >
                                 Switch from a <Highlight effect>house</Highlight>, <br /> to a <Highlight effect>home</Highlight>.
                             </motion.h1>
                             <motion.h4
@@ -143,12 +144,13 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='font-bold text-4xl tracking-normal select-none'>
-                                <LuxEdge /> takes care of your{' '}
+                                className='text-4xl tracking-tighter font-luxury'
+                            >
+                                <LuxEdge className='font-normal' /> takes care of your{' '}
                                 <Highlight effect lighter>
                                     home
                                 </Highlight>{' '}
-                                <br /> so you can take care of your <Highlight effect>life</Highlight>.
+                                <br /> while you take care of your <Highlight effect>life</Highlight>.
                             </motion.h4>
                             <motion.a
                                 initial={{ opacity: 0 }}
@@ -161,10 +163,11 @@ const HomePage: React.FC = () => {
                                 }}
                                 viewport={{ once: true }}
                                 href='products'
-                                className='transition-color duration-200 font-bold inline-block text-2xl capitalize px-10 py-3 rounded-xl text-white bg-primary-base hover:bg-primary-hover mt-12'>
+                                className='tracking-tighter transition-color duration-200 font-bold inline-block text-2xl capitalize px-10 py-3 rounded-xl text-white bg-primary-base hover:bg-primary-hover mt-12'
+                            >
                                 our products
                             </motion.a>
-                            <ul className='mt-4 ml-1 flex flex-col items-start'>
+                            <ul className='mt-6 ml-1 flex flex-col items-start [&>*]:font-luxury'>
                                 {['Comfort.', 'Luxury.', 'Modernity.'].map((item, i) => (
                                     <motion.div
                                         initial={{
@@ -178,7 +181,8 @@ const HomePage: React.FC = () => {
                                             }
                                         }}
                                         viewport={{ once: true }}
-                                        key={i}>
+                                        key={i}
+                                    >
                                         <CustomLi>{item}</CustomLi>
                                     </motion.div>
                                 ))}
@@ -195,11 +199,12 @@ const HomePage: React.FC = () => {
                             }
                         }}
                         viewport={{ once: true }}
-                        className='-lg:w-full lg:w-1/2 lg:right-0 -lg:mt-4 lg:relative lg:h-[calc(100vh-4rem)] flex items-center justify-center'>
+                        className='-lg:w-full lg:w-1/2 lg:right-0 -lg:mt-4 lg:relative lg:h-[calc(100vh-4rem)] flex items-center justify-center'
+                    >
                         <Img src='/homepageBed.jpg' alt='hero-img' className='mb-16 lg:w-[50vw] -lg:h-[50vw] lg:h-[50vh] -lg:w-screen' />
                     </motion.div>
                 </section>
-                <section id='problem-solution' className='bg-slate-200 py-8 flex -lg:flex-col'>
+                <section id='problem-solution' className='bg-slate-200 py-8 flex -lg:flex-col border-t-2 border-b-2 border-slate-300'>
                     <motion.div
                         initial={{ opacity: 0 }}
                         whileInView={{
@@ -210,7 +215,8 @@ const HomePage: React.FC = () => {
                             }
                         }}
                         viewport={{ once: true }}
-                        className='-lg:w-full lg:w-1/2 flex items-center justify-center'>
+                        className='-lg:w-full lg:w-1/2 flex items-center justify-center'
+                    >
                         <Img src='/homepageDesk.jpg' alt='desk' className='mb-16 lg:w-[50vw] -lg:h-[70vw] lg:h-[70vh] -lg:w-screen' />
                     </motion.div>
                     <div className='-lg:w-full lg:w-1/2 flex items-center'>
@@ -226,7 +232,8 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='font-extrabold text-5xl tracking-tight my-8'>
+                                className='font-extrabold text-5xl my-8 font-luxury'
+                            >
                                 The problem
                             </motion.h2>
                             <motion.h6
@@ -241,9 +248,10 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-2xl mb-8 font-semibold'>
-                                Today it is nearly impossible to find nice <Highlight>modern</Highlight> furniture that is also <Highlight>affordable</Highlight> and{' '}
-                                <Highlight>comfortable</Highlight>.
+                                className='text-2xl mb-8 font-semibold'
+                            >
+                                Today it is nearly impossible to find <Highlight>modern</Highlight> and <Highlight>luxurious</Highlight> furniture that is also{' '}
+                                <Highlight>affordable</Highlight> and <Highlight>comfortable</Highlight>.
                             </motion.h6>
                             <motion.p
                                 initial={{
@@ -257,7 +265,8 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-xl mb-2 font-semibold'>
+                                className='text-xl mb-2 font-semibold'
+                            >
                                 How much time have you searched the internet for the perfect piece of furniture for the space you spend <Highlight lighter>most of your time</Highlight>{' '}
                                 in?
                             </motion.p>
@@ -273,7 +282,8 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-xl mb-8 font-semibold'>
+                                className='text-xl mb-8 font-semibold'
+                            >
                                 How many times have you found the perfect piece of furniture only to find out that it is <Highlight lighter>way out of your budget</Highlight>?
                             </motion.p>
                             <motion.p
@@ -288,14 +298,15 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-xl font-semibold'>
+                                className='text-xl font-semibold'
+                            >
                                 Now with <LuxEdge />, that long and frustrating is <Highlight lighter>only a bad memory</Highlight>. We offer the best quality furniture, with both a{' '}
                                 <Highlight lighter>modern look</Highlight> and the nice old <Highlight lighter>comfort</Highlight> at a <Highlight lighter>lower price</Highlight>.
                             </motion.p>
                         </div>
                     </div>
                 </section>
-                <section id='benefits' className='flex flex-col items-center w-full py-20 lg:py-28'>
+                <section id='benefits' className='flex flex-col items-center w-full py-20 lg:py-28 border-b-2 border-slate-300'>
                     <motion.h1
                         initial={{
                             opacity: 0,
@@ -309,7 +320,8 @@ const HomePage: React.FC = () => {
                             }
                         }}
                         viewport={{ once: true }}
-                        className='font-extrabold text-5xl tracking-tight select-none'>
+                        className='font-extrabold text-5xl font-luxury'
+                    >
                         Our Benefits
                     </motion.h1>
                     <div id='benefits-container' className='flex -lg:flex-col justify-evenly w-full mt-16'>
@@ -318,7 +330,7 @@ const HomePage: React.FC = () => {
                         ))}
                     </div>
                 </section>
-                <section id='suggested-products' className='bg-slate-200 flex flex-col w-full py-8 items-center'>
+                <section id='suggested-products' className='bg-slate-200 flex flex-col w-full py-8 items-center border-b-2 border-slate-300'>
                     <motion.h1
                         initial={{
                             opacity: 0,
@@ -332,12 +344,13 @@ const HomePage: React.FC = () => {
                             }
                         }}
                         viewport={{ once: true }}
-                        className='lg:px-8 py-8 font-extrabold text-5xl tracking-tight'>
+                        className='lg:px-8 py-8 font-extrabold text-5xl tracking-tight font-luxury'
+                    >
                         Our bestseller products
                     </motion.h1>
                     <div id='products-container' className='flex gap-8 overflow-x-scroll scroll-smooth items-center w-full p-4'>
                         {scroll > 0 && (
-                            <button onClick={() => handleArrowClick('left')} className='bg-primary-light rounded-full p-1.5 absolute left-5 z-50'>
+                            <button onClick={() => handleArrowClick('left')} className='bg-primary-light rounded-full p-1.5 absolute left-5 z-20'>
                                 <ArrowLeftIcon className='h-8 w-8 text-white' />
                             </button>
                         )}
@@ -345,13 +358,13 @@ const HomePage: React.FC = () => {
                             <ProductCard key={i} product={product} />
                         ))}
                         {Math.round(scroll) < Math.round(maxScroll) && (
-                            <button onClick={() => handleArrowClick('right')} className='bg-primary-light rounded-full p-1.5 absolute right-5 z-50'>
+                            <button onClick={() => handleArrowClick('right')} className='bg-primary-light rounded-full p-1.5 absolute right-5 z-20'>
                                 <ArrowRightIcon className='h-8 w-8 text-white' />
                             </button>
                         )}
                     </div>
                 </section>
-                <section id='testimonials' className='py-10 flex flex-col items-center'>
+                <section id='testimonials' className='py-10 flex flex-col items-center border-b-2 border-slate-300'>
                     <motion.h1
                         initial={{
                             opacity: 0,
@@ -365,7 +378,8 @@ const HomePage: React.FC = () => {
                             }
                         }}
                         viewport={{ once: true }}
-                        className='py-8 lg:px-10 font-extrabold text-5xl tracking-tight text-center select-none'>
+                        className='py-8 lg:px-10 font-extrabold text-5xl text-center font-luxury'
+                    >
                         What clients say
                     </motion.h1>
                     <div id='testimonials-container' className='flex -lg:flex-col -lg:items-center -lg:gap-8 lg:justify-evenly w-full'>
@@ -382,42 +396,15 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                key={i}>
+                                key={i}
+                                className='w-full flex flex-col items-center'
+                            >
                                 <Testimonial testimonial={testimonial} />
                             </motion.div>
                         ))}
                     </div>
                 </section>
-                <section id='final-call-to-action' className='bg-slate-200 flex flex-col items-center py-16'>
-                    <h1 className='text-center py-8 text-6xl font-extrabold'>
-                        <motion.span
-                            initial={{
-                                opacity: 0
-                            }}
-                            whileInView={{
-                                opacity: 1,
-                                transition: {
-                                    duration: 0.7
-                                }
-                            }}
-                            viewport={{ once: true }}>
-                            Time to check{' '}
-                        </motion.span>
-                        <motion.span
-                            initial={{
-                                opacity: 0
-                            }}
-                            whileInView={{
-                                opacity: 1,
-                                transition: {
-                                    duration: 0.7,
-                                    delay: 0.5
-                                }
-                            }}
-                            viewport={{ once: true }}>
-                            <Highlight>yourself!</Highlight>
-                        </motion.span>
-                    </h1>
+                <section id='final-call-to-action' className='bg-slate-200 flex flex-col items-center py-16 border-b-2 border-slate-300'>
                     <motion.a
                         initial={{
                             opacity: 0
@@ -425,14 +412,15 @@ const HomePage: React.FC = () => {
                         whileInView={{
                             opacity: 1,
                             transition: {
-                                duration: 0.7,
-                                delay: 1
+                                duration: 0.5,
+                                delay: 0.5
                             }
                         }}
                         viewport={{ once: true }}
                         href='/products'
-                        className='transition-colors duration-200 capitalize inline-block py-4 my-4 bg-primary-base hover:bg-primary-hover text-white rounded-lg px-16 font-extrabold text-2xl'>
-                        our products
+                        className='transition-colors shadow-xl duration-200 capitalize inline-block py-4 my-4 bg-primary-base hover:bg-primary-hover text-white rounded-lg md:px-48 px-[20vw] font-extrabold text-4xl'
+                    >
+                        See more
                     </motion.a>
                 </section>
                 <Footer />
