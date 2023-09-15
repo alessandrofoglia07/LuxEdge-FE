@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import LuxEdge from './LuxEdgeLogo';
 import categories from '@/assets/productCategories';
 import { PlayIcon } from '@heroicons/react/20/solid';
+import { z } from 'zod';
+import axios, { AxiosError } from 'axios';
 
 interface Item {
     name: string;
@@ -54,10 +56,44 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ className }: FooterProps) => {
     const [email, setEmail] = useState('');
+    const [helperText, setHelperText] = useState('We will never share your email address.');
 
-    const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleNewsletterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(email);
+
+        const validate = z.string().email().safeParse(email);
+
+        try {
+            if (validate.success) {
+                const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/newsletter/subscribe`, { email });
+
+                if (res.status === 201) {
+                    setHelperText('Thank you for subscribing!');
+                } else {
+                    setHelperText('Something went wrong. Please try again later.');
+                }
+
+                setEmail('');
+            } else {
+                setHelperText('Please enter a valid email address.');
+            }
+        } catch (err: unknown) {
+            if (err instanceof AxiosError) {
+                if (err.response?.status === 409) {
+                    setHelperText('This email address is already subscribed.');
+                    throw err;
+                }
+
+                setHelperText(err.response?.data.message);
+                throw err;
+            } else if (typeof err === 'string') {
+                setHelperText(err);
+                throw new Error(err);
+            } else {
+                setHelperText('Something went wrong. Please try again later.');
+                console.log(err);
+            }
+        }
     };
 
     return (
@@ -81,10 +117,16 @@ const Footer: React.FC<FooterProps> = ({ className }: FooterProps) => {
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder='Email address*'
                         />
-                        <button type='submit' className='aspect-square h-12 p-2 rounded-r-sm border-2 border-white grid place-items-center'>
+                        <button
+                            type='submit'
+                            className='aspect-square h-12 p-2 rounded-r-sm border-2 border-white grid place-items-center hover:bg-slate-800 transition-colors duration-200'
+                        >
                             <PlayIcon className='w-6 text-slate-100' />
                         </button>
                     </form>
+                    <h6 id='helperText' className='text-slate-50 font-semibold text-xl -md:max-w-full -md:w-fit'>
+                        {helperText}
+                    </h6>
                 </div>
             </div>
             <div id='copyright' className='w-full h-max bg-slate-800'>
