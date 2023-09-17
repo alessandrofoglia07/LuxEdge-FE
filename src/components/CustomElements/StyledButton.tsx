@@ -21,11 +21,12 @@ const Button: React.FC<Props> = (props: Props) => {
         <Component
             className={
                 props.secondary
-                    ? `font-bold text-lg lg:mx-4 sm:mx-2 flex items-center gap-1 select-none ${props.className}`
-                    : `transition-colors duration-200 font-bold text-lg px-4 py-2 select-none rounded-xl text-white bg-primary-base hover:bg-primary-hover mx-4 ${props.className}`
+                    ? `transition-colors duration-200 text-lg px-8 py-[6px] select-none rounded-full border-2 border-primary-base hover:border-primary-hover text-primary-base hover:text-primary-hover mx-4 flex items-center gap-1 ${props.className}`
+                    : `transition-colors duration-200 font-bold text-lg px-8 py-2 select-none rounded-full text-white bg-primary-base hover:bg-primary-hover mx-4 ${props.className}`
             }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            {...(newProps as any)}>
+            {...(newProps as any)}
+        >
             {props.children}
         </Component>
     );
