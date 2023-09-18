@@ -27,7 +27,7 @@ export interface Product {
     sold: number;
     available: boolean;
     reviews: string[];
-    score: number;
+    rating: number;
     createdAt: Date;
     updatedAt: Date;
 }

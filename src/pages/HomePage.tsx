@@ -4,7 +4,7 @@ import { HomeIcon, CubeIcon, BanknotesIcon, ArrowLeftIcon, ArrowRightIcon } from
 import Highlight from '@/components/Highlight';
 import Benefit from '@/components/Benefit';
 import axios from 'axios';
-import ProductCard from '@/components/ProductCard2';
+import ProductCard from '@/components/ProductCard';
 import Testimonial from '@/components/Testimonial';
 import Img from '@/components/CustomElements/CustomImg';
 import Footer from '@/components/Footer';
@@ -364,7 +364,7 @@ const HomePage: React.FC = () => {
                         )}
                     </div>
                 </section>
-                <section id='testimonials' className='py-10 flex flex-col items-center border-b-2 border-slate-300'>
+                <section id='testimonials' className='py-10 flex flex-col items-center'>
                     <motion.h1
                         initial={{
                             opacity: 0,
@@ -404,7 +404,7 @@ const HomePage: React.FC = () => {
                         ))}
                     </div>
                 </section>
-                <section id='final-call-to-action' className='bg-slate-200 flex flex-col items-center py-16 border-b-2 border-slate-300'>
+                <section id='final-call-to-action' className='flex flex-col items-center py-16 border-b-2 border-slate-300'>
                     <motion.a
                         initial={{
                             opacity: 0
