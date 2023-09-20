@@ -89,7 +89,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                             {product.tags[0] && <p className='uppercase tracking-wide text-primary-light opacity-70'>{product.tags[0]}</p>}
                             {product.rating && <Rating rating={product.rating} />}
                         </div>
-                        <a draggable={false} href={`/products/details/${product.name}`} className='uppercase font-bold tracking-wide'>
+                        <a draggable={false} href={`/products/details/${product.name}`} className='capitalize font-bold tracking-wide'>
                             {product.name}
                         </a>
                         <h6 className='font-semibold tracking-wide'>{toPrice(product.price)}</h6>
