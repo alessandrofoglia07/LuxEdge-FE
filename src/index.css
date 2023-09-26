@@ -26,6 +26,14 @@
     }
 }
 
+.responsive-grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(352px, 1fr));
+    place-items: center;
+    grid-gap: 1rem;
+}
+
 /* Firefox */
 * {
     scrollbar-width: thin;

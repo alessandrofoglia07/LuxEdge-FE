@@ -297,8 +297,8 @@ const ProductsPage: React.FC = () => {
                                 </div>
                             </div>
                         </aside>
-                        <section id='products' className='grid place-items-center w-fit'>
-                            <div className='flex flex-wrap justify-center -md:gap-2'>
+                        <section id='products' className='grid place-items-center w-full'>
+                            <div className='responsive-grid'>
                                 {products.map((product, i) => (
                                     <ProductCard key={i} product={product} />
                                 ))}
@@ -313,3 +313,5 @@ const ProductsPage: React.FC = () => {
 };
 
 export default ProductsPage;
+
+('flex flex-wrap justify-center -md:gap-2');
