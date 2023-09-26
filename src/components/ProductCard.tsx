@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import useSelector from '@/hooks/useSelector';
 import { Product } from '@/types';
-import { StarIcon } from '@heroicons/react/20/solid';
+import { HeartIcon } from '@heroicons/react/20/solid';
 import authAxios from '@/api/authAxios';
 import Img from './CustomElements/CustomImg';
 import { useNavigate } from 'react-router-dom';
@@ -60,13 +60,11 @@ const ProductCard: React.FC<Props> = (_: Props) => {
         <div id='ProductCard' className='md:w-96 md:h-96 w-64 h-64 aspect-square group rounded-lg'>
             {product ? (
                 <>
-                    <a href={`/products/details/${product.name}`} className='w-full h-full rounded-lg' draggable='false'>
+                    <a className='w-full h-full rounded-lg' draggable='false'>
                         <Img src={toUrl(product.imagePath)} alt={product.name} className='w-full aspect-square rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300' />
                     </a>
                     <div className='flex group-hover:opacity-100 transition-opacity duration-300 md:opacity-0 p-2 flex-col -translate-y-full text-end items-end w-full rounded-b-lg bg-black bg-opacity-25'>
-                        <a href={`/products/details/${product.name}`} className='text-2xl font-bold text-white mb-2 tracking-tight'>
-                            {product.name}
-                        </a>
+                        <a className='text-2xl font-bold text-white mb-2 tracking-tight'>{product.name}</a>
                         <button
                             id='favs'
                             className={`w-10 aspect-square grid place-items-center bg-black bg-opacity-20 hover:bg-opacity-30 transition-all duration-200 rounded-lg ${
@@ -74,13 +72,15 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                             }`}
                             onClick={handleFavorite}
                         >
-                            <StarIcon className='w-6 h-6' />
+                            <HeartIcon className='w-6 h-6' />
                         </button>
                     </div>
                 </>
             ) : (
                 <>
-                    <Img src='/productPlaceholder.jpg' alt='placeholder' className='w-full aspect-square rounded-lg shadow-md' />
+                    <a className='w-full h-full rounded-lg' draggable='false'>
+                        <Img src={'/productPlaceholder.jpg'} alt='Loading' className='w-full aspect-square rounded-[20%] animate-pulse duration-300' />
+                    </a>
                 </>
             )}
         </div>

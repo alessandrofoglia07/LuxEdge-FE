@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useSelector from '@/hooks/useSelector';
 import { Product } from '@/types';
 import Rating from './Rating';
-import { ShoppingCartIcon, HeartIcon } from '@heroicons/react/20/solid';
+import { HeartIcon } from '@heroicons/react/20/solid';
 import authAxios from '@/api/authAxios';
 import Img from './CustomElements/CustomImg';
 
@@ -61,10 +61,6 @@ const ProductCard: React.FC<Props> = (_: Props) => {
         }
     };
 
-    {
-        /* TODO: Make the component responsive when product is undefined */
-    }
-
     return (
         <Container>
             {product ? (
@@ -97,28 +93,20 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                 </>
             ) : (
                 <>
-                    <div id='top' className='w-full h-1/2 flex justify-center items-center pt-4'>
-                        <Img
-                            className='h-[calc(100%-1rem)] w-[calc(100%-5rem)] rounded-lg border-slate-200 drop-shadow-xl border-2 animate-pulse'
-                            src='/productPlaceholder.jpg'
-                            alt='placeholder'
-                        />
+                    <div id='top' className='md:w-full md:h-1/2 w-48 h-48 group'>
+                        <a draggable={false} className='w-full h-full md:pt-4'>
+                            <Img src='/productPlaceholder.jpg' className='w-full h-full rounded-[80%] animate-pulse' alt='placeholder' />
+                        </a>
                     </div>
-                    <div id='center' className='py-8 flex flex-col items-center'>
-                        <div className='font-extrabold text-3xl tracking-wider select-none animate-pulse bg-slate-300 text-slate-300 my-2 rounded-xl'>placeholder</div>
-                        <div className='font-semibold opacity-50 animate-pulse bg-slate-300 text-slate-300 rounded-xl'>You will soon see the product</div>
-                        <h4 className='font-bold text-3xl py-4 select-none text-slate-400 animate-pulse'>$100</h4>
-                        <div id='score'>
+                    <div id='rows-container' className='md:w-full md:h-1/2 w-48 h-48 flex flex-col md:pt-4 px-4 gap-1'>
+                        <div className='flex justify-between'>
+                            <p className='uppercase tracking-wide text-primary-light opacity-30 bg-primary-light animate-pulse rounded-xl'>Bedroom</p>
                             <Rating rating={5} />
                         </div>
-                    </div>
-                    <div id='bottom' className='w-full h-12 flex justify-evenly lg:px-2'>
-                        <button id='cart' className='w-2/3 bg-slate-400 h-full flex items-center justify-evenly text-white rounded-lg lg:px-8 animate-pulse' disabled>
-                            Add to Cart <ShoppingCartIcon className='w-6 h-6' />
-                        </button>
-                        <button id='favs' className='h-full aspect-square grid place-items-center bg-slate-300 rounded-lg text-white animate-pulse' disabled>
-                            <HeartIcon className='w-6 h-6' />
-                        </button>
+                        <a draggable={false} className='capitalize font-bold w-max tracking-wide animate-pulse bg-slate-300 text-slate-300 rounded-xl'>
+                            Product name placeholder
+                        </a>
+                        <h6 className='font-semibold tracking-wide text-slate-300 animate-pulse rounded-xl w-max'>$ 300.00</h6>
                     </div>
                 </>
             )}
