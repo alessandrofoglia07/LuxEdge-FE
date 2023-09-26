@@ -313,5 +313,3 @@ const ProductsPage: React.FC = () => {
 };
 
 export default ProductsPage;
-
-('flex flex-wrap justify-center -md:gap-2');
