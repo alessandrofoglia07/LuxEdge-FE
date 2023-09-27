@@ -209,10 +209,7 @@ const ProductsPage: React.FC = () => {
             <Navbar />
             <main className='pt-16 mx-auto w-[calc(100vw - 9px)] flex flex-col items-center h-screen'>
                 <div className='md:w-3/4 w-full flex flex-col'>
-                    <div id='top' className='w-full self-center bg-primary-base my-12 py-8 md:rounded-md'>
-                        <h1 className='text-white font-bold text-3xl px-8 tracking-tight'>Products</h1>
-                    </div>
-                    <div id='mid' className='w-full self-center h-max flex -md:flex-col -md:gap-4 items-center justify-between py-4 px-4'>
+                    <div id='mid' className='w-full self-center mt-8 h-max flex -md:flex-col -md:gap-4 items-center justify-between py-4 px-4'>
                         <h6>
                             <span className='font-semibold'>
                                 Showing {Math.min(1 + (page - 1) * 12, productsCount)} - {Math.min(12 + (page - 1) * 12, productsCount)}

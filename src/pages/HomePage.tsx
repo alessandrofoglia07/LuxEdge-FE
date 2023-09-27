@@ -39,7 +39,7 @@ const benefits = [
 ];
 
 const HomePage: React.FC = () => {
-    const url = `${import.meta.env.VITE_API_URL}/api/products/search?limit=5&sort=recommend`;
+    const url = `${import.meta.env.VITE_API_URL}/api/products/search?sort=recommend&limit=8`;
     const width = useWindowWidth();
 
     const [scroll, setScroll] = useState(0);
@@ -53,9 +53,9 @@ const HomePage: React.FC = () => {
         let scrollAmount = 0;
 
         if (width < 768) {
-            scrollAmount = 258;
+            scrollAmount = 300;
         } else {
-            scrollAmount = 420;
+            scrollAmount = 500;
         }
 
         if (direction === 'left') {
@@ -93,7 +93,6 @@ const HomePage: React.FC = () => {
             try {
                 const res = await axios.get(url);
                 setProducts(res.data.products);
-                console.log(res.data);
             } catch (err: unknown) {
                 if (err instanceof Error) {
                     throw err;
@@ -126,7 +125,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='font-extrabold text-7xl mb-8 font-luxury tracking-luxury'
+                                className='font-extrabold text-7xl mb-8 tracking-tight'
                             >
                                 Switch from a <Highlight effect>house</Highlight>, <br /> to a <Highlight effect>home</Highlight>.
                             </motion.h1>
@@ -144,7 +143,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-4xl tracking-tighter font-luxury'
+                                className='text-4xl tracking-tight'
                             >
                                 <LuxEdge className='font-normal' /> takes care of your{' '}
                                 <Highlight effect lighter>
@@ -167,7 +166,7 @@ const HomePage: React.FC = () => {
                             >
                                 our products
                             </motion.a>
-                            <ul className='mt-6 ml-1 flex flex-col items-start [&>*]:font-luxury'>
+                            <ul className='mt-6 ml-1 flex flex-col items-start'>
                                 {['Comfort.', 'Luxury.', 'Modernity.'].map((item, i) => (
                                     <motion.div
                                         initial={{
@@ -232,7 +231,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='font-extrabold text-5xl my-8 font-luxury'
+                                className='font-extrabold text-5xl my-8'
                             >
                                 The problem
                             </motion.h2>
@@ -320,7 +319,7 @@ const HomePage: React.FC = () => {
                             }
                         }}
                         viewport={{ once: true }}
-                        className='font-extrabold text-5xl font-luxury'
+                        className='font-extrabold text-5xl tracking-tight'
                     >
                         Our Benefits
                     </motion.h1>
@@ -344,7 +343,7 @@ const HomePage: React.FC = () => {
                             }
                         }}
                         viewport={{ once: true }}
-                        className='lg:px-8 py-8 font-extrabold text-5xl tracking-tight font-luxury'
+                        className='lg:px-8 py-8 font-extrabold text-5xl tracking-tight'
                     >
                         Our bestseller products
                     </motion.h1>
@@ -378,7 +377,7 @@ const HomePage: React.FC = () => {
                             }
                         }}
                         viewport={{ once: true }}
-                        className='py-8 lg:px-10 font-extrabold text-5xl text-center font-luxury'
+                        className='py-8 lg:px-10 font-extrabold text-5xl text-center tracking-tight'
                     >
                         What clients say
                     </motion.h1>

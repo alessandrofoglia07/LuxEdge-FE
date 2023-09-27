@@ -7,8 +7,7 @@ const theme = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Inter', ...defaultTheme.fontFamily.sans],
-                luxury: ['Playfair Display', ...defaultTheme.fontFamily.serif]
+                sans: ['Inter', ...defaultTheme.fontFamily.sans]
             },
             screens: {
                 'nav-limit': '932px',
@@ -26,9 +25,6 @@ const theme = {
             },
             backgroundImage: {
                 'login-bg': "url('/loginbg.jpg')"
-            },
-            letterSpacing: {
-                luxury: '-4px'
             }
         }
     },
