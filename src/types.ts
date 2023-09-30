@@ -23,7 +23,7 @@ export interface Product {
     description: string;
     price: number;
     imagePath: string;
-    tags: string[];
+    category: string;
     sold: number;
     available: boolean;
     reviews: string[];

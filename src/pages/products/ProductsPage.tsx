@@ -116,7 +116,7 @@ const ProductsPage: React.FC = () => {
                     tags &&
                     tags
                         .split(',')
-                        .map((tag) => (tag === 'Bookshelves' ? 'bookshelf' : tag.toLowerCase().slice(0, -1)))
+                        .map((tag) => (tag.toLowerCase() === 'bookshelves' ? 'bookshelf' : tag.toLowerCase().slice(0, -1)))
                         .join(','),
                 price,
                 rating,
@@ -124,6 +124,8 @@ const ProductsPage: React.FC = () => {
                 limit,
                 page
             };
+
+            console.log(queryParams.tags);
 
             for (const key in queryParams) {
                 const val = queryParams[key as keyof typeof queryParams];

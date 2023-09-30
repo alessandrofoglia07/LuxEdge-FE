@@ -82,7 +82,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                     </div>
                     <div id='rows-container' className='md:w-full md:h-1/2 w-48 h-48 flex flex-col md:pt-4 px-4 gap-1'>
                         <div className='flex justify-between'>
-                            {product.tags[0] && <p className='uppercase tracking-wide text-primary-light opacity-70'>{product.tags[0]}</p>}
+                            {product.category && <p className='uppercase tracking-wide text-primary-light opacity-70'>{product.category}</p>}
                             {product.rating && <Rating rating={product.rating} />}
                         </div>
                         <a draggable={false} href={`/products/details/${product.name}`} className='capitalize font-bold tracking-wide'>
