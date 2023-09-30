@@ -27,9 +27,22 @@
 .responsive-grid {
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(352px, 1fr));
     place-items: center;
     grid-gap: 1rem;
+}
+
+/* Smaller screen (mobile) */
+@media only screen and (max-width: 768px) {
+    .responsive-grid {
+        grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    }
+}
+
+/* Larger screen (desktop/tablet) */
+@media only screen and (min-width: 768px) {
+    .responsive-grid {
+        grid-template-columns: repeat(auto-fit, minmax(352px, 1fr));
+    }
 }
 
 /* Firefox */

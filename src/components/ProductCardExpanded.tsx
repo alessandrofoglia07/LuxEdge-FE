@@ -65,7 +65,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
         <Container>
             {product ? (
                 <>
-                    <div id='top' className='md:w-full md:h-1/2 w-48 h-48 group'>
+                    <div id='top' className='md:w-full md:h-1/2 w-64 h-64 group'>
                         <a draggable={false} className='w-full h-full md:pt-4' href={`/products/details/${product.name}`}>
                             <Img className='w-full h-full rounded-md border-slate-200 drop-shadow-xl border-2' src={toUrl(product.imagePath)} alt={product.name} />
                         </a>
@@ -80,7 +80,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                             </button>
                         </div>
                     </div>
-                    <div id='rows-container' className='md:w-full md:h-1/2 w-48 h-48 flex flex-col md:pt-4 px-4 gap-1'>
+                    <div id='rows-container' className='md:w-full md:h-1/2 w-64 h-64 flex flex-col md:pt-4 px-4 gap-1'>
                         <div className='flex justify-between'>
                             {product.category && <p className='uppercase tracking-wide text-primary-light opacity-70'>{product.category}</p>}
                             {product.rating && <Rating rating={product.rating} />}
@@ -93,12 +93,12 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                 </>
             ) : (
                 <>
-                    <div id='top' className='md:w-full md:h-1/2 w-48 h-48 group'>
+                    <div id='top' className='md:w-full md:h-1/2 w-64 h-64 group'>
                         <a draggable={false} className='w-full h-full md:pt-4'>
                             <Img src='/productPlaceholder.jpg' className='w-full h-full rounded-[80%] animate-pulse' alt='placeholder' />
                         </a>
                     </div>
-                    <div id='rows-container' className='md:w-full md:h-1/2 w-48 h-48 flex flex-col md:pt-4 px-4 gap-1'>
+                    <div id='rows-container' className='md:w-full md:h-1/2 w-64 h-64 flex flex-col md:pt-4 px-4 gap-1'>
                         <div className='flex justify-between'>
                             <p className='uppercase tracking-wide text-primary-light opacity-30 bg-primary-light animate-pulse rounded-xl'>Bedroom</p>
                             <Rating rating={5} />
