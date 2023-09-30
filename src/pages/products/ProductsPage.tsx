@@ -125,8 +125,6 @@ const ProductsPage: React.FC = () => {
                 page
             };
 
-            console.log(queryParams.tags);
-
             for (const key in queryParams) {
                 const val = queryParams[key as keyof typeof queryParams];
                 if (val) {

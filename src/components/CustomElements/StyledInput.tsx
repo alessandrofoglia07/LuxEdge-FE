@@ -26,7 +26,8 @@ const Input: React.FC<Props> = (props: Props) => {
             <div
                 className={`bg-slate-200 transition-all duration-[20ms] px-6 py-3 flex items-center select-none gap-4 rounded-lg focus-within:outline focus-within:outline-blue-500 focus-within:outline-offset-1 ${
                     props.containerClassName?.includes('w-') && 'w-full [&>input]:w-full'
-                }`}>
+                }`}
+            >
                 <input type={type} className={`bg-slate-200 text-lg tracking-tight py-[.25rem] leading-3 outline-none ${props.className}`} {...inputProps} />
                 {props.type === 'password' && type === 'password' ? (
                     <button type='button' className='focus:outline-none' onClick={() => setType('text')}>
@@ -38,7 +39,7 @@ const Input: React.FC<Props> = (props: Props) => {
                     </button>
                 ) : null}
             </div>
-            {props.error && <p className='text-sm text-red-600 px-1 tracking-tight absolute'>{props.helperText}</p>}
+            {props.error && <p className='text-sm text-primary-hover px-1 tracking-tight absolute'>{props.helperText}</p>}
         </div>
     );
 };

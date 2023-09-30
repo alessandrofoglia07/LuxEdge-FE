@@ -14,7 +14,7 @@ interface CategoryProps {
 
 const Category: React.FC<CategoryProps> = ({ children, className }: CategoryProps) => {
     return (
-        <a href={`/products?tags=${children.toLowerCase()}`} className={`text-black font-bold py-1 ${className}`}>
+        <a href={`/products?tags=${children === 'Living rooms' ? 'livingrooms' : children.toLowerCase()}`} className={`text-black font-bold py-1 ${className}`}>
             {children}
         </a>
     );
@@ -22,7 +22,7 @@ const Category: React.FC<CategoryProps> = ({ children, className }: CategoryProp
 
 const MobileCategory: React.FC<CategoryProps> = ({ children, className }: CategoryProps) => {
     return (
-        <a href={`/products?tags=${children.toLowerCase()}`} className={`text-slate-700 text-xl font-semibold ${className}`}>
+        <a href={`/products?tags=${children === 'Living rooms' ? 'livingrooms' : children.toLowerCase()}`} className={`text-slate-700 text-xl font-semibold ${className}`}>
             {children}
         </a>
     );
