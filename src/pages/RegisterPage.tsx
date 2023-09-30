@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
-import useSelector from '@/hooks/useSelector';
 import LuxEdge from '@/components/LuxEdgeLogo';
 import { Navigate } from 'react-router-dom';
 import Input from '@/components/CustomElements/StyledInput';
@@ -11,6 +10,7 @@ import { detect } from 'curse-filter';
 import Notification from '@/components/Notification';
 import { AxiosError } from 'axios';
 import { motion } from 'framer-motion';
+import useAuth from '@/hooks/useAuth';
 
 const bannedUsernames = ['post', 'comment', 'admin', 'administrator', 'moderator', 'mod', 'user', 'users'];
 
@@ -32,7 +32,7 @@ const passLengthErr = 'Password must be 6-16 characters long';
 const passCharsErr = 'Password cannot contain spaces';
 
 const RegisterPage: React.FC = () => {
-    const { accessToken } = useSelector((state) => state.auth);
+    const isAuth = useAuth();
 
     const [form, setForm] = useState({
         username: '',
@@ -173,7 +173,7 @@ const RegisterPage: React.FC = () => {
         return () => body?.classList.remove('bg-slate-200');
     }, []);
 
-    return accessToken ? (
+    return isAuth ? (
         <Navigate to='/products' />
     ) : (
         <div id='LoginPage'>

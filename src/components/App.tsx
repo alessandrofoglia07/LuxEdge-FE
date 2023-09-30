@@ -9,15 +9,14 @@ import NotFoundPage from '@/pages/NotFoundPage';
 import CartPage from '@/pages/CartPage';
 import CheckoutPage from '@/pages/CheckoutPage';
 import FavoritesPage from '@/pages/FavoritesPage';
-import useSelector from '@/hooks/useSelector';
 import ActivatePage from '@/pages/user/ActivatePage';
 import ForgotPasswordPage from '@/pages/user/ForgotPassword';
 import ResetPasswordPage from '@/pages/user/ResetPasswordPage';
 import UnsubscribePage from '@/pages/user/UnsubscribePage';
+import useAuth from '@/hooks/useAuth';
 
 function App() {
-    const { accessToken } = useSelector((state) => state.auth);
-    const isAuth = !!accessToken;
+    const isAuth = useAuth();
 
     return (
         <Routes>

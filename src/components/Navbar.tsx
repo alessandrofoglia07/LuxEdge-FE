@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Popover, Transition, Dialog } from '@headlessui/react';
-import { ChevronDownIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/20/solid';
-import { ShoppingCartIcon, StarIcon } from '@heroicons/react/24/outline';
+import { ChevronDownIcon, Bars3Icon, XMarkIcon, HeartIcon, ShoppingCartIcon } from '@heroicons/react/20/solid';
+import { StarIcon } from '@heroicons/react/24/outline';
 import useWindowWidth from '@/hooks/useWindowWidth';
-import useSelector from '@/hooks/useSelector';
+import useAuth from '@/hooks/useAuth';
 import categories from '@/assets/productCategories';
 import Button from './CustomElements/StyledButton';
 
@@ -34,8 +34,7 @@ const VSpacer = () => <div className='border-r-2 border-r-slate-300 h-1/2' />;
 
 const Navbar: React.FC = () => {
     const width = useWindowWidth();
-
-    const { accessToken, userInfo } = useSelector((state) => state.auth);
+    const isAuth = useAuth();
 
     const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
     const [loggedIn, setLoggedIn] = useState<boolean>(true);
@@ -61,6 +60,12 @@ const Navbar: React.FC = () => {
 
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    useEffect(() => {
+        if (width > 932) {
+            handleClose();
+        }
+    }, [width]);
 
     const handleOpen = () => {
         if (Date.now() - time < 100) return;
@@ -94,12 +99,12 @@ const Navbar: React.FC = () => {
     };
 
     useEffect(() => {
-        if (userInfo && accessToken) {
+        if (isAuth) {
             setLoggedIn(true);
         } else {
             setLoggedIn(false);
         }
-    }, [userInfo, accessToken]);
+    }, [isAuth]);
 
     // xl: >1280px => desktop
     // lg: >1024px => desktop
@@ -180,12 +185,20 @@ const Navbar: React.FC = () => {
                 <div id='right' className={`flex items-center ${width > 932 ? '' : 'hidden'}`}>
                     {loggedIn ? (
                         <>
-                            <Button id='Favorites' href='/favorites' as='a' secondary>
-                                Favorites <StarIcon className='w-6 mb-1' />
-                            </Button>
-                            <Button id='Cart' href='/cart' as='a' className='flex items-center gap-4'>
-                                Cart <ShoppingCartIcon className='w-[1.3rem]' />
-                            </Button>
+                            <a
+                                href='/favorites'
+                                id='Favorites'
+                                className='flex items-center gap-2 text-xl rounded-full border-2 border-primary-base p-2 text-primary-base hover:text-primary-hover hover:border-primary-hover border-opacity-70 transition-colors mr-4'
+                            >
+                                <HeartIcon className='w-6' />
+                            </a>
+                            <a
+                                href='/cart'
+                                id='Cart'
+                                className='flex items-center gap-2 text-xl rounded-full border-2 border-primary-base p-2 text-primary-base hover:text-primary-hover hover:border-primary-hover border-opacity-70 transition-colors mr-8'
+                            >
+                                <ShoppingCartIcon className='w-6' />
+                            </a>
                         </>
                     ) : (
                         <>
@@ -214,7 +227,7 @@ const Navbar: React.FC = () => {
                 <div className='fixed inset-0 z-50' />
                 <Dialog.Panel
                     id='mobile-panel'
-                    className='transition-transform duration-300 -translate-x-full fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-slate-50 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'
+                    className='transition-transform duration-300 -translate-x-full fixed inset-y-0 left-0 z-50 w-full overflow-y-auto bg-slate-50 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'
                 >
                     <Dialog.Title className='flex justify-between border-b-2 border-b-slate-300 pb-8'>
                         <a href='/' className='w-fit h-fit'>

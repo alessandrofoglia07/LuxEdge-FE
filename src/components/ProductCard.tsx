@@ -1,44 +1,26 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import useSelector from '@/hooks/useSelector';
 import { Product } from '@/types';
 import { HeartIcon } from '@heroicons/react/20/solid';
-import authAxios from '@/api/authAxios';
 import Img from './CustomElements/CustomImg';
 import { useNavigate } from 'react-router-dom';
+import toUrl from '@/utils/toUrl';
+import getFavsList from '@/utils/getFavsList';
+import useAuth from '@/hooks/useAuth';
 
 interface Props {
     product: Product;
 }
 
 const ProductCard: React.FC<Props> = (_: Props) => {
-    const { accessToken } = useSelector((state) => state.auth);
+    const isAuth = useAuth();
     const navigate = useNavigate();
 
     const [product, setProduct] = useState<Product | null>(null);
     const [favsList, setFavsList] = useState<Product[] | null>(null);
 
-    const toUrl = (path: string) => {
-        return `${import.meta.env.VITE_API_URL}/products/${path}`;
-    };
-
-    const getFavsList = async () => {
-        try {
-            const res = await authAxios.get('/lists/favs');
-            setFavsList(res.data);
-        } catch (err: unknown) {
-            if (err instanceof Error) {
-                throw err;
-            } else if (typeof err === 'string') {
-                throw new Error(err);
-            } else {
-                console.log(err);
-            }
-        }
-    };
-
     const handleFavorite = async () => {
-        if (!accessToken) {
+        if (!isAuth) {
             navigate('/login');
         } else {
             // TODO: add
@@ -47,10 +29,13 @@ const ProductCard: React.FC<Props> = (_: Props) => {
     };
 
     useEffect(() => {
-        if (accessToken) {
-            getFavsList();
-        }
-    }, [accessToken]);
+        (async () => {
+            if (isAuth) {
+                const favs = await getFavsList();
+                setFavsList(favs || []);
+            }
+        })();
+    }, [isAuth]);
 
     useEffect(() => {
         setProduct(_.product);

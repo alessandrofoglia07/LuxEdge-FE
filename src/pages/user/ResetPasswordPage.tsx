@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
-import useSelector from '@/hooks/useSelector';
 import Navbar from '@/components/Navbar';
 import LuxEdge from '@/components/LuxEdgeLogo';
 import Input from '@/components/CustomElements/StyledInput';
@@ -8,10 +7,11 @@ import Button from '@/components/CustomElements/StyledButton';
 import { z } from 'zod';
 import { AxiosError } from 'axios';
 import { resetPassword } from '@/api/authApi';
+import useAuth from '@/hooks/useAuth';
 
 const ResetPasswordPage: React.FC = () => {
     const { userId, token } = useParams();
-    const { accessToken } = useSelector((state) => state.auth);
+    const isAuth = useAuth();
 
     const [input, setInput] = useState({
         newPassword: '',
@@ -85,7 +85,7 @@ const ResetPasswordPage: React.FC = () => {
         setInput({ ...input, [e.target.name]: e.target.value });
     };
 
-    return accessToken ? (
+    return isAuth ? (
         <Navigate to='/' />
     ) : (
         <div id='ResetPasswordPage'>

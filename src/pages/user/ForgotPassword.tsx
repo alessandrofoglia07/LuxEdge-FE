@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
-import useSelector from '@/hooks/useSelector';
 import { Navigate } from 'react-router-dom';
 import Input from '@/components/CustomElements/StyledInput';
 import LuxEdge from '@/components/LuxEdgeLogo';
@@ -8,9 +7,10 @@ import Button from '@/components/CustomElements/StyledButton';
 import { forgotPassword } from '@/api/authApi';
 import { AxiosError } from 'axios';
 import { z } from 'zod';
+import useAuth from '@/hooks/useAuth';
 
 const ForgotPasswordPage: React.FC = () => {
-    const { accessToken } = useSelector((state) => state.auth);
+    const isAuth = useAuth();
 
     const [email, setEmail] = useState('');
     const [result, setResult] = useState('');
@@ -57,7 +57,7 @@ const ForgotPasswordPage: React.FC = () => {
         return () => body?.classList.remove('bg-slate-200');
     }, []);
 
-    return accessToken ? (
+    return isAuth ? (
         <Navigate to='/products' />
     ) : (
         <div id='ForgotPasswordPage'>

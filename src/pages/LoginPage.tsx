@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
-import useSelector from '@/hooks/useSelector';
 import LuxEdge from '@/components/LuxEdgeLogo';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Input from '@/components/CustomElements/StyledInput';
@@ -12,9 +11,10 @@ import { UserInfo } from '@/types';
 import Notification from '@/components/Notification';
 import { AxiosError } from 'axios';
 import { motion } from 'framer-motion';
+import useAuth from '@/hooks/useAuth';
 
 const LoginPage: React.FC = () => {
-    const { accessToken } = useSelector((state) => state.auth);
+    const isAuth = useAuth();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -63,7 +63,7 @@ const LoginPage: React.FC = () => {
         return () => body?.classList.remove('bg-slate-200');
     }, []);
 
-    return accessToken ? (
+    return isAuth ? (
         <Navigate to='/products' />
     ) : (
         <div id='LoginPage'>
@@ -74,7 +74,8 @@ const LoginPage: React.FC = () => {
                     className={`w-96 h-[36rem] rounded-lg rounded-r-none -md:hidden bg-gradient-to-br from-blue-500 to-blue-700
                         flex flex-col justify-between
                         before:bg-white before:opacity-0 before:absolute before:w-96 before:h-full`}
-                    viewport={{ once: true }}>
+                    viewport={{ once: true }}
+                >
                     <div id='top' className='h-12 w-max px-4 py-2'>
                         <LuxEdge version='white' id='logo' className='text-4xl' />
                     </div>
@@ -88,7 +89,8 @@ const LoginPage: React.FC = () => {
                                 }
                             }}
                             viewport={{ once: true }}
-                            className='text-center text-[2.7rem] font-bold text-white px-4 tracking-tight'>
+                            className='text-center text-[2.7rem] font-bold text-white px-4 tracking-tight'
+                        >
                             Welcome back.
                         </motion.h2>
                         <div

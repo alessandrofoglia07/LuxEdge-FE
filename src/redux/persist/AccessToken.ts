@@ -28,7 +28,6 @@ class AccessToken {
     }
 
     /** Refresh `accessToken` (cookies)
-     * @important Don't use this function outside of Redux reducers / Interceptors
      * @param refreshToken - Refresh token (If not provided, it will be retrieved from cookies)
      * @returns New access token
      */
