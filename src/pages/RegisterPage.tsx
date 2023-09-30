@@ -25,6 +25,12 @@ interface Result {
     message: string;
 }
 
+const userLengthErr = 'Username must be 3-20 characters long';
+const userCharsErr = 'Username cannot contain spaces or asterisks';
+const userNotAllowedErr = 'Username not allowed';
+const passLengthErr = 'Password must be 6-16 characters long';
+const passCharsErr = 'Password cannot contain spaces';
+
 const RegisterPage: React.FC = () => {
     const { accessToken } = useSelector((state) => state.auth);
 
@@ -42,15 +48,11 @@ const RegisterPage: React.FC = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
+        validateField(e.target.name as 'username' | 'email' | 'password', e.target.value);
     };
 
+    // validate the entire form before submitting
     const validateInput = (username: string, email: string, password: string) => {
-        const userLengthErr = 'Username must be 3-20 characters long';
-        const userCharsErr = 'Username cannot contain spaces or asterisks';
-        const userNotAllowedErr = 'Username not allowed';
-        const passLengthErr = 'Password must be 6-16 characters long';
-        const passCharsErr = 'Password cannot contain spaces';
-
         const UserSchema = z.object({
             username: z
                 .string()
@@ -91,6 +93,41 @@ const RegisterPage: React.FC = () => {
             return false;
         }
         return true;
+    };
+
+    // validate a single field on change
+    const validateField = (name: 'username' | 'email' | 'password', value: string) => {
+        let schema: z.ZodType;
+
+        switch (name) {
+            case 'username':
+                schema = z
+                    .string()
+                    .min(3, userLengthErr)
+                    .max(20, userLengthErr)
+                    .refine((value) => !bannedUsernames.includes(value) && !detect(value), userNotAllowedErr)
+                    .refine((value) => !value.includes(' ') && !value.includes('*'), userCharsErr);
+                break;
+            case 'email':
+                schema = z.string().email('Invalid email');
+                break;
+            case 'password':
+                schema = z
+                    .string()
+                    .min(6, passLengthErr)
+                    .max(16, passLengthErr)
+                    .refine((value) => !value.includes(' '), passCharsErr);
+                break;
+        }
+
+        const result = schema.safeParse(value);
+
+        if (!result.success) {
+            const error = result.error.errors[0].message;
+            setHelperTexts((prev) => ({ ...prev, [name]: error }));
+        } else {
+            setHelperTexts((prev) => ({ ...prev, [name]: undefined }));
+        }
     };
 
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -146,7 +183,8 @@ const RegisterPage: React.FC = () => {
                     id='presentation'
                     className={`w-96 h-[36rem] rounded-lg rounded-r-none -md:hidden select-none bg-gradient-to-bl from-blue-500 to-blue-700
                         flex flex-col justify-between
-                        before:bg-white before:opacity-0 before:absolute before:w-96 before:h-full`}>
+                        before:bg-white before:opacity-0 before:absolute before:w-96 before:h-full`}
+                >
                     <div id='top' className='h-12 w-max px-4 py-2'>
                         <LuxEdge version='white' id='logo' className='text-4xl' />
                     </div>
@@ -160,7 +198,8 @@ const RegisterPage: React.FC = () => {
                                 }
                             }}
                             viewport={{ once: true }}
-                            className='text-center text-[2.7rem] font-bold text-white px-6 tracking-tight'>
+                            className='text-center text-[2.7rem] font-bold text-white px-6 tracking-tight'
+                        >
                             Get started.
                         </motion.h2>
                         <div
