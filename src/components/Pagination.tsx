@@ -1,4 +1,5 @@
 import { usePagination, dots } from '@/hooks/usePagination';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/20/solid';
 
 interface Props {
     onPageChange: (page: number) => void;
@@ -31,32 +32,50 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
 
     const lastPage = paginationRange ? paginationRange[paginationRange?.length - 1] : 0;
 
-    // TODO: Add styles
     return (
-        <ul className={`${className}`}>
-            <li id='arrow-left-container'>
-                <button onClick={onPrevious} disabled={currentPage === 1}>
-                    <div />
+        <ul className={`flex items-center gap-2 my-8 ${className}`}>
+            <li
+                id='arrow-left-container'
+                className={`w-10 h-10 border-2 rounded-sm border-primary-base group transition-colors mr-2 ${
+                    currentPage === 1 ? 'opacity-40' : 'hover:border-primary-hover hover:bg-primary-base'
+                }`}
+            >
+                <button onClick={onPrevious} disabled={currentPage === 1} className='w-full h-full grid place-items-center rounded-sm'>
+                    <ArrowLeftIcon className={`w-6 h-6 text-primary-base transition-colors ${currentPage !== 1 && 'group-hover:text-white'}`} />
                 </button>
             </li>
             {paginationRange?.map((pageNumber: number | string, i: number) => {
                 if (pageNumber === dots) {
                     return (
-                        <li key={i} className='dots'>
+                        <li key={i} className='w-10 h-10 grid rounded-sm place-items-center pb-2 text-xl font-semibold border-2 border-primary-base pointer-events-none select-none'>
                             &#8230;
                         </li>
                     );
                 }
-
                 return (
-                    <li key={i}>
-                        <button onClick={() => onPageChange(pageNumber as number)}>{pageNumber}</button>
+                    <li
+                        key={i}
+                        className={`w-10 h-10 border-2 rounded-sm border-primary-base hover:border-primary-hover hover:bg-primary-base transition-colors group ${
+                            currentPage === pageNumber && 'bg-primary-base'
+                        }`}
+                    >
+                        <button
+                            className={`w-full h-full grid place-items-center text-xl font-semibold group-hover:text-white ${currentPage === pageNumber && 'text-white'}`}
+                            onClick={() => onPageChange(pageNumber as number)}
+                        >
+                            {pageNumber}
+                        </button>
                     </li>
                 );
             })}
-            <li id='arrow-right-container'>
-                <button onClick={onNext} disabled={currentPage === lastPage}>
-                    <div />
+            <li
+                id='arrow-right-container'
+                className={`w-10 h-10 border-2 rounded-sm border-primary-base group transition-colors ml-2 ${
+                    currentPage === lastPage ? 'opacity-40' : 'hover:border-primary-hover hover:bg-primary-base'
+                }`}
+            >
+                <button onClick={onNext} disabled={currentPage === lastPage} className='w-full h-full grid place-items-center rounded-sm'>
+                    <ArrowRightIcon className={`w-6 h-6 text-primary-base group-hover:text-primary-hover transition-colors ${currentPage !== lastPage && 'group-hover:text-white'}`} />
                 </button>
             </li>
         </ul>

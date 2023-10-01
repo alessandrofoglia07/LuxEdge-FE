@@ -10,6 +10,7 @@ import Option from '@/components/Option';
 import ProductCard from '@/components/ProductCardExpanded';
 import { useSearchParams } from 'react-router-dom';
 import { z } from 'zod';
+import Pagination from '@/components/Pagination';
 
 const sortOptions = [
     { id: 1, name: 'Recommend' },
@@ -204,6 +205,10 @@ const ProductsPage: React.FC = () => {
         }
     };
 
+    const onPageChange = (page: number) => {
+        setPage(page);
+    };
+
     return (
         <div id='ProductsPage'>
             <Navbar />
@@ -294,13 +299,16 @@ const ProductsPage: React.FC = () => {
                                 </div>
                             </div>
                         </aside>
-                        <section id='products' className='grid place-items-center w-full'>
-                            <div className='responsive-grid'>
-                                {products.map((product, i) => (
-                                    <ProductCard key={i} product={product} />
-                                ))}
-                            </div>
-                        </section>
+                        <div className='w-full h-full flex flex-col items-center'>
+                            <section id='products' className='grid place-items-center w-full'>
+                                <div className='responsive-grid'>
+                                    {products.map((product, i) => (
+                                        <ProductCard key={i} product={product} />
+                                    ))}
+                                </div>
+                            </section>
+                            <Pagination currentPage={page} pageSize={12} totalCount={productsCount} onPageChange={onPageChange} />
+                        </div>
                     </div>
                 </div>
                 <Footer />
