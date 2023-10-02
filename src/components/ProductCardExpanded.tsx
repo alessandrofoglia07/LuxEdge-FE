@@ -2,29 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Product } from '@/types';
 import Rating from './Rating';
 import { HeartIcon } from '@heroicons/react/20/solid';
-import getFavsList from '@/utils/getFavsList';
 import Img from './CustomElements/CustomImg';
 import toUrl from '@/utils/toUrl';
 import useAuth from '@/hooks/useAuth';
+import authAxios from '@/api/authAxios';
 
 interface Props {
-    product: Product;
+    product: Product | null;
+    isFavorite: boolean;
+    setIsFavorite: (val: boolean, _id: string) => void;
 }
 
 const ProductCard: React.FC<Props> = (_: Props) => {
     const isAuth = useAuth();
 
-    const [product, setProduct] = useState<Product | null>(null);
-    const [favsList, setFavsList] = useState<Product[] | null>(null);
-
-    useEffect(() => {
-        (async () => {
-            if (isAuth) {
-                const favs = await getFavsList();
-                setFavsList(favs || []);
-            }
-        })();
-    }, [isAuth]);
+    const [product, setProduct] = useState<Product | null>(_.product);
 
     useEffect(() => {
         setProduct(_.product);
@@ -46,6 +38,23 @@ const ProductCard: React.FC<Props> = (_: Props) => {
         }
     };
 
+    const handleFavorite = async () => {
+        // handle this
+        if (!isAuth) return;
+
+        // if product is in favs
+        if (_.isFavorite) {
+            await authAxios.patch(`/lists/favorites/remove/${product!._id}`);
+            _.setIsFavorite(false, product!._id);
+        } else {
+            // add to favs
+            if (!_.isFavorite) {
+                await authAxios.patch(`/lists/favorites/add/${product!._id}`);
+                _.setIsFavorite(true, product!._id);
+            }
+        }
+    };
+
     return (
         <Container>
             {product ? (
@@ -58,8 +67,9 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                             <button
                                 id='favs'
                                 className={`w-10 aspect-square grid place-items-center bg-black bg-opacity-60 transition-all duration-200 rounded-lg ${
-                                    favsList?.some((p) => p._id === product._id) ? 'text-yellow-400' : 'text-slate-200 hover:text-slate-50'
+                                    _.isFavorite === true ? 'text-red-500' : 'text-slate-200 hover:text-slate-50'
                                 }`}
+                                onClick={handleFavorite}
                             >
                                 <HeartIcon className='w-6 h-6' />
                             </button>
@@ -78,7 +88,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                 </>
             ) : (
                 <>
-                    <div id='top' className='md:w-full md:h-1/2 w-64 h-64 group'>
+                    <div id='top' className='-md:w-full -md:h-1/2 w-64 h-64 group'>
                         <a draggable={false} className='w-full h-full md:pt-4'>
                             <Img src='/productPlaceholder.jpg' className='w-full h-full rounded-[80%] animate-pulse' alt='placeholder' />
                         </a>

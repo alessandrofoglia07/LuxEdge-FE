@@ -55,7 +55,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                         <button
                             id='favs'
                             className={`w-10 aspect-square grid place-items-center bg-black bg-opacity-20 hover:bg-opacity-30 transition-all duration-200 rounded-lg ${
-                                favsList?.some((p) => p._id === product._id) ? 'text-yellow-400' : 'text-slate-200 hover:text-slate-50'
+                                favsList?.some((p) => p._id === product._id) ? 'text-red-500' : 'text-slate-200 hover:text-slate-50'
                             }`}
                             onClick={handleFavorite}
                         >

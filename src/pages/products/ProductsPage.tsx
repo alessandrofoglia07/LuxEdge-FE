@@ -11,6 +11,8 @@ import ProductCard from '@/components/ProductCardExpanded';
 import { useSearchParams } from 'react-router-dom';
 import { z } from 'zod';
 import Pagination from '@/components/Pagination';
+import useAuth from '@/hooks/useAuth';
+import getFavsList from '@/utils/getFavsList';
 
 const sortOptions = [
     { id: 1, name: 'Recommend' },
@@ -44,6 +46,8 @@ const PriceRangeInput: React.FC<PriceRangeInputProps> = (props: PriceRangeInputP
 };
 
 const ProductsPage: React.FC = () => {
+    const isAuth = useAuth();
+
     const [productsCount, setProductsCount] = useState<number>(0);
     const [page, setPage] = useState<number>(1);
     const [products, setProducts] = useState<Product[]>([]);
@@ -53,9 +57,12 @@ const ProductsPage: React.FC = () => {
     );
     const [selectedRatingRanges, setSelectedRatingRanges] = useState<Category[]>(RatingRanges);
     const [priceRange, setPriceRange] = useState<[string, string]>(['', '']);
+    const [favsList, setFavsList] = useState<Product[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const [searchParams, setSearchParams] = useSearchParams();
 
+    // Get state from URL
     const getStateFromURL = () => {
         const tags = searchParams.get('tags')?.split(' ');
         const priceRanges = searchParams.get('price')?.split('-');
@@ -77,10 +84,33 @@ const ProductsPage: React.FC = () => {
         setPage(parseInt(page));
     };
 
+    // On load, get state from URL
     useEffect(() => {
         getStateFromURL();
     }, []);
 
+    // Get favs list
+    useEffect(() => {
+        (async () => {
+            try {
+                setLoading(true);
+                const favsList = (await getFavsList()) || [];
+                setFavsList(favsList);
+            } catch (err: unknown) {
+                if (err instanceof AxiosError) {
+                    throw err.response?.data;
+                } else if (typeof err === 'string') {
+                    throw new Error(err);
+                } else {
+                    console.log(err);
+                }
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, [isAuth]);
+
+    // Update URL based on state
     const updateURL = () => {
         const tags = selectedCategories.filter((category) => category.checked).map((category) => category.url);
         const ratingRanges = selectedRatingRanges.filter((ratingRange) => ratingRange.checked).map((ratingRange) => ratingRange.url);
@@ -108,8 +138,11 @@ const ProductsPage: React.FC = () => {
         setSearchParams(searchParams, { replace: true });
     };
 
+    // Fetch products
     const fetchProducts = async (tags: string, price: [number, number], rating: string, sort: string, limit: string, page: string) => {
         try {
+            setLoading(true);
+
             const queries = [];
 
             const queryParams = {
@@ -144,9 +177,12 @@ const ProductsPage: React.FC = () => {
             } else {
                 console.log(err);
             }
+        } finally {
+            setLoading(false);
         }
     };
 
+    // On state change, update URL and fetch products
     useEffect(() => {
         updateURL();
 
@@ -205,9 +241,21 @@ const ProductsPage: React.FC = () => {
         }
     };
 
+    // On page change, update page state
     const onPageChange = (page: number) => {
         setPage(page);
     };
+
+    // Handle favorite
+    function handleFavorite(val: boolean, _id: string): void {
+        if (!isAuth) return;
+
+        if (val) {
+            setFavsList((prev) => [...prev, products.find((p) => p._id === _id)!]);
+        } else {
+            setFavsList((prev) => prev.filter((p) => p._id !== _id));
+        }
+    }
 
     return (
         <div id='ProductsPage'>
@@ -217,9 +265,9 @@ const ProductsPage: React.FC = () => {
                     <div id='mid' className='w-full self-center mt-8 h-max flex -md:flex-col -md:gap-4 items-center justify-between py-4 px-4'>
                         <h6>
                             <span className='font-semibold'>
-                                Showing {Math.min(1 + (page - 1) * 12, productsCount)} - {Math.min(12 + (page - 1) * 12, productsCount)}
+                                Showing {!loading ? Math.min(1 + (page - 1) * 12, productsCount) : '...'} - {!loading ? Math.min(12 + (page - 1) * 12, productsCount) : '...'}
                             </span>{' '}
-                            out of {productsCount} products
+                            out of {!loading ? productsCount : '...'} products
                         </h6>
                         <Listbox value={selectedSort} onChange={setSelectedSort}>
                             <div className='relative mt-1 z-10'>
@@ -300,14 +348,25 @@ const ProductsPage: React.FC = () => {
                             </div>
                         </aside>
                         <div className='w-full h-full flex flex-col items-center'>
-                            <section id='products' className='grid place-items-center w-full'>
-                                <div className='responsive-grid'>
-                                    {products.map((product, i) => (
-                                        <ProductCard key={i} product={product} />
-                                    ))}
+                            {loading ? (
+                                <div
+                                    className='inline-block h-12 w-12 animate-spin rounded-full border-2 border-solid border-current border-r-transparent text-slate-700 align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] mt-[20vh]'
+                                    role='status'
+                                >
+                                    <span className='!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]'>Loading...</span>
                                 </div>
-                            </section>
-                            <Pagination currentPage={page} pageSize={12} totalCount={productsCount} onPageChange={onPageChange} />
+                            ) : (
+                                <>
+                                    <section id='products' className='grid place-items-center w-full'>
+                                        <div className='responsive-grid'>
+                                            {products.map((product, i) => (
+                                                <ProductCard key={i} product={product} isFavorite={favsList.some((p) => p._id === product._id)} setIsFavorite={handleFavorite} />
+                                            ))}
+                                        </div>
+                                    </section>
+                                    <Pagination currentPage={page} pageSize={12} totalCount={productsCount} onPageChange={onPageChange} />
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
