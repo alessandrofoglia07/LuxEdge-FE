@@ -13,6 +13,7 @@ import { z } from 'zod';
 import Pagination from '@/components/Pagination';
 import useAuth from '@/hooks/useAuth';
 import getFavsList from '@/utils/getFavsList';
+import Spinner from '@/components/Spinner';
 
 const sortOptions = [
     { id: 1, name: 'Recommend' },
@@ -247,7 +248,7 @@ const ProductsPage: React.FC = () => {
     };
 
     // Handle favorite
-    function handleFavorite(val: boolean, _id: string): void {
+    const handleFavorite = (val: boolean, _id: string) => {
         if (!isAuth) return;
 
         if (val) {
@@ -255,7 +256,7 @@ const ProductsPage: React.FC = () => {
         } else {
             setFavsList((prev) => prev.filter((p) => p._id !== _id));
         }
-    }
+    };
 
     return (
         <div id='ProductsPage'>
@@ -349,12 +350,7 @@ const ProductsPage: React.FC = () => {
                         </aside>
                         <div className='w-full h-full flex flex-col items-center'>
                             {loading ? (
-                                <div
-                                    className='inline-block h-12 w-12 animate-spin rounded-full border-2 border-solid border-current border-r-transparent text-slate-700 align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] mt-[20vh]'
-                                    role='status'
-                                >
-                                    <span className='!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]'>Loading...</span>
-                                </div>
+                                <Spinner className='mt-[20vh]' />
                             ) : (
                                 <>
                                     <section id='products' className='grid place-items-center w-full'>

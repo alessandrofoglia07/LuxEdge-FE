@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar';
 import { HomeIcon, CubeIcon, BanknotesIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import Highlight from '@/components/Highlight';
 import Benefit from '@/components/Benefit';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import ProductCard from '@/components/ProductCard';
 import Testimonial from '@/components/Testimonial';
 import Img from '@/components/CustomElements/CustomImg';
@@ -13,6 +13,9 @@ import { motion } from 'framer-motion';
 import { mockTestimonials } from '@/assets/mock';
 import { Product } from '@/types';
 import useWindowWidth from '@/hooks/useWindowWidth';
+import useAuth from '@/hooks/useAuth';
+import getFavsList from '@/utils/getFavsList';
+import Spinner from '@/components/Spinner';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
     <li className='font-bold text-2xl'>
@@ -41,10 +44,13 @@ const benefits = [
 const HomePage: React.FC = () => {
     const url = `${import.meta.env.VITE_API_URL}/api/products/search?sort=recommend&limit=8`;
     const width = useWindowWidth();
+    const isAuth = useAuth();
 
     const [scroll, setScroll] = useState(0);
     const [maxScroll, setMaxScroll] = useState(0);
     const [products, setProducts] = useState<Product[]>([]);
+    const [favsList, setFavsList] = useState<Product[]>([]);
+    const [productsLoading, setProductsLoading] = useState(true);
 
     const handleArrowClick = (direction: 'left' | 'right') => {
         const container = document.getElementById('products-container');
@@ -91,6 +97,7 @@ const HomePage: React.FC = () => {
     useEffect(() => {
         (async () => {
             try {
+                setProductsLoading(true);
                 const res = await axios.get(url);
                 setProducts(res.data.products);
             } catch (err: unknown) {
@@ -101,9 +108,41 @@ const HomePage: React.FC = () => {
                 } else {
                     console.log(err);
                 }
+            } finally {
+                setProductsLoading(false);
             }
         })();
     }, [url]);
+
+    const handleFavorite = (val: boolean, _id: string) => {
+        if (!isAuth) return;
+
+        if (val) {
+            setFavsList((prev) => [...prev, products.find((p) => p._id === _id)!]);
+        } else {
+            setFavsList((prev) => prev.filter((p) => p._id !== _id));
+        }
+    };
+
+    useEffect(() => {
+        (async () => {
+            try {
+                setProductsLoading(true);
+                const favsList = (await getFavsList()) || [];
+                setFavsList(favsList);
+            } catch (err: unknown) {
+                if (err instanceof AxiosError) {
+                    throw err.response?.data;
+                } else if (typeof err === 'string') {
+                    throw new Error(err);
+                } else {
+                    console.log(err);
+                }
+            } finally {
+                setProductsLoading(false);
+            }
+        })();
+    }, [isAuth]);
 
     return (
         <div id='HomePage'>
@@ -348,18 +387,24 @@ const HomePage: React.FC = () => {
                         Our bestseller products
                     </motion.h1>
                     <div id='products-container' className='flex gap-8 overflow-x-scroll scroll-smooth items-center w-full p-4'>
-                        {scroll > 0 && (
-                            <button onClick={() => handleArrowClick('left')} className='bg-primary-light rounded-full p-1.5 absolute left-5 z-20'>
-                                <ArrowLeftIcon className='h-8 w-8 text-white' />
-                            </button>
-                        )}
-                        {products.map((product, i) => (
-                            <ProductCard key={i} product={product} />
-                        ))}
-                        {Math.round(scroll) < Math.round(maxScroll) && (
-                            <button onClick={() => handleArrowClick('right')} className='bg-primary-light rounded-full p-1.5 absolute right-5 z-20'>
-                                <ArrowRightIcon className='h-8 w-8 text-white' />
-                            </button>
+                        {productsLoading ? (
+                            <Spinner className='mx-auto my-4' />
+                        ) : (
+                            <>
+                                {scroll > 0 && (
+                                    <button onClick={() => handleArrowClick('left')} className='bg-primary-light rounded-full p-1.5 absolute left-5 z-20'>
+                                        <ArrowLeftIcon className='h-8 w-8 text-white' />
+                                    </button>
+                                )}
+                                {products.map((product, i) => (
+                                    <ProductCard key={i} product={product} isFavorite={favsList.some((p) => p._id === product._id)} setIsFavorite={handleFavorite} />
+                                ))}
+                                {Math.round(scroll) < Math.round(maxScroll) && (
+                                    <button onClick={() => handleArrowClick('right')} className='bg-primary-light rounded-full p-1.5 absolute right-5 z-20'>
+                                        <ArrowRightIcon className='h-8 w-8 text-white' />
+                                    </button>
+                                )}
+                            </>
                         )}
                     </div>
                 </section>
