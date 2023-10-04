@@ -16,6 +16,7 @@ import useWindowWidth from '@/hooks/useWindowWidth';
 import useAuth from '@/hooks/useAuth';
 import getFavsList from '@/utils/getFavsList';
 import Spinner from '@/components/Spinner';
+import Favorites from '@/redux/persist/Favorites';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
     <li className='font-bold text-2xl'>
@@ -49,7 +50,7 @@ const HomePage: React.FC = () => {
     const [scroll, setScroll] = useState(0);
     const [maxScroll, setMaxScroll] = useState(0);
     const [products, setProducts] = useState<Product[]>([]);
-    const [favsList, setFavsList] = useState<Product[]>([]);
+    const [favsList, setFavsList] = useState<string[]>([]);
     const [productsLoading, setProductsLoading] = useState(true);
 
     const handleArrowClick = (direction: 'left' | 'right') => {
@@ -115,12 +116,12 @@ const HomePage: React.FC = () => {
     }, [url]);
 
     const handleFavorite = (val: boolean, _id: string) => {
-        if (!isAuth) return;
-
         if (val) {
-            setFavsList((prev) => [...prev, products.find((p) => p._id === _id)!]);
+            setFavsList((prev) => [...prev, _id]);
+            Favorites.add(_id);
         } else {
-            setFavsList((prev) => prev.filter((p) => p._id !== _id));
+            setFavsList((prev) => prev.filter((id) => id !== _id));
+            Favorites.remove(_id);
         }
     };
 
@@ -128,8 +129,14 @@ const HomePage: React.FC = () => {
         (async () => {
             try {
                 setProductsLoading(true);
-                const favsList = (await getFavsList()) || [];
-                setFavsList(favsList);
+
+                if (isAuth) {
+                    const favsList = (await getFavsList()) || [];
+                    setFavsList(favsList);
+                } else {
+                    const favsList = Favorites.get();
+                    setFavsList(favsList);
+                }
             } catch (err: unknown) {
                 if (err instanceof AxiosError) {
                     throw err.response?.data;
@@ -397,7 +404,7 @@ const HomePage: React.FC = () => {
                                     </button>
                                 )}
                                 {products.map((product, i) => (
-                                    <ProductCard key={i} product={product} isFavorite={favsList.some((p) => p._id === product._id)} setIsFavorite={handleFavorite} />
+                                    <ProductCard key={i} product={product} isFavorite={favsList.some((id) => id === product._id)} setIsFavorite={handleFavorite} />
                                 ))}
                                 {Math.round(scroll) < Math.round(maxScroll) && (
                                     <button onClick={() => handleArrowClick('right')} className='bg-primary-light rounded-full p-1.5 absolute right-5 z-20'>

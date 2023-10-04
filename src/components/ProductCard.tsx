@@ -18,19 +18,17 @@ const ProductCard: React.FC<Props> = (_: Props) => {
     const [product, setProduct] = useState<Product>(_.product);
 
     const handleFavorite = async () => {
-        // TODO: handle this
-        if (!isAuth) return;
-
         // if product is in favs
         if (_.isFavorite) {
-            await authAxios.patch(`/lists/favorites/remove/${product._id}`);
+            if (isAuth) {
+                await authAxios.patch(`/lists/favorites/remove/${product._id}`);
+            }
             _.setIsFavorite(false, product._id);
         } else {
-            // add to favs
-            if (!_.isFavorite) {
+            if (isAuth) {
                 await authAxios.patch(`/lists/favorites/add/${product._id}`);
-                _.setIsFavorite(true, product._id);
             }
+            _.setIsFavorite(true, product._id);
         }
     };
 

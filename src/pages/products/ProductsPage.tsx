@@ -14,6 +14,7 @@ import Pagination from '@/components/Pagination';
 import useAuth from '@/hooks/useAuth';
 import getFavsList from '@/utils/getFavsList';
 import Spinner from '@/components/Spinner';
+import Favorites from '@/redux/persist/Favorites';
 
 const sortOptions = [
     { id: 1, name: 'Recommend' },
@@ -58,7 +59,7 @@ const ProductsPage: React.FC = () => {
     );
     const [selectedRatingRanges, setSelectedRatingRanges] = useState<Category[]>(RatingRanges);
     const [priceRange, setPriceRange] = useState<[string, string]>(['', '']);
-    const [favsList, setFavsList] = useState<Product[]>([]);
+    const [favsList, setFavsList] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -95,8 +96,14 @@ const ProductsPage: React.FC = () => {
         (async () => {
             try {
                 setLoading(true);
-                const favsList = (await getFavsList()) || [];
-                setFavsList(favsList);
+
+                if (isAuth) {
+                    const favsList = (await getFavsList()) || [];
+                    setFavsList(favsList);
+                } else {
+                    const favsList = Favorites.get();
+                    setFavsList(favsList);
+                }
             } catch (err: unknown) {
                 if (err instanceof AxiosError) {
                     throw err.response?.data;
@@ -249,12 +256,12 @@ const ProductsPage: React.FC = () => {
 
     // Handle favorite
     const handleFavorite = (val: boolean, _id: string) => {
-        if (!isAuth) return;
-
         if (val) {
-            setFavsList((prev) => [...prev, products.find((p) => p._id === _id)!]);
+            setFavsList((prev) => [...prev, _id]);
+            Favorites.add(_id);
         } else {
-            setFavsList((prev) => prev.filter((p) => p._id !== _id));
+            setFavsList((prev) => prev.filter((id) => id !== _id));
+            Favorites.remove(_id);
         }
     };
 
@@ -356,11 +363,11 @@ const ProductsPage: React.FC = () => {
                                     <section id='products' className='grid place-items-center w-full'>
                                         <div className='responsive-grid'>
                                             {products.map((product, i) => (
-                                                <ProductCard key={i} product={product} isFavorite={favsList.some((p) => p._id === product._id)} setIsFavorite={handleFavorite} />
+                                                <ProductCard key={i} product={product} isFavorite={favsList.some((id) => id === product._id)} setIsFavorite={handleFavorite} />
                                             ))}
                                         </div>
                                     </section>
-                                    <Pagination currentPage={page} pageSize={12} totalCount={productsCount} onPageChange={onPageChange} />
+                                    {products.length !== 0 && <Pagination currentPage={page} pageSize={12} totalCount={productsCount} onPageChange={onPageChange} />}
                                 </>
                             )}
                         </div>

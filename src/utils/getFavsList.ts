@@ -1,10 +1,9 @@
 import authAxios from '@/api/authAxios';
-import { Product } from '@/types';
 
 const getFavsList = async () => {
     try {
-        const res = await authAxios.get('/lists/favorites');
-        return (res.data as Product[]) || [];
+        const res = await authAxios.get('/lists/favorites/ids');
+        return (res.data as string[]) || [];
     } catch (err: unknown) {
         if (err instanceof Error) {
             throw err;

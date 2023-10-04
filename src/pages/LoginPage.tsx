@@ -12,6 +12,7 @@ import Notification from '@/components/Notification';
 import { AxiosError } from 'axios';
 import { motion } from 'framer-motion';
 import useAuth from '@/hooks/useAuth';
+import Favorites from '@/redux/persist/Favorites';
 
 const LoginPage: React.FC = () => {
     const isAuth = useAuth();
@@ -38,6 +39,9 @@ const LoginPage: React.FC = () => {
             dispatch(setToken(accessToken));
             dispatch(setRefreshToken(refreshToken));
             dispatch(setUserInfo(userInfo));
+            if (Favorites.get().length > 0) {
+                await Favorites.sync();
+            }
             navigate('/products');
         } catch (err: unknown) {
             if (err instanceof AxiosError) {
