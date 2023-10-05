@@ -23,7 +23,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
     }, [_]);
 
     const Container = ({ children }: { children: React.ReactNode }) => (
-        <div id='ProductCard' className='md:w-96 flex flex-col items-center md:min-w-[24rem] md:min-h-[36rem] md:h-fit w-min h-[28rem] bg-white rounded-lg p-4'>
+        <div id='ProductCard' className='md:w-96 flex flex-col items-center md:min-w-[24rem] md:h-fit w-min bg-white rounded-lg p-4'>
             {children}
         </div>
     );
@@ -55,7 +55,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
 
     return (
         <Container>
-            <div id='top' className='md:w-full md:h-1/2 w-64 h-64 group'>
+            <div id='top' className='md:w-full md:h-1/2 w-full h-64 group'>
                 <a draggable={false} className='w-full h-full md:pt-4' href={`/products/details/${product.name}`}>
                     <Img className='w-full h-full rounded-md border-slate-200 drop-shadow-xl border-2' src={toUrl(product.imagePath)} alt={product.name} />
                 </a>
@@ -71,7 +71,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                     </button>
                 </div>
             </div>
-            <div id='rows-container' className='md:w-full md:h-1/2 w-64 h-64 flex flex-col md:pt-4 px-4 gap-1'>
+            <div id='rows-container' className='md:w-full md:h-1/2 w-64 h-min flex flex-col md:pt-4 px-4 gap-1'>
                 <div className='flex justify-between'>
                     {product.category && <p className='uppercase tracking-wide text-primary-light opacity-70'>{product.category}</p>}
                     {product.rating && <Rating rating={product.rating} />}

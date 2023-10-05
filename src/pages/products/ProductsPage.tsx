@@ -3,8 +3,8 @@ import Navbar from '@/components/Navbar';
 import categories from '@/assets/productCategories';
 import { Product } from '@/types';
 import axios, { AxiosError } from 'axios';
-import { Listbox, Transition } from '@headlessui/react';
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
+import { Dialog, Listbox, Transition } from '@headlessui/react';
+import { CheckIcon, ChevronUpDownIcon, XMarkIcon } from '@heroicons/react/20/solid';
 import Footer from '@/components/Footer';
 import Option from '@/components/Option';
 import ProductCard from '@/components/ProductCardExpanded';
@@ -15,6 +15,7 @@ import useAuth from '@/hooks/useAuth';
 import getFavsList from '@/utils/getFavsList';
 import Spinner from '@/components/Spinner';
 import Favorites from '@/redux/persist/Favorites';
+import { FunnelIcon } from '@heroicons/react/24/outline';
 
 const sortOptions = [
     { id: 1, name: 'Recommend' },
@@ -61,6 +62,9 @@ const ProductsPage: React.FC = () => {
     const [priceRange, setPriceRange] = useState<[string, string]>(['', '']);
     const [favsList, setFavsList] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+
+    const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false);
+    const [mobileFiltersTimeout, setMobileFiltersTimeout] = useState<number>(0);
 
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -117,6 +121,37 @@ const ProductsPage: React.FC = () => {
             }
         })();
     }, [isAuth]);
+
+    const handleMobileFiltersOpen = () => {
+        if (Date.now() - mobileFiltersTimeout < 100) return;
+
+        setMobileFiltersOpen(true);
+
+        setTimeout(() => {
+            const panel = document.getElementById('filters-menu-mobile');
+
+            if (panel) {
+                panel.classList.remove('translate-x-full');
+            }
+        }, 50);
+
+        setMobileFiltersTimeout(Date.now());
+    };
+
+    const handleMobileFiltersClose = () => {
+        if (Date.now() - mobileFiltersTimeout < 100) return;
+
+        const panel = document.getElementById('filters-menu-mobile');
+
+        if (panel) {
+            panel.classList.add('translate-x-full');
+        }
+
+        setTimeout(() => {
+            setMobileFiltersOpen(false);
+            setMobileFiltersTimeout(Date.now());
+        }, 300);
+    };
 
     // Update URL based on state
     const updateURL = () => {
@@ -277,43 +312,52 @@ const ProductsPage: React.FC = () => {
                             </span>{' '}
                             out of {!loading ? productsCount : '...'} products
                         </h6>
-                        <Listbox value={selectedSort} onChange={setSelectedSort}>
-                            <div className='relative mt-1 z-10'>
-                                <Listbox.Button className='relative w-64 rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-lg border border-slate-300 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light sm:text-sm'>
-                                    <span className='block truncate font-semibold'>{selectedSort.name}</span>
-                                    <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
-                                        <ChevronUpDownIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
-                                    </span>
-                                </Listbox.Button>
-                                <Transition as={Fragment} leave='transition ease-in duration-100' leaveFrom='opacity-100' leaveTo='opacity-0'>
-                                    <Listbox.Options className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
-                                        {sortOptions.map((sortOption, idx) => (
-                                            <Listbox.Option
-                                                key={idx}
-                                                className={({ active }) =>
-                                                    `relative cursor-pointer select-none py-2 pl-10 pr-4 ${active ? 'bg-blue-100 text-gray-900' : 'text-gray-900'}`
-                                                }
-                                                value={sortOption}
-                                            >
-                                                {({ selected }) => (
-                                                    <>
-                                                        <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>{sortOption.name}</span>
-                                                        {selected ? (
-                                                            <span className='absolute inset-y-0 left-0 flex items-center pl-3 text-primary-base'>
-                                                                <CheckIcon className='h-5 w-5' aria-hidden='true' />
-                                                            </span>
-                                                        ) : null}
-                                                    </>
-                                                )}
-                                            </Listbox.Option>
-                                        ))}
-                                    </Listbox.Options>
-                                </Transition>
-                            </div>
-                        </Listbox>
+                        <div className='-md:w-full -md:flex justify-center gap-2'>
+                            <Listbox value={selectedSort} onChange={setSelectedSort}>
+                                <div className='relative z-10'>
+                                    <Listbox.Button className='relative w-64 h-11 md:h-auto -md:w-[40vw] -md:text-center rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-lg border border-slate-300 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light sm:text-sm'>
+                                        <span className='block truncate font-semibold'>{selectedSort.name}</span>
+                                        <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
+                                            <ChevronUpDownIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
+                                        </span>
+                                    </Listbox.Button>
+                                    <Transition as={Fragment} leave='transition ease-in duration-100' leaveFrom='opacity-100' leaveTo='opacity-0'>
+                                        <Listbox.Options className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+                                            {sortOptions.map((sortOption, idx) => (
+                                                <Listbox.Option
+                                                    key={idx}
+                                                    className={({ active }) =>
+                                                        `relative cursor-pointer select-none py-2 pl-10 pr-4 ${active ? 'bg-blue-100 text-gray-900' : 'text-gray-900'}`
+                                                    }
+                                                    value={sortOption}
+                                                >
+                                                    {({ selected }) => (
+                                                        <>
+                                                            <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>{sortOption.name}</span>
+                                                            {selected ? (
+                                                                <span className='absolute inset-y-0 left-0 flex items-center pl-3 text-primary-base'>
+                                                                    <CheckIcon className='h-5 w-5' aria-hidden='true' />
+                                                                </span>
+                                                            ) : null}
+                                                        </>
+                                                    )}
+                                                </Listbox.Option>
+                                            ))}
+                                        </Listbox.Options>
+                                    </Transition>
+                                </div>
+                            </Listbox>
+                            <button
+                                onClick={handleMobileFiltersOpen}
+                                className='md:hidden relative h-11 w-[40vw] rounded-lg font-semibold bg-white py-2 text-center shadow-lg border border-slate-300 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light sm:text-sm flex justify-center items-center gap-2'
+                            >
+                                Filter
+                                <FunnelIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
+                            </button>
+                        </div>
                     </div>
-                    <div id='main' className='w-full self-center h-max flex'>
-                        <aside id='sidebar' className='w-72 h-max -md:hidden'>
+                    <div id='main' className='w-full self-center h-max flex -md:flex-col'>
+                        <aside id='filters-menu-desktop' className='w-72 h-max -md:hidden'>
                             <div className='ml-4 w-[calc(100% - 1rem)] h-max flex flex-col'>
                                 <h2 className='text-xl font-bold border-b py-4 border-b-slate-300 uppercase'>
                                     <b>Filters</b>
@@ -375,6 +419,65 @@ const ProductsPage: React.FC = () => {
                 </div>
                 <Footer />
             </main>
+            <Dialog as='div' open={mobileFiltersOpen} onClose={handleMobileFiltersClose}>
+                <div className='fixed inset-0 z-50' />
+                <Dialog.Panel
+                    id='filters-menu-mobile'
+                    className='transition-transform duration-300 translate-x-full fixed inset-y-0 right-0 z-50 w-max overflow-y-auto bg-slate-50 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'
+                >
+                    <Dialog.Title className='flex flex-col items-center border-b-2 border-b-slate-300 pb-4'>
+                        <div className='flex justify-between w-full'>
+                            <a href='/' className='w-fit h-fit'>
+                                <img src='/favicon.ico' className='w-12 h-12' />
+                            </a>
+                            <button onClick={handleMobileFiltersClose}>
+                                <span className='sr-only'>Close Menu</span>
+                                <XMarkIcon className='w-8' />
+                            </button>
+                        </div>
+                        <span className='text-xl font-bold uppercase mt-4'>
+                            <b>Filters</b>
+                        </span>
+                    </Dialog.Title>
+                    <div id='content' className='flow-root mt-4 pr-[10vw]'>
+                        <div className='border-b border-b-slate-200 py-2'>
+                            <h2 className='text-md py-2 uppercase'>
+                                <b>Categories</b>
+                            </h2>
+                            {selectedCategories.map((category, i) => (
+                                <Option key={i} checked={category.checked} onClick={() => handleCategoryChange(category)} className='py-1'>
+                                    {category.name}
+                                </Option>
+                            ))}
+                        </div>
+                        <div className='border-b border-b-slate-200 py-2'>
+                            <h2 className='text-md py-2 uppercase'>
+                                <b>Price</b>
+                            </h2>
+                            <div className='flex flex-col'>
+                                <div className='flex justify-between items-center'>
+                                    <p>From:</p>
+                                    <PriceRangeInput value={priceRange[0]} placeholder='0' onChange={(e) => handlePriceRangeChange(0, e.target.value)} />
+                                </div>
+                                <div className='flex justify-between items-center'>
+                                    <p>To:</p>
+                                    <PriceRangeInput value={priceRange[1]} placeholder='1000000' onChange={(e) => handlePriceRangeChange(1, e.target.value)} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className='border-b border-b-slate-200 py-2'>
+                            <h2 className='text-md py-2 uppercase'>
+                                <b>Rating</b>
+                            </h2>
+                            {selectedRatingRanges.map((ratingRange, i) => (
+                                <Option key={i} checked={ratingRange.checked} onClick={() => handleRatingRangeChange(ratingRange)} className='py-1'>
+                                    {ratingRange.name}
+                                </Option>
+                            ))}
+                        </div>
+                    </div>
+                </Dialog.Panel>
+            </Dialog>
         </div>
     );
 };

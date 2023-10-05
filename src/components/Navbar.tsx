@@ -227,7 +227,7 @@ const Navbar: React.FC = () => {
                 <div className='fixed inset-0 z-50' />
                 <Dialog.Panel
                     id='mobile-panel'
-                    className='transition-transform duration-300 -translate-x-full fixed inset-y-0 left-0 z-50 w-full overflow-y-auto bg-slate-50 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'
+                    className='transition-transform duration-300 -translate-x-full fixed inset-y-0 left-0 z-50 w-max overflow-y-auto bg-slate-50 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'
                 >
                     <Dialog.Title className='flex justify-between border-b-2 border-b-slate-300 pb-8'>
                         <a href='/' className='w-fit h-fit'>
@@ -238,7 +238,7 @@ const Navbar: React.FC = () => {
                             <XMarkIcon className='w-8' />
                         </button>
                     </Dialog.Title>
-                    <div id='content' className='flow-root mt-8'>
+                    <div id='content' className='flow-root mt-8 pr-[20vw]'>
                         <ul id='navlinks' className='self-center items-start flex flex-col w-full h-full gap-6'>
                             <li className='flex items-center px-1'>
                                 <a href='/' className='font-bold text-3xl select-none'>
@@ -267,7 +267,7 @@ const Navbar: React.FC = () => {
                                 </a>
                             </li>
                         </ul>
-                        <ul id='account' className='self-center items-start flex flex-col w-full h-full gap-4 mt-28'>
+                        <ul id='account' className='self-center items-start flex flex-col w-full h-full gap-4 mt-8'>
                             {loggedIn ? (
                                 <>
                                     <Button id='Favorites' as='a' href='/favorites' secondary>
