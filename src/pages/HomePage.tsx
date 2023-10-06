@@ -157,7 +157,7 @@ const HomePage: React.FC = () => {
             <main className='pt-16'>
                 <section id='hero' className='flex -lg:flex-col-reverse'>
                     <div className='-lg:w-full lg:w-1/2 lg:left-0 lg:h-[calc(100vh-4rem)] lg:ml-16 flex flex-col justify-center -lg:items-center'>
-                        <div className='mb-16 lg:px-16 -lg:px-2 -lg:flex -lg:flex-col -lg:items-center -lg:text-center'>
+                        <div className='mb-16 lg:px-16 -lg:px-2 -lg:flex -lg:flex-col -lg:items-center -lg:text-center lg:absolute lg:pt-4 homepage-limit:px-16'>
                             <motion.h1
                                 initial={{
                                     opacity: 0,
@@ -190,6 +190,7 @@ const HomePage: React.FC = () => {
                                 }}
                                 viewport={{ once: true }}
                                 className='text-4xl tracking-tight'
+                                id='hero-subtitle'
                             >
                                 <LuxEdge className='font-normal' /> takes care of your{' '}
                                 <Highlight effect lighter>
@@ -246,7 +247,7 @@ const HomePage: React.FC = () => {
                         viewport={{ once: true }}
                         className='-lg:w-full lg:w-1/2 lg:right-0 -lg:mt-4 lg:relative lg:h-[calc(100vh-4rem)] flex items-center justify-center'
                     >
-                        <Img src='/homepageBed.jpg' alt='hero-img' className='mb-16 lg:w-[50vw] -lg:h-[50vw] lg:h-[50vh] -lg:w-screen' />
+                        <Img src='/homepageBed.jpg' alt='hero-img' className='homepage-limit:hidden transition-all mb-16 lg:w-[50vw] -lg:h-[50vw] lg:h-[50vh] -lg:w-screen' />
                     </motion.div>
                 </section>
                 <section id='problem-solution' className='bg-slate-200 py-8 flex -lg:flex-col border-t-2 border-b-2 border-slate-300'>
@@ -262,7 +263,7 @@ const HomePage: React.FC = () => {
                         viewport={{ once: true }}
                         className='-lg:w-full lg:w-1/2 flex items-center justify-center'
                     >
-                        <Img src='/homepageDesk.jpg' alt='desk' className='mb-16 lg:w-[50vw] -lg:h-[70vw] lg:h-[70vh] -lg:w-screen' />
+                        <Img id='hero-img' src='/homepageDesk.jpg' alt='desk' className='mb-16 lg:w-[50vw] -lg:h-[70vw] lg:h-[70vh] -lg:w-screen' />
                     </motion.div>
                     <div className='-lg:w-full lg:w-1/2 flex items-center'>
                         <div className='flex flex-col -lg:px-8 lg:pr-8 mb-16'>

@@ -13,7 +13,8 @@ const theme = {
                 'nav-limit': '932px',
                 '-md': { max: '767px' },
                 '-sm': { max: '639px' },
-                '-lg': { max: '1023px' }
+                '-lg': { max: '1023px' },
+                'homepage-limit': { max: '1621px', min: '1024px' }
             },
             colors: {
                 primary: {
