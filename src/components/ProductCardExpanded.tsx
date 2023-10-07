@@ -6,6 +6,7 @@ import Img from './CustomElements/CustomImg';
 import toUrl from '@/utils/toUrl';
 import useAuth from '@/hooks/useAuth';
 import authAxios from '@/api/authAxios';
+import toPrice from '@/utils/toPrice';
 
 interface Props {
     product: Product;
@@ -27,16 +28,6 @@ const ProductCard: React.FC<Props> = (_: Props) => {
             {children}
         </div>
     );
-
-    const toPrice = (price: number) => {
-        if (Number.isInteger(price) && price > 0) {
-            return `$ ${price}.00`;
-        } else if (price > 0) {
-            return `$ ${price.toFixed(2)}`;
-        } else {
-            return `$ 0.00`;
-        }
-    };
 
     const handleFavorite = async () => {
         // if product is in favs
