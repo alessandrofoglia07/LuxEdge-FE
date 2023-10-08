@@ -303,7 +303,7 @@ const ProductsPage: React.FC = () => {
     return (
         <div id='ProductsPage'>
             <Navbar />
-            <main className='pt-16 mx-auto w-[calc(100vw - 9px)] flex flex-col items-center min-h-screen'>
+            <main className='pt-16 mx-auto w-[calc(100vw - 9px)] flex flex-col items-center min-h-page'>
                 <div className='md:w-3/4 w-full flex flex-col'>
                     <div id='mid' className='w-full self-center mt-8 h-max flex -md:flex-col -md:gap-4 items-center justify-between py-4 px-4'>
                         <h6>

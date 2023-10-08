@@ -100,7 +100,7 @@ const FavoritesPage: React.FC = () => {
     return (
         <div id='FavoritesPage'>
             <Navbar />
-            <main className='pt-16 min-h-screen'>
+            <main className='pt-16 min-h-page'>
                 {loading ? (
                     <div className='absolute right-1/2 -translate-x-1/2'>
                         <Spinner className='mt-[20vh]' />

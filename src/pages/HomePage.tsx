@@ -154,7 +154,7 @@ const HomePage: React.FC = () => {
     return (
         <div id='HomePage'>
             <Navbar />
-            <main className='pt-16 min-h-screen'>
+            <main className='pt-16 min-h-page'>
                 <section id='hero' className='flex -lg:flex-col-reverse'>
                     <div className='-lg:w-full lg:w-1/2 lg:left-0 lg:h-[calc(100vh-4rem)] lg:ml-16 flex flex-col justify-center -lg:items-center'>
                         <div className='mb-16 lg:px-16 -lg:px-2 -lg:flex -lg:flex-col -lg:items-center -lg:text-center lg:absolute lg:pt-4 homepage-limit:px-16'>

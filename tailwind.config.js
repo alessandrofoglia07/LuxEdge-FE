@@ -26,6 +26,9 @@ const theme = {
             },
             backgroundImage: {
                 'login-bg': "url('/loginbg.jpg')"
+            },
+            minHeight: {
+                page: 'calc(100vh - 96px)'
             }
         }
     },
