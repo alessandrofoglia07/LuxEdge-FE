@@ -24,12 +24,12 @@ const Benefit: React.FC<Props> = ({ Icon, title, subtitle, i }: Props) => {
                     <Icon className='w-16 h-16' />
                 </Highlight>
             </div>
-            <h2 onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className='tracking-tight text-4xl font-extrabold py-3 select-none'>
+            <h2 onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className='tracking-tight text-4xl -md:text-2xl font-extrabold py-3 select-none'>
                 <Highlight effect force={hover}>
                     {title}
                 </Highlight>
             </h2>
-            <h6 className='text-xl text-center font-semibold'>{subtitle}</h6>
+            <h6 className='text-xl -md:text-lg text-center font-semibold'>{subtitle}</h6>
         </motion.div>
     );
 };

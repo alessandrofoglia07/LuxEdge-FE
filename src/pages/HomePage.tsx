@@ -19,7 +19,7 @@ import Spinner from '@/components/Spinner';
 import Favorites from '@/redux/persist/Favorites';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
-    <li className='font-bold text-2xl'>
+    <li className='font-bold text-2xl -md:text-md'>
         <span className='text-primary-base text-2xl'>•</span> {children}
     </li>
 );
@@ -171,7 +171,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='font-extrabold text-7xl mb-8 tracking-tight'
+                                className='font-extrabold text-7xl -md:text-4xl mb-8 tracking-tight'
                             >
                                 Switch from a <Highlight effect>house</Highlight>, <br /> to a <Highlight effect>home</Highlight>.
                             </motion.h1>
@@ -189,7 +189,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-4xl tracking-tight'
+                                className='text-4xl -md:text-xl tracking-tight'
                                 id='hero-subtitle'
                             >
                                 <LuxEdge className='font-normal' /> takes care of your{' '}
@@ -278,7 +278,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='font-extrabold text-5xl my-8'
+                                className='font-extrabold text-5xl my-8 -md:text-3xl tracking-tight'
                             >
                                 The problem
                             </motion.h2>
@@ -294,7 +294,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-2xl mb-8 font-semibold'
+                                className='text-2xl -md:text-lg mb-8 font-semibold'
                             >
                                 Today it is nearly impossible to find <Highlight>modern</Highlight> and <Highlight>luxurious</Highlight> furniture that is also{' '}
                                 <Highlight>affordable</Highlight> and <Highlight>comfortable</Highlight>.
@@ -311,7 +311,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-xl mb-2 font-semibold'
+                                className='text-2xl -md:text-lg mb-2 font-semibold'
                             >
                                 How much time have you searched the internet for the perfect piece of furniture for the space you spend <Highlight lighter>most of your time</Highlight>{' '}
                                 in?
@@ -328,7 +328,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-xl mb-8 font-semibold'
+                                className='text-2xl -md:text-lg mb-8 font-semibold'
                             >
                                 How many times have you found the perfect piece of furniture only to find out that it is <Highlight lighter>way out of your budget</Highlight>?
                             </motion.p>
@@ -344,7 +344,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-xl font-semibold'
+                                className='text-2xl -md:text-lg font-semibold'
                             >
                                 Now with <LuxEdge />, that long and frustrating is <Highlight lighter>only a bad memory</Highlight>. We offer the best quality furniture, with both a{' '}
                                 <Highlight lighter>modern look</Highlight> and the nice old <Highlight lighter>comfort</Highlight> at a <Highlight lighter>lower price</Highlight>.
@@ -366,11 +366,11 @@ const HomePage: React.FC = () => {
                             }
                         }}
                         viewport={{ once: true }}
-                        className='font-extrabold text-5xl tracking-tight'
+                        className='font-extrabold text-5xl -md:text-3xl tracking-tight'
                     >
                         Our Benefits
                     </motion.h1>
-                    <div id='benefits-container' className='flex -lg:flex-col justify-evenly w-full mt-16'>
+                    <div id='benefits-container' className='flex -lg:flex-col justify-evenly w-full mt-16 -md:mt-4 -md:px-2'>
                         {benefits.map((benefit, i) => (
                             <Benefit key={i} i={i} Icon={benefit.Icon} title={benefit.title} subtitle={benefit.subtitle} />
                         ))}
@@ -390,7 +390,7 @@ const HomePage: React.FC = () => {
                             }
                         }}
                         viewport={{ once: true }}
-                        className='lg:px-8 py-8 font-extrabold text-5xl tracking-tight'
+                        className='lg:px-8 py-8 font-extrabold text-5xl -md:text-3xl tracking-tight'
                     >
                         Our bestseller products
                     </motion.h1>
@@ -430,12 +430,12 @@ const HomePage: React.FC = () => {
                             }
                         }}
                         viewport={{ once: true }}
-                        className='py-8 lg:px-10 font-extrabold text-5xl text-center tracking-tight'
+                        className='py-8 lg:px-10 font-extrabold text-5xl -md:text-3xl text-center tracking-tight'
                     >
                         What clients say
                     </motion.h1>
                     <div id='testimonials-container' className='flex -lg:flex-col -lg:items-center -lg:gap-8 lg:justify-evenly w-full'>
-                        {mockTestimonials.map((testimonial, i) => (
+                        {(width > 768 ? mockTestimonials : mockTestimonials.slice(0, 2)).map((testimonial, i) => (
                             <motion.div
                                 initial={{
                                     opacity: 0
