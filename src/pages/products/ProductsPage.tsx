@@ -287,6 +287,7 @@ const ProductsPage: React.FC = () => {
     // On page change, update page state
     const onPageChange = (page: number) => {
         setPage(page);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     // Handle favorite
