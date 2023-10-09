@@ -12,38 +12,61 @@ import Spinner from '@/components/Spinner';
 import { CheckIcon, XMarkIcon, XCircleIcon } from '@heroicons/react/20/solid';
 import toPrice from '@/utils/toPrice';
 
-const ProductCard = ({ product, handleRemove }: { product: Product; handleRemove: (id: string) => void }) => {
-    return (
-        <div className='[&>*]:font-semibold [&>*]:tracking-wide [&>*]:text-start flex items-center'>
-            <div className='w-5/12 flex items-center'>
-                <a className='rounded-lg' href={`/procuts/details/${product.name}`}>
-                    <Img src={toUrl(product.imagePath)} alt={product.name} className='w-48 aspect-square rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300' />
-                </a>
-                <a href={`/procuts/details/${product.name}`} className='pl-8 text-xl tracking-wide'>
-                    {product.name}
-                </a>
-            </div>
-            <div className='flex items-center justify-evenly w-5/12 [&>*]:font-normal'>
-                <h6 className='capitalize text-start w-2/4'>{product.category}</h6>
-                {product.available ? (
-                    <div className='flex items-center justify-center w-1/6'>
-                        <CheckIcon className='w-8' />
-                    </div>
-                ) : (
-                    <div className='flex items-center justify-center w-1/6'>
-                        <XMarkIcon className='w-8' />
-                    </div>
-                )}
-                <h6 className='text-end w-2/6'>{toPrice(product.price)}</h6>
-            </div>
-            <div className='w-2/12 flex items-center justify-center'>
-                <button className='rounded-full' onClick={() => handleRemove(product._id)}>
-                    <XCircleIcon aria-label='Remove from favorites' className='w-8' />
-                </button>
-            </div>
+interface ProductCardProps {
+    product: Product;
+    handleRemove: (id: string) => void;
+}
+
+const ProductCardDesktop = ({ product, handleRemove }: ProductCardProps) => (
+    <div className='[&>*]:font-semibold [&>*]:tracking-wide [&>*]:text-start flex items-center'>
+        <div className='w-5/12 flex items-center'>
+            <a className='rounded-lg' href={`/procuts/details/${product.name}`}>
+                <Img src={toUrl(product.imagePath)} alt={product.name} className='w-48 min-w-[6rem] aspect-square rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300' />
+            </a>
+            <a href={`/procuts/details/${product.name}`} className='pl-8 text-xl tracking-wide'>
+                {product.name}
+            </a>
         </div>
-    );
-};
+        <div className='flex items-center justify-evenly w-5/12 [&>*]:font-normal'>
+            <h6 className='capitalize text-start w-2/4'>{product.category}</h6>
+            {product.available ? (
+                <div className='flex items-center justify-center w-1/6'>
+                    <CheckIcon className='w-8' />
+                </div>
+            ) : (
+                <div className='flex items-center justify-center w-1/6'>
+                    <XMarkIcon className='w-8' />
+                </div>
+            )}
+            <h6 className='text-end w-2/6'>{toPrice(product.price)}</h6>
+        </div>
+        <div className='w-2/12 flex items-center justify-center'>
+            <button className='rounded-full' onClick={() => handleRemove(product._id)}>
+                <XCircleIcon aria-label='Remove from favorites' className='w-8' />
+            </button>
+        </div>
+    </div>
+);
+
+const ProductCardMobile = ({ product, handleRemove }: ProductCardProps) => (
+    <div className='[&>*]:font-semibold [&>*]:tracking-wide [&>*]:text-start flex items-center'>
+        <a className='rounded-lg w-4/12' href={`/procuts/details/${product.name}`}>
+            <Img src={toUrl(product.imagePath)} alt={product.name} className='w-full aspect-square rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300' />
+        </a>
+        <div className='w-6/12 flex flex-col pl-8'>
+            <a href={`/procuts/details/${product.name}`} className='text-md tracking-tight'>
+                {product.name}
+            </a>
+            <h6 className='capitalize text-start opacity-70'>{product.category}</h6>
+            <h6 className='text-end'>{toPrice(product.price)}</h6>
+        </div>
+        <div className='w-2/12 flex items-center justify-center'>
+            <button className='rounded-full' onClick={() => handleRemove(product._id)}>
+                <XCircleIcon aria-label='Remove from favorites' className='w-8' />
+            </button>
+        </div>
+    </div>
+);
 
 const FavoritesPage: React.FC = () => {
     const isAuth = useAuth();
@@ -100,16 +123,15 @@ const FavoritesPage: React.FC = () => {
     return (
         <div id='FavoritesPage'>
             <Navbar />
-            <main className='pt-16 min-h-page'>
+            <main className='py-16 min-h-page'>
                 {loading ? (
                     <div className='absolute right-1/2 -translate-x-1/2'>
                         <Spinner className='mt-[20vh]' />
                     </div>
                 ) : (
                     <>
-                        {/* TODO: make this responsive */}
-                        <h2 className='font-extrabold text-5xl tracking-tight mt-6 ml-10'>Favorites</h2>
-                        <div className='w-full px-10 mt-8'>
+                        <h2 className='font-extrabold text-5xl -md:text-3xl tracking-tight mt-6 ml-10'>Favorites</h2>
+                        <div className='w-full px-10 mt-8 -md:hidden'>
                             <div id='table-header' className='border-b-2 pb-3'>
                                 <div className='[&>*]:font-semibold [&>*]:tracking-wide [&>*]:text-start flex items-center'>
                                     <h6 className='w-5/12'>Added Items</h6>
@@ -125,9 +147,20 @@ const FavoritesPage: React.FC = () => {
                                 {products.length === 0 ? (
                                     <h3 className='absolute left-1/2 -translate-x-1/2 pt-[20vh] text-center font-bold text-2xl'>No products found</h3>
                                 ) : (
-                                    products.map((products) => <ProductCard handleRemove={handleRemoveProduct} product={products} key={products._id} />)
+                                    products.map((products) => <ProductCardDesktop handleRemove={handleRemoveProduct} product={products} key={products._id} />)
                                 )}
                             </div>
+                        </div>
+                        <div className='w-full px-2 mt-4 pt-4 border-t-2 md:hidden'>
+                            {products.length === 0 ? (
+                                <h3 className='text-center font-bold text-2xl -md:text-xl'>No products found</h3>
+                            ) : (
+                                <div className='flex items-center flex-col gap-4'>
+                                    {products.map((products) => (
+                                        <ProductCardMobile handleRemove={handleRemoveProduct} product={products} key={products._id} />
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </>
                 )}
