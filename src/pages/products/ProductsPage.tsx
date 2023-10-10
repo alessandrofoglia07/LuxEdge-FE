@@ -75,7 +75,14 @@ const ProductsPage: React.FC = () => {
         const tags = searchParams.get('tags')?.split(' ');
         const priceRanges = searchParams.get('price')?.split('-');
         const ratingRanges = searchParams.get('rating')?.split(' ');
-        const page = searchParams.get('page') || '1';
+        let page = searchParams.get('page');
+
+        if (!page) {
+            searchParams.set('page', '1');
+            setSearchParams(searchParams, { replace: true });
+            page = '1';
+        }
+
         if (tags) {
             setSelectedCategories((prev) => {
                 return prev.map((prevCategory) => (tags.includes(prevCategory.url) ? { ...prevCategory, checked: true } : prevCategory));
@@ -264,7 +271,7 @@ const ProductsPage: React.FC = () => {
         }) as [number, number];
 
         fetchProducts(tags, newPriceRange, ratingRanges, sortMap.get(selectedSort.name) || 'recommend', '12', page.toString());
-    }, [page, selectedSort, selectedCategories, priceRange, selectedRatingRanges, searchParams]);
+    }, [page, selectedSort, selectedCategories, priceRange, selectedRatingRanges, searchParams, ready]);
 
     const handleCategoryChange = (category: Category) => {
         setSelectedCategories((prev) => {
