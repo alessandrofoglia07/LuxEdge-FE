@@ -7,13 +7,13 @@
         background-color: #fbfbfd;
     }
 
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
+    input[type='number']::-webkit-inner-spin-button,
+    input[type='number']::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
     }
 
-    input[type=number] {
+    input[type='number'] {
         -moz-appearance: textfield;
         appearance: textfield;
         margin: 0;
@@ -26,7 +26,7 @@
     /* Firefox */
     * {
         scrollbar-width: thin;
-        scrollbar-color: #60A5FA #DFE9EB;
+        scrollbar-color: #60a5fa #dfe9eb;
     }
 
     /* Chrome, Edge and Safari */
@@ -37,15 +37,15 @@
 
     *::-webkit-scrollbar-track {
         border-radius: 5px;
-        background-color: #DFE9EB;
+        background-color: #dfe9eb;
     }
 
     *::-webkit-scrollbar-track:hover {
-        background-color: #C1CACC;
+        background-color: #c1cacc;
     }
 
     *::-webkit-scrollbar-track:active {
-        background-color: #C1CACC;
+        background-color: #c1cacc;
     }
 
     *::-webkit-scrollbar-thumb {
@@ -54,7 +54,7 @@
     }
 
     *::-webkit-scrollbar-thumb:is(:hover, :active) {
-        background-color: #252B48;
+        background-color: #252b48;
     }
 }
 

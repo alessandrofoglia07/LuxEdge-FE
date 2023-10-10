@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Popover, Transition, Dialog } from '@headlessui/react';
-import { ChevronDownIcon, Bars3Icon, XMarkIcon, HeartIcon, ShoppingCartIcon } from '@heroicons/react/20/solid';
+import { ChevronDownIcon, Bars3Icon, XMarkIcon, HeartIcon, ShoppingCartIcon, ArrowRightOnRectangleIcon as LoginIcon } from '@heroicons/react/20/solid';
 import { StarIcon } from '@heroicons/react/24/outline';
 import useWindowWidth from '@/hooks/useWindowWidth';
 import useAuth from '@/hooks/useAuth';
@@ -188,23 +188,27 @@ const Navbar: React.FC = () => {
                             <a
                                 href='/favorites'
                                 id='Favorites'
-                                className='flex items-center gap-2 text-xl rounded-full border-2 border-primary-base p-2 text-primary-base hover:text-primary-hover hover:border-primary-hover border-opacity-70 transition-colors mr-4'
+                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-200 border-primary-base p-2 text-primary-base hover:text-primary-hover hover:border-primary-hover border-opacity-70 transition-all mr-4'
                             >
                                 <HeartIcon className='w-6' />
                             </a>
                             <a
                                 href='/cart'
                                 id='Cart'
-                                className='flex items-center gap-2 text-xl rounded-full border-2 border-primary-base p-2 text-primary-base hover:text-primary-hover hover:border-primary-hover border-opacity-70 transition-colors mr-8'
+                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-200 border-primary-base p-2 text-primary-base hover:text-primary-hover hover:border-primary-hover border-opacity-70 transition-all mr-8'
                             >
                                 <ShoppingCartIcon className='w-6' />
                             </a>
                         </>
                     ) : (
                         <>
-                            <Button id='Login' href='/login' as='a' secondary>
-                                Login
-                            </Button>
+                            <a
+                                href='/favorites'
+                                id='Favorites'
+                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-200 border-primary-base p-2 text-primary-base hover:text-primary-hover hover:border-primary-hover border-opacity-70 transition-all'
+                            >
+                                <LoginIcon className='w-6' />
+                            </a>
                             <Button id='Register' href='/register' as='a'>
                                 Register
                             </Button>
@@ -212,9 +216,9 @@ const Navbar: React.FC = () => {
                     )}
                 </div>
                 <div id='mobile-btn' className={`flex ${width > 932 ? 'hidden' : ''} mx-12 inline-flex items-center justify-center rounded-md text-gray-700`}>
-                    <button onClick={handleOpen}>
+                    <button onClick={handleOpen} className='group'>
                         <span className='sr-only'>Open main menu</span>
-                        <Bars3Icon className='h-6 w-6' />
+                        <Bars3Icon className='h-6 w-6 text-primary-base group-focus:text-primary-hover' />
                     </button>
                 </div>
             </nav>

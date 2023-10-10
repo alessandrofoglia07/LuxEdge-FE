@@ -30,11 +30,11 @@ const Input: React.FC<Props> = (props: Props) => {
             >
                 <input type={type} className={`bg-slate-200 text-lg tracking-tight py-[.25rem] leading-3 outline-none ${props.className}`} {...inputProps} />
                 {props.type === 'password' && type === 'password' ? (
-                    <button type='button' className='focus:outline-none' onClick={() => setType('text')}>
+                    <button type='button' className='focus:outline-none focus:bg-slate-300 p-1 -m-1 rounded-full' onClick={() => setType('text')}>
                         <ViewPass className='w-6 h-6 text-gray-500' />
                     </button>
                 ) : props.type === 'password' && type === 'text' ? (
-                    <button type='button' className='focus:outline-none' onClick={() => setType('password')}>
+                    <button type='button' className='focus:outline-none focus:bg-slate-300 p-1 -m-1 rounded-full' onClick={() => setType('password')}>
                         <NotViewPass className='w-6 h-6 text-gray-500' />
                     </button>
                 ) : null}
