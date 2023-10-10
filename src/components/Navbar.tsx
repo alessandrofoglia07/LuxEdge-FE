@@ -115,7 +115,7 @@ const Navbar: React.FC = () => {
         <header>
             {/* START DESKTOP MENU */}
 
-            <nav id='Navbar' className='transition-all w-full shadow-md flex items-center justify-between h-16 bg-white fixed top-0 left-0 z-50'>
+            <nav id='Navbar' className='transition-all w-full flex bg-white-gradient items-center justify-between h-16 fixed top-0 left-0 z-50'>
                 <div id='left'>
                     <div id='logo' className='flex items-center justify-self-start'>
                         <a className='sm:px-10 px-7 text-4xl font-extrabold tracking-tight cursor-pointer select-none' href='/'>

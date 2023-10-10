@@ -22,61 +22,65 @@
     html {
         -webkit-tap-highlight-color: transparent;
     }
-}
 
-.responsive-grid {
-    display: grid;
-    width: 100%;
-    place-items: center;
-    grid-gap: 1rem;
-}
+    /* Firefox */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: #60A5FA #DFE9EB;
+    }
 
-/* Smaller screen (mobile) */
-@media only screen and (max-width: 768px) {
-    .responsive-grid {
-        grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    /* Chrome, Edge and Safari */
+    *::-webkit-scrollbar {
+        width: 9px;
+        height: 9px;
+    }
+
+    *::-webkit-scrollbar-track {
+        border-radius: 5px;
+        background-color: #DFE9EB;
+    }
+
+    *::-webkit-scrollbar-track:hover {
+        background-color: #C1CACC;
+    }
+
+    *::-webkit-scrollbar-track:active {
+        background-color: #C1CACC;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        background-color: #445069;
+    }
+
+    *::-webkit-scrollbar-thumb:is(:hover, :active) {
+        background-color: #252B48;
     }
 }
 
-/* Larger screen (desktop/tablet) */
-@media only screen and (min-width: 768px) {
+@layer utilities {
+    .bg-white-gradient {
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 90%, rgba(255, 255, 255, 0) 100%);
+    }
+
     .responsive-grid {
-        grid-template-columns: repeat(auto-fit, minmax(352px, 1fr));
+        display: grid;
+        width: 100%;
+        place-items: center;
+        grid-gap: 1rem;
+    }
+
+    /* Smaller screen (mobile) */
+    @media only screen and (max-width: 768px) {
+        .responsive-grid {
+            grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+        }
+    }
+
+    /* Larger screen (desktop/tablet) */
+    @media only screen and (min-width: 768px) {
+        .responsive-grid {
+            grid-template-columns: repeat(auto-fit, minmax(352px, 1fr));
+        }
     }
 }
-
-/* Firefox */
-* {
-    scrollbar-width: thin;
-    scrollbar-color: #60A5FA #DFE9EB;
-}
-
-/* Chrome, Edge and Safari */
-*::-webkit-scrollbar {
-    width: 9px;
-    height: 9px;
-}
-
-*::-webkit-scrollbar-track {
-    border-radius: 5px;
-    background-color: #DFE9EB;
-}
-
-*::-webkit-scrollbar-track:hover {
-    background-color: #C1CACC;
-}
-
-*::-webkit-scrollbar-track:active {
-    background-color: #C1CACC;
-}
-
-*::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    background-color: #445069;
-}
-
-*::-webkit-scrollbar-thumb:is(:hover, :active) {
-    background-color: #252B48;
-}
-
-/* ----------------------------- */
