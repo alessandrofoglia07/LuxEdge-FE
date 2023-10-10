@@ -62,6 +62,7 @@ const ProductsPage: React.FC = () => {
     const [priceRange, setPriceRange] = useState<[string, string]>(['', '']);
     const [favsList, setFavsList] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [ready, setReady] = useState<boolean>(false);
 
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false);
     const [mobileFiltersTimeout, setMobileFiltersTimeout] = useState<number>(0);
@@ -70,6 +71,7 @@ const ProductsPage: React.FC = () => {
 
     // Get state from URL
     const getStateFromURL = () => {
+        setLoading(true);
         const tags = searchParams.get('tags')?.split(' ');
         const priceRanges = searchParams.get('price')?.split('-');
         const ratingRanges = searchParams.get('rating')?.split(' ');
@@ -88,6 +90,8 @@ const ProductsPage: React.FC = () => {
             });
         }
         setPage(parseInt(page));
+        setLoading(false);
+        setReady(true);
     };
 
     // On load, get state from URL
@@ -227,6 +231,8 @@ const ProductsPage: React.FC = () => {
 
     // On state change, update URL and fetch products
     useEffect(() => {
+        if (!ready) return;
+
         updateURL();
 
         const tags = selectedCategories
