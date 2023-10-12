@@ -54,7 +54,7 @@ const ProductCardMobile = ({ product, handleRemove }: ProductCardProps) => (
             <Img src={toUrl(product.imagePath)} alt={product.name} className='w-full aspect-square rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300' />
         </a>
         <div className='w-6/12 flex flex-col pl-8'>
-            <a href={`/procuts/details/${product.name}`} className='text-md tracking-tight'>
+            <a href={`/procuts/details/${product.name}`} className='text-lg tracking-tight'>
                 {product.name}
             </a>
             <h6 className='capitalize text-start opacity-70'>{product.category}</h6>
@@ -155,7 +155,7 @@ const FavoritesPage: React.FC = () => {
                             {products.length === 0 ? (
                                 <h3 className='text-center font-bold text-2xl -md:text-xl'>No products found</h3>
                             ) : (
-                                <div className='flex items-center flex-col gap-4'>
+                                <div className='flex items-center flex-col gap-6'>
                                     {products.map((products) => (
                                         <ProductCardMobile handleRemove={handleRemoveProduct} product={products} key={products._id} />
                                     ))}
