@@ -239,12 +239,15 @@ const CartPage: React.FC = () => {
         }
     };
 
-    // TODO: fix this
     const handleRemoveProduct = async (id: string) => {
         try {
             await authAxios.patch(`/lists/cart/remove/${id}`);
 
-            setProducts((prev) => prev.filter((product) => product._id !== id));
+            setProducts((prev) => {
+                const index = prev.findIndex((product) => product._id === id);
+                prev.splice(index, 1);
+                return [...prev];
+            });
         } catch (err: unknown) {
             if (err instanceof AxiosError) {
                 throw err.response?.data;
@@ -292,8 +295,9 @@ const CartPage: React.FC = () => {
                                     {products.length === 0 ? (
                                         <h3 className='relative left-1/2 -translate-x-1/2 pt-[20vh] text-center font-bold text-2xl'>No products found</h3>
                                     ) : (
-                                        groupedProducts.slice((page - 1) * PRODUCTS_PER_PAGE, (page - 1) * PRODUCTS_PER_PAGE + PRODUCTS_PER_PAGE).map((product) => {
-                                            return (
+                                        groupedProducts
+                                            .slice((page - 1) * PRODUCTS_PER_PAGE, (page - 1) * PRODUCTS_PER_PAGE + PRODUCTS_PER_PAGE)
+                                            .map((product) => (
                                                 <ProductCardDesktop
                                                     handleAdd={handleAddProduct}
                                                     quantity={product.quantity}
@@ -301,8 +305,7 @@ const CartPage: React.FC = () => {
                                                     product={product}
                                                     key={product._id}
                                                 />
-                                            );
-                                        })
+                                            ))
                                     )}
                                 </div>
                             </div>
