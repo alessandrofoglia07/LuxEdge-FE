@@ -7,6 +7,7 @@ import toUrl from '@/utils/toUrl';
 import useAuth from '@/hooks/useAuth';
 import authAxios from '@/api/authAxios';
 import toPrice from '@/utils/toPrice';
+import { toPlural } from '@/utils/singularPlural';
 
 interface Props {
     product: Product;
@@ -47,7 +48,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
     return (
         <Container>
             <div id='top' className='md:w-full md:h-1/2 w-full h-64 group'>
-                <a draggable={false} className='w-full h-full md:pt-4' href={`/products/details/${product.name}`}>
+                <a draggable={false} className='w-full h-full md:pt-4' href={`/products/${toPlural(product.category)}/${product.name}`}>
                     <Img className='w-full h-full rounded-md border-slate-200 drop-shadow-xl border-2' src={toUrl(product.imagePath)} alt={product.name} />
                 </a>
                 <div className='absolute flex group-hover:opacity-100 transition-opacity duration-300 md:opacity-0 p-2 flex-col -translate-y-full text-end items-end rounded-b-lg'>
@@ -61,7 +62,7 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                     {product.category && <p className='uppercase tracking-wide text-primary-light opacity-70'>{product.category}</p>}
                     {product.rating && <Rating rating={product.rating} />}
                 </div>
-                <a draggable={false} href={`/products/details/${product.name}`} className='capitalize font-bold tracking-wide'>
+                <a draggable={false} href={`/products/${toPlural(product.category)}/${product.name}`} className='capitalize font-bold tracking-wide'>
                     {product.name}
                 </a>
                 <h6 className='font-semibold tracking-wide'>{toPrice(product.price)}</h6>

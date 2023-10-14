@@ -29,7 +29,7 @@ function App() {
 
             {/* /products */}
             <Route path='/products' element={<ProductsPage />} />
-            <Route path='/products/details/:productName' element={<DetailsPage />} />
+            <Route path='/products/:productCategory/:productName' element={<DetailsPage />} />
 
             {/* /user */}
             <Route path='/user/activate/:userId' element={<ActivatePage />} />

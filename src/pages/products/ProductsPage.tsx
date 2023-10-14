@@ -16,6 +16,7 @@ import getFavsList from '@/utils/getFavsList';
 import Spinner from '@/components/Spinner';
 import Favorites from '@/redux/persist/Favorites';
 import { FunnelIcon } from '@heroicons/react/24/outline';
+import { toSingular } from '@/utils/singularPlural';
 
 const sortOptions = [
     { id: 1, name: 'Recommend' },
@@ -204,7 +205,7 @@ const ProductsPage: React.FC = () => {
                     tags &&
                     tags
                         .split(',')
-                        .map((tag) => (tag.toLowerCase() === 'bookshelves' ? 'bookshelf' : tag.toLowerCase().slice(0, -1)))
+                        .map((tag) => toSingular(tag))
                         .join(','),
                 price,
                 rating,
