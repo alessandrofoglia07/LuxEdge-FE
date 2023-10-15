@@ -130,7 +130,7 @@ const Footer: React.FC<FooterProps> = ({ className }: FooterProps) => {
                 </div>
             </div>
             <div id='copyright' className='w-full h-max bg-slate-800'>
-                <p className='text-slate-950 py-2 text-center tracking-tight select-none'> Copyright&copy; {new Date().getFullYear()} LuxEdge Furnitures. All rights reserved.</p>
+                <p className='text-slate-500 py-2 text-center tracking-tight'> Copyright&copy; {new Date().getFullYear()} LuxEdge Furnitures. All rights reserved.</p>
             </div>
         </footer>
     );
