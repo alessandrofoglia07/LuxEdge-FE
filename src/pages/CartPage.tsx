@@ -24,10 +24,10 @@ interface ProductCardProps {
 const ProductCardDesktop = ({ product, handleAdd, handleRemove, quantity = 1 }: ProductCardProps) => (
     <div className='[&>*]:font-semibold [&>*]:tracking-wide [&>*]:text-start flex items-center'>
         <div className='w-5/12 flex items-center'>
-            <a className='rounded-lg' href={`/procuts/${product.category}/${product.name}`}>
+            <a className='rounded-lg' href={`/products/${toPlural(product.category)}/${product.name}`}>
                 <Img src={toUrl(product.imagePath)} alt={product.name} className='w-48 min-w-[6rem] aspect-square rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300' />
             </a>
-            <a href={`/procuts/${product.category}/${product.name}`} className='px-8 text-xl tracking-wide'>
+            <a href={`/products/${toPlural(product.category)}/${product.name}`} className='px-8 text-xl tracking-wide'>
                 {product.name}
             </a>
         </div>

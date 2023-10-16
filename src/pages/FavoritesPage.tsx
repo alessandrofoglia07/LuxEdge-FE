@@ -51,11 +51,11 @@ const ProductCardDesktop = ({ product, handleRemove }: ProductCardProps) => (
 
 const ProductCardMobile = ({ product, handleRemove }: ProductCardProps) => (
     <div className='[&>*]:font-semibold [&>*]:tracking-wide [&>*]:text-start flex items-center'>
-        <a className='rounded-lg w-4/12' href={`/procuts/${product.category}/${product.name}`}>
+        <a className='rounded-lg w-4/12' href={`/products/${toPlural(product.category)}/${product.name}`}>
             <Img src={toUrl(product.imagePath)} alt={product.name} className='w-full aspect-square rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300' />
         </a>
         <div className='w-6/12 flex flex-col pl-8'>
-            <a href={`/procuts/${product.category}/${product.name}`} className='text-lg tracking-tight'>
+            <a href={`/products/${toPlural(product.category)}/${product.name}`} className='text-lg tracking-tight'>
                 {product.name}
             </a>
             <h6 className='capitalize text-start opacity-70'>{product.category}</h6>
