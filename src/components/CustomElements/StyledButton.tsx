@@ -21,7 +21,7 @@ const Button: React.FC<Props> = (props: Props) => {
         <Component
             className={
                 props.secondary
-                    ? `transition-colors duration-200 text-lg px-8 py-[6px] select-none rounded-lg border-2 border-primary-base hover:border-primary-hover text-primary-base hover:text-primary-hover mx-4 flex items-center gap-1 ${props.className}`
+                    ? `transition-colors duration-200 text-lg px-8 py-[6px] select-none rounded-lg border-2 hover:border-primary-base text-primary-base hover:text-primary-hover mx-4 flex items-center gap-1 ${props.className}`
                     : `transition-colors duration-200 font-bold text-lg px-8 py-2 select-none rounded-lg text-white bg-primary-base hover:bg-primary-hover mx-4 ${props.className}`
             }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any

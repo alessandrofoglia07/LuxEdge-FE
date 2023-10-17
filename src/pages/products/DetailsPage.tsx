@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Product } from '@/types';
 import { toPlural, toSingular } from '@/utils/singularPlural';
@@ -10,31 +10,99 @@ import Img from '@/components/CustomElements/CustomImg';
 import toPrice from '@/utils/toPrice';
 import { ShoppingCartIcon, HeartIcon } from '@heroicons/react/24/solid';
 import Rating from '@/components/Rating';
+import getFavsList from '@/utils/getFavsList';
+import useAuth from '@/hooks/useAuth';
+import authAxios from '@/api/authAxios';
+import Favorites from '@/redux/persist/Favorites';
+import Notification from '@/components/Notification';
 
 const DetailsPage: React.FC = () => {
+    const navigate = useNavigate();
+    const isAuth = useAuth();
     const productName = useParams<{ productName: string }>().productName;
     const productCategory = toSingular(useParams<{ productCategory: string }>().productCategory || '');
 
     const [product, setProduct] = useState<Product | null>(null);
+    const [favorite, setFavorite] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
+    const [notification, setNotification] = useState<string>('');
+    const [notificationOpen, setNotificationOpen] = useState<boolean>(false);
+    const [notificationType, setNotificationType] = useState<'success' | 'error'>('success');
 
     useEffect(() => {
         try {
             setLoading(true);
 
             (async () => {
-                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/details/name/${productName}`);
-                if (data.category !== productCategory) throw new Error('Product not found');
-                setProduct(data);
+                const products = (await axios.get(`${import.meta.env.VITE_API_URL}/api/products/details/name/${productName}`)).data;
+                let favs: string[] = [];
+                if (isAuth) {
+                    favs = (await getFavsList()) || [];
+                } else {
+                    favs = Favorites.get() || [];
+                }
+                if (products.category !== productCategory) throw new Error('Product not found');
+                setProduct(products);
+                setFavorite(favs.includes(products._id));
             })();
         } catch (err) {
             if (axios.isAxiosError(err)) {
                 console.log(err.response?.data);
+            } else {
+                console.log(err);
             }
         } finally {
             setLoading(false);
         }
     }, [productName]);
+
+    const handleAddToCart = async () => {
+        if (!product) return;
+        if (!isAuth) {
+            navigate('/login');
+        }
+        try {
+            await authAxios.patch(`/lists/cart/add/${product._id}`);
+            setNotificationType('success');
+            setNotification(`${product.name} added to cart!`);
+            setNotificationOpen(true);
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                console.log(err.response?.data);
+            } else {
+                console.log(err);
+            }
+        }
+    };
+
+    const handleAddToFavs = async () => {
+        if (!product) return;
+        try {
+            if (favorite) {
+                if (isAuth) {
+                    // save to db
+                    await authAxios.patch(`/lists/favorites/remove/${product._id}`);
+                }
+                // save locally
+                Favorites.remove(product._id);
+            } else {
+                if (isAuth) {
+                    // save to db
+                    await authAxios.patch(`/lists/favorites/add/${product._id}`);
+                }
+                // save locally
+                Favorites.add(product._id);
+            }
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                console.log(err.response?.data);
+            } else {
+                console.log(err);
+            }
+        } finally {
+            setFavorite(!favorite);
+        }
+    };
 
     return (
         <div id='DetailsPage'>
@@ -59,26 +127,33 @@ const DetailsPage: React.FC = () => {
                             className='max-w-xl md:w-1/3 md:h-1/3 sm:w-1/2 sm:h-1/2 w-full h-full self-center aspect-square rounded-md'
                         />
                         <div className='md:w-1/2 w-full -md:px-8 h-full md:py-16 pb-32 -md:flex -md:flex-col items-center'>
-                            <h1 className='font-extrabold text-5xl mb-8 h-fit -md:text-center'>{product.name}</h1>
-                            <h4 className='text-xl h-fit -md:text-center'>{product.description}</h4>
+                            <h1 className='font-extrabold text-5xl mb-8 h-fit -md:text-center tracking-tight'>{product.name}</h1>
+                            <h4 className='text-xl h-fit -md:text-center tracking-wide'>{product.description}</h4>
                             {product.rating > 0 && <Rating rating={product.rating} />}
                             <div className='flex items-center -md:flex-col justify-between mt-16'>
                                 <div className='flex items-center'>
-                                    <button className='text-xl flex items-center gap-4 text-white bg-primary-base hover:bg-primary-hover transition-colors py-4 px-6 rounded-md mr-2 whitespace-nowrap'>
+                                    <button
+                                        className='text-xl flex items-center gap-4 text-white bg-primary-base hover:bg-primary-hover transition-colors py-4 px-6 rounded-md mr-2 whitespace-nowrap tracking-tight'
+                                        onClick={handleAddToCart}
+                                    >
                                         <ShoppingCartIcon className='w-8 h-8' />
                                         Add to Cart
                                     </button>
-                                    <button className='bg-white text-primary-base hover:text-primary-hover border-2 border-primary-base hover:border-primary-hover hover:bg-slate-200 transition-colors p-3 rounded-md mr-2'>
-                                        <HeartIcon className='w-8 h-8' />
+                                    <button
+                                        className='bg-white text-primary-base hover:text-primary-hover border-2 hover:bg-slate-100 transition-colors p-3 rounded-md mr-2 group'
+                                        onClick={handleAddToFavs}
+                                    >
+                                        <HeartIcon className={`w-10 h-10 transition-colors ${favorite && 'text-red-500 group-hover:text-red-600'}`} />
                                     </button>
                                 </div>
-                                <h3 className='text-3xl font-extrabold text-primary-base whitespace-nowrap -md:mt-8'>{toPrice(product.price)}</h3>
+                                <h3 className='text-3xl font-extrabold text-primary-base whitespace-nowrap -md:mt-8 tracking-wide'>{toPrice(product.price)}</h3>
                             </div>
                         </div>
                     </div>
                 ) : null}
             </main>
             <Footer />
+            <Notification message={notification} onClose={() => setNotificationOpen(false)} open={notificationOpen} severity={notificationType} />
         </div>
     );
 };

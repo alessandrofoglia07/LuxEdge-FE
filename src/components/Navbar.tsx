@@ -118,7 +118,7 @@ const Navbar: React.FC = () => {
             <nav id='Navbar' className='transition-all w-full flex bg-white-gradient items-center justify-between h-16 fixed top-0 left-0 z-50'>
                 <div id='left'>
                     <div id='logo' className='flex items-center justify-self-start'>
-                        <a className='sm:px-10 px-7 text-4xl font-extrabold tracking-tight cursor-pointer select-none' href='/'>
+                        <a className='sm:px-10 px-7 h-min py-1 text-4xl font-extrabold tracking-tight cursor-pointer select-none' href='/'>
                             Lux<span className='text-primary-base hover:text-primary-hover'>Edge</span>
                         </a>
                     </div>
@@ -188,14 +188,14 @@ const Navbar: React.FC = () => {
                             <a
                                 href='/favorites'
                                 id='Favorites'
-                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-200 border-primary-base p-2 text-primary-base hover:text-primary-hover hover:border-primary-hover border-opacity-70 transition-all mr-4'
+                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-100 p-2 text-primary-base hover:text-primary-hover hover:border-primary-base border-opacity-70 transition-all mr-4'
                             >
                                 <HeartIcon className='w-6' />
                             </a>
                             <a
                                 href='/cart'
                                 id='Cart'
-                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-200 border-primary-base p-2 text-primary-base hover:text-primary-hover hover:border-primary-hover border-opacity-70 transition-all mr-8'
+                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-100 p-2 text-primary-base hover:text-primary-hover hover:border-primary-base border-opacity-70 transition-all mr-8'
                             >
                                 <ShoppingCartIcon className='w-6' />
                             </a>
@@ -205,7 +205,7 @@ const Navbar: React.FC = () => {
                             <a
                                 href='/favorites'
                                 id='Favorites'
-                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-200 border-primary-base p-2 text-primary-base hover:text-primary-hover hover:border-primary-hover border-opacity-70 transition-all'
+                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-200 p-2 text-primary-base hover:text-primary-hover hover:border-primary-base border-opacity-70 transition-all'
                             >
                                 <LoginIcon className='w-6' />
                             </a>
