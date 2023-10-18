@@ -26,8 +26,18 @@ export interface Product {
     category: string;
     sold: number;
     available: boolean;
-    reviews: string[];
+    reviews: Review[];
     rating: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface Review {
+    _id: string;
+    productId: string;
+    userId: string;
+    rating: number;
+    comment: string;
     createdAt: Date;
     updatedAt: Date;
 }

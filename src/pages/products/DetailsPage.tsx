@@ -15,6 +15,7 @@ import useAuth from '@/hooks/useAuth';
 import authAxios from '@/api/authAxios';
 import Favorites from '@/redux/persist/Favorites';
 import Notification from '@/components/Notification';
+import Review from '@/components/Review';
 
 const DetailsPage: React.FC = () => {
     const navigate = useNavigate();
@@ -120,36 +121,45 @@ const DetailsPage: React.FC = () => {
                 </h4>
                 {/* TODO: add reviews */}
                 {product && !loading ? (
-                    <div className='lg:w-fit w-full relative left-1/2 -translate-x-1/2 flex -md:flex-col lg:gap-16 gap-8 justify-center lg:px-8 px-4 mt-8 h-max'>
-                        <Img
-                            src={toUrl(product.imagePath)}
-                            alt={product.name}
-                            className='max-w-xl md:w-1/3 md:h-1/3 sm:w-1/2 sm:h-1/2 w-full h-full self-center aspect-square rounded-md'
-                        />
-                        <div className='md:w-1/2 w-full -md:px-8 h-full md:py-16 pb-32 -md:flex -md:flex-col items-center'>
-                            <h1 className='font-extrabold text-5xl mb-8 h-fit -md:text-center tracking-tight'>{product.name}</h1>
-                            <h4 className='text-xl h-fit -md:text-center tracking-wide'>{product.description}</h4>
-                            {product.rating > 0 && <Rating rating={product.rating} />}
-                            <div className='flex items-center -md:flex-col justify-between mt-16'>
-                                <div className='flex items-center'>
-                                    <button
-                                        className='text-xl flex items-center gap-4 text-white bg-primary-base hover:bg-primary-hover transition-colors py-4 px-6 rounded-md mr-2 whitespace-nowrap tracking-tight'
-                                        onClick={handleAddToCart}
-                                    >
-                                        <ShoppingCartIcon className='w-8 h-8' />
-                                        Add to Cart
-                                    </button>
-                                    <button
-                                        className='bg-white text-primary-base hover:text-primary-hover border-2 hover:bg-slate-100 transition-colors p-3 rounded-md mr-2 group'
-                                        onClick={handleAddToFavs}
-                                    >
-                                        <HeartIcon className={`w-10 h-10 transition-colors ${favorite && 'text-red-500 group-hover:text-red-600'}`} />
-                                    </button>
+                    <>
+                        <div className='lg:w-fit w-full relative left-1/2 -translate-x-1/2 flex -md:flex-col lg:gap-16 gap-8 justify-center lg:px-8 px-4 mt-8 h-max'>
+                            <Img
+                                src={toUrl(product.imagePath)}
+                                alt={product.name}
+                                className='max-w-xl md:w-1/3 md:h-1/3 sm:w-1/2 sm:h-1/2 w-full h-full self-center aspect-square rounded-md'
+                            />
+                            <div className='md:w-1/2 w-full -md:px-8 h-full md:py-16 pb-32 -md:flex -md:flex-col items-center'>
+                                <h1 className='font-extrabold text-5xl mb-8 h-fit -md:text-center tracking-tight'>{product.name}</h1>
+                                <h4 className='text-xl h-fit -md:text-center tracking-wide'>{product.description}</h4>
+                                {product.rating > 0 && <Rating rating={product.rating} />}
+                                <div className='flex items-center -md:flex-col justify-between mt-16'>
+                                    <div className='flex items-center'>
+                                        <button
+                                            className='text-xl flex items-center gap-4 text-white bg-primary-base hover:bg-primary-hover transition-colors py-4 px-6 rounded-md mr-2 whitespace-nowrap tracking-tight'
+                                            onClick={handleAddToCart}
+                                        >
+                                            <ShoppingCartIcon className='w-8 h-8' />
+                                            Add to Cart
+                                        </button>
+                                        <button
+                                            className='bg-white text-primary-base hover:text-primary-hover border-2 hover:bg-slate-100 transition-colors p-3 rounded-md mr-2 group'
+                                            onClick={handleAddToFavs}
+                                        >
+                                            <HeartIcon className={`w-10 h-10 transition-colors ${favorite && 'text-red-500 group-hover:text-red-600'}`} />
+                                        </button>
+                                    </div>
+                                    <h3 className='text-3xl font-extrabold text-primary-base whitespace-nowrap -md:mt-8 tracking-wide'>{toPrice(product.price)}</h3>
                                 </div>
-                                <h3 className='text-3xl font-extrabold text-primary-base whitespace-nowrap -md:mt-8 tracking-wide'>{toPrice(product.price)}</h3>
                             </div>
                         </div>
-                    </div>
+                        {product.reviews.length > 0 && (
+                            <div className='lg:w-fit w-full relative left-1/2 -translate-x-1/2 flex -md:flex-col lg:gap-16 gap-8 justify-center lg:px-8 px-4 mt-8 h-max'>
+                                {product.reviews.map((review) => (
+                                    <Review review={review} key={review._id} />
+                                ))}
+                            </div>
+                        )}
+                    </>
                 ) : null}
             </main>
             <Footer />
