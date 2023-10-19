@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LuxEdge from './LuxEdgeLogo';
-import categories from '@/assets/productCategories';
+import { categories } from '@/components/Navbar';
 import { PlayIcon } from '@heroicons/react/20/solid';
 import { z } from 'zod';
 import axios, { AxiosError } from 'axios';

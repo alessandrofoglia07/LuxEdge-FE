@@ -4,8 +4,9 @@ import { ChevronDownIcon, Bars3Icon, XMarkIcon, HeartIcon, ShoppingCartIcon, Arr
 import { StarIcon } from '@heroicons/react/24/outline';
 import useWindowWidth from '@/hooks/useWindowWidth';
 import useAuth from '@/hooks/useAuth';
-import categories from '@/assets/productCategories';
 import Button from './CustomElements/StyledButton';
+
+export const categories = ['Beds', 'Bookshelves', 'Chairs', 'Desks', 'Drawers', 'Sofas', 'Tables', 'Bedrooms', 'Living rooms'];
 
 interface CategoryProps {
     children: string;
@@ -174,12 +175,6 @@ const Navbar: React.FC = () => {
                                 )}
                             </Popover>
                         </li>
-                        <VSpacer />
-                        <li className='flex items-center my-3 px-4'>
-                            <a href='/contact' className='font-bold text-xl w-max select-none'>
-                                Contact us
-                            </a>
-                        </li>
                     </ul>
                 </div>
                 <div id='right' className={`flex items-center ${width > 932 ? '' : 'hidden'}`}>
@@ -264,11 +259,6 @@ const Navbar: React.FC = () => {
                                         </div>
                                     ))}
                                 </div>
-                            </li>
-                            <li className='flex items-center px-1'>
-                                <a href='/contact' className='font-bold text-3xl select-none'>
-                                    Contact us
-                                </a>
                             </li>
                         </ul>
                         <ul id='account' className='self-center items-start flex flex-col w-full h-full gap-4 mt-8'>

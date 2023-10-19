@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Navbar from '@/components/Navbar';
-import categories from '@/assets/productCategories';
 import { Product } from '@/types';
 import axios, { AxiosError } from 'axios';
 import { Dialog, Listbox, Transition } from '@headlessui/react';
@@ -17,6 +16,7 @@ import Spinner from '@/components/Spinner';
 import Favorites from '@/redux/persist/Favorites';
 import { FunnelIcon } from '@heroicons/react/24/outline';
 import { toSingular } from '@/utils/singularPlural';
+import { categories } from '@/components/Navbar';
 
 const sortOptions = [
     { id: 1, name: 'Recommend' },

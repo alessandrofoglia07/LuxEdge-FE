@@ -10,8 +10,7 @@ import Img from '@/components/CustomElements/CustomImg';
 import Footer from '@/components/Footer';
 import LuxEdge from '@/components/LuxEdgeLogo';
 import { motion } from 'framer-motion';
-import { mockTestimonials } from '@/assets/mock';
-import { Product } from '@/types';
+import { Product, Testimonial as TestimonialT } from '@/types';
 import useWindowWidth from '@/hooks/useWindowWidth';
 import useAuth from '@/hooks/useAuth';
 import getFavsList from '@/utils/getFavsList';
@@ -39,6 +38,27 @@ const benefits = [
         Icon: BanknotesIcon,
         title: 'Low-price',
         subtitle: 'Our furniture is affordable and high quality.'
+    }
+];
+
+const mockTestimonials: TestimonialT[] = [
+    {
+        pfpPath: '/testimonials/testimonial1.jpg',
+        rating: 4.5,
+        author: 'John Doe',
+        text: 'The craftsmanship of the bedroom set is superb, and it has transformed my bedroom into a cozy and stylish oasis.'
+    },
+    {
+        pfpPath: '/testimonials/testimonial2.jpg',
+        rating: 5,
+        author: 'Jane Doe',
+        text: 'I found the perfect sofa for my living room, and it far exceeded my expectations in terms of quality and comfort. It looks and feels like a luxurious piece, yet it fits well within my budget.'
+    },
+    {
+        pfpPath: '/testimonials/testimonial3.jpg',
+        rating: 4.5,
+        author: 'Johnny Doe',
+        text: 'The quality of the furniture is top-notch, and the designs are absolutely stunning. The chairs are not only comfortable but also add a touch of elegance to my dining area.'
     }
 ];
 

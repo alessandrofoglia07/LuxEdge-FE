@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import authAxios from '@/api/authAxios';
 import { AxiosError } from 'axios';
 import Spinner from '@/components/Spinner';
-import { CheckIcon, XMarkIcon, XCircleIcon } from '@heroicons/react/20/solid';
+import { CheckIcon, XMarkIcon, XCircleIcon, MinusCircleIcon } from '@heroicons/react/20/solid';
 import toPrice from '@/utils/toPrice';
 import Pagination from '@/components/Pagination';
 import { toPlural } from '@/utils/singularPlural';
@@ -51,7 +51,7 @@ const ProductCardDesktop = ({ product, handleAdd, handleRemove, quantity = 1 }: 
                 </button>
                 <h6 className='text-center font-extrabold'>{quantity}</h6>
                 <button className='rounded-full focus:outline-none' onClick={() => handleRemove(product._id)}>
-                    <XCircleIcon aria-label='Remove from cart' className='w-8' />
+                    <MinusCircleIcon aria-label='Remove from cart' className='w-8' />
                 </button>
             </div>
         </div>
@@ -77,7 +77,7 @@ const ProductCardMobile = ({ product, handleAdd, handleRemove, quantity = 1 }: P
                 </button>
                 <h6 className='text-center font-extrabold'>{quantity}</h6>
                 <button className='rounded-full focus:outline-none' onClick={() => handleRemove(product._id)}>
-                    <XCircleIcon aria-label='Remove from cart' className='w-8' />
+                    <MinusCircleIcon aria-label='Remove from cart' className='w-8' />
                 </button>
             </div>
         </div>
@@ -131,7 +131,7 @@ const TotalPrice = ({ products }: { products: Product[] }) => {
                     <h4 className='font-bold text-xl'>Total</h4>
                     <h4 className='font-extrabold text-2xl'>{toPrice(totalPrice)}</h4>
                 </div>
-                <button className='w-1/2 h-12 bg-primary-light rounded-lg text-white font-semibold'>Proceed to checkout</button>
+                <button className='w-1/2 h-12 bg-primary-light rounded-lg text-white font-semibold hover:shadow-xl transition-shadow'>Proceed to checkout</button>
             </div>
         </div>
     );

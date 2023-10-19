@@ -135,7 +135,7 @@ const DetailsPage: React.FC = () => {
                                 <div className='flex items-center -md:flex-col justify-between mt-16'>
                                     <div className='flex items-center'>
                                         <button
-                                            className='text-xl flex items-center gap-4 text-white bg-primary-base hover:bg-primary-hover transition-colors py-4 px-6 rounded-md mr-2 whitespace-nowrap tracking-tight'
+                                            className='text-xl flex items-center gap-4 text-white bg-primary-base hover:bg-primary-hover transition-all py-4 px-6 rounded-md mr-2 whitespace-nowrap tracking-tight hover:shadow-xl'
                                             onClick={handleAddToCart}
                                         >
                                             <ShoppingCartIcon className='w-8 h-8' />
