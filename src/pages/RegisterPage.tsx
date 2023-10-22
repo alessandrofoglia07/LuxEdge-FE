@@ -11,6 +11,7 @@ import Notification from '@/components/Notification';
 import { AxiosError } from 'axios';
 import { motion } from 'framer-motion';
 import useAuth from '@/hooks/useAuth';
+import { NotificationMessage } from '@/types';
 
 const bannedUsernames = ['post', 'comment', 'admin', 'administrator', 'moderator', 'mod', 'user', 'users'];
 
@@ -22,7 +23,7 @@ interface HelperTexts {
 
 interface Result {
     success: boolean;
-    message: string;
+    message: NotificationMessage;
 }
 
 const userLengthErr = 'Username must be 3-20 characters long';
@@ -142,25 +143,25 @@ const RegisterPage: React.FC = () => {
             const message = await register(username, email, password);
             setResult({
                 success: true,
-                message
+                message: { title: 'Registration completed.', content: message }
             });
         } catch (err: unknown) {
             if (err instanceof AxiosError) {
                 setResult({
                     success: false,
-                    message: err.response ? err.response.data.message : 'An unknown error occurred.'
+                    message: { title: 'Unexpected error.', content: err.response ? err.response.data.message : 'An unknown error occurred.' }
                 });
                 throw err;
             } else if (typeof err === 'string') {
                 setResult({
                     success: false,
-                    message: err
+                    message: { title: 'Unexpected error.', content: err }
                 });
                 throw new Error(err);
             } else {
                 setResult({
                     success: false,
-                    message: 'An unknown error occurred.'
+                    message: { title: 'Unexpected error.', content: 'An unknown error occurred.' }
                 });
                 console.log(err);
             }
@@ -263,8 +264,8 @@ const RegisterPage: React.FC = () => {
                 </div>
             </main>
             <Notification
-                open={!!result}
-                message={result?.message || ''}
+                open={!!result?.message.content.length && result?.message.content.length > 0}
+                message={result?.message || { title: '', content: '' }}
                 severity={result?.success ? 'success' : 'error'}
                 onClose={() => {
                     setResult(undefined);

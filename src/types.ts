@@ -32,6 +32,11 @@ export interface Product {
     updatedAt: Date;
 }
 
+export interface NotificationMessage {
+    title: string;
+    content: string;
+}
+
 export interface Review {
     _id: string;
     productId: string;

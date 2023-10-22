@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/20/solid';
+import { NotificationMessage } from '@/types';
 
 interface Props {
     /** Message to show in the notification. */
-    message: string;
+    message: NotificationMessage;
     /** Type of notification. */
     severity?: 'success' | 'error';
     /** Whether the notification is open or not. */
@@ -13,31 +14,34 @@ interface Props {
 }
 
 const Notification: React.FC<Props> = ({ message, severity = 'success', open, onClose }: Props) => {
-    const [messageState, setMessageState] = useState('');
+    const [messageState, setMessageState] = useState<NotificationMessage>(message);
 
     useEffect(() => {
-        if (messageState === message) return;
+        if (messageState.content === message.content) return;
 
-        const letterRegex = /[a-zA-Z]/;
+        const letterRegex = /[a-z]/i;
 
-        if (letterRegex.test(message.slice(-1))) {
-            setMessageState(message + '.');
+        if (letterRegex.test(message.content.slice(-1))) {
+            setMessageState({ ...message, content: message.content + '.' });
         } else {
-            setMessageState(message);
+            setMessageState({ ...message });
         }
     }, [message]);
 
     return (
         <div
             id='Notification'
-            className={`fixed w-96 h-max bottom-6 right-6 rounded-lg shadow-lg p-4 z-50
-                bg-gradient-to-bl ${severity === 'error' ? 'from-red-500 to-red-700' : 'from-blue-500 to-blue-700'}
-                flex items-center justify-between gap-4
+            className={`fixed md:w-[36rem] w-[calc(100vw-8rem)] h-max bottom-6 right-6 rounded-lg elevate p-4 z-50
+                bg-gradient-to-bl bg-white
+                flex items-center justify-between gap-8
                 ${open ? 'translate-x-0' : 'translate-x-[calc(100%+2rem)]'} transition-[transform] duration-100 ease-in-out`}
         >
-            <p className='text-lg text-white font-semibold'>{messageState}</p>
-            <button onClick={onClose} className='w-10 h-10 hover:bg-white hover:bg-opacity-20 rounded-md grid place-items-center'>
-                <XMarkIcon className='w-8 h-8 text-white' />
+            <div className='flex flex-col gap-2'>
+                <h2 className='text-2xl font-extrabold tracking-tight'>{messageState.title}</h2>
+                <p className={`text-md ${severity === 'error' ? 'text-red-800' : 'text-black'} font-semibold hyphens-auto`}>{messageState.content}</p>
+            </div>
+            <button onClick={onClose} className='w-12 h-12 aspect-square hover:bg-slate-200 rounded-md grid place-items-center mr-4'>
+                <XMarkIcon className='w-10 h-10 text-black' />
             </button>
         </div>
     );

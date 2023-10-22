@@ -83,4 +83,8 @@
             grid-template-columns: repeat(auto-fit, minmax(352px, 1fr));
         }
     }
+
+    .elevate {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 20px;
+    }
 }

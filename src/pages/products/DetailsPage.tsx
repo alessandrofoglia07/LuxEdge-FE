@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Product } from '@/types';
+import { NotificationMessage, Product } from '@/types';
 import { toPlural, toSingular } from '@/utils/singularPlural';
 import toUrl from '@/utils/toUrl';
 import Img from '@/components/CustomElements/CustomImg';
@@ -17,6 +17,12 @@ import Favorites from '@/redux/persist/Favorites';
 import Notification from '@/components/Notification';
 import Review from '@/components/Review';
 
+interface Notification {
+    message: NotificationMessage;
+    open: boolean;
+    type: 'success' | 'error';
+}
+
 const DetailsPage: React.FC = () => {
     const navigate = useNavigate();
     const isAuth = useAuth();
@@ -26,9 +32,7 @@ const DetailsPage: React.FC = () => {
     const [product, setProduct] = useState<Product | null>(null);
     const [favorite, setFavorite] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
-    const [notification, setNotification] = useState<string>('');
-    const [notificationOpen, setNotificationOpen] = useState<boolean>(false);
-    const [notificationType, setNotificationType] = useState<'success' | 'error'>('success');
+    const [notification, setNotification] = useState<Notification | undefined>(undefined);
 
     useEffect(() => {
         try {
@@ -64,9 +68,14 @@ const DetailsPage: React.FC = () => {
         }
         try {
             await authAxios.patch(`/lists/cart/add/${product._id}`);
-            setNotificationType('success');
-            setNotification(`${product.name} added to cart!`);
-            setNotificationOpen(true);
+            setNotification({
+                message: {
+                    title: 'Product added to cart.',
+                    content: `${product.name} has been successfully added to your cart!`
+                },
+                open: true,
+                type: 'success'
+            });
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {
                 console.log(err.response?.data);
@@ -163,7 +172,12 @@ const DetailsPage: React.FC = () => {
                 ) : null}
             </main>
             <Footer />
-            <Notification message={notification} onClose={() => setNotificationOpen(false)} open={notificationOpen} severity={notificationType} />
+            <Notification
+                message={notification?.message || { title: '', content: '' }}
+                onClose={() => setNotification(undefined)}
+                open={!!notification?.open}
+                severity={notification?.type}
+            />
         </div>
     );
 };
