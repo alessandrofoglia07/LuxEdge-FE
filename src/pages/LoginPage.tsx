@@ -9,7 +9,7 @@ import { setToken, setRefreshToken, setUserInfo } from '@/redux/slices/authSlice
 import { useDispatch } from 'react-redux';
 import { UserInfo, NotificationMessage } from '@/types';
 import Notification from '@/components/Notification';
-import { AxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 import { motion } from 'framer-motion';
 import useAuth from '@/hooks/useAuth';
 import Favorites from '@/redux/persist/Favorites';
@@ -44,7 +44,7 @@ const LoginPage: React.FC = () => {
             }
             navigate('/products');
         } catch (err: unknown) {
-            if (err instanceof AxiosError) {
+            if (isAxiosError(err)) {
                 setError({ ...error, content: err.response?.data.message || 'An error occurred while logging in.' });
                 throw err;
             } else if (typeof err === 'string') {

@@ -4,7 +4,7 @@ import Button from '@/components/CustomElements/StyledButton';
 import LuxEdge from '@/components/LuxEdgeLogo';
 import Navbar from '@/components/Navbar';
 import { useParams } from 'react-router-dom';
-import { AxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 
 const ActivatePage: React.FC = () => {
     const { userId } = useParams<{ userId: string }>();
@@ -27,7 +27,7 @@ const ActivatePage: React.FC = () => {
             const message = await activateAccount(userId);
             setResult(message);
         } catch (err: unknown) {
-            if (err instanceof AxiosError) {
+            if (isAxiosError(err)) {
                 setResult(err.response?.data.message || defaultErr);
                 throw err;
             } else if (typeof err === 'string') {

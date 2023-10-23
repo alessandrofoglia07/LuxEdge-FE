@@ -5,7 +5,7 @@ import Input from '@/components/CustomElements/StyledInput';
 import LuxEdge from '@/components/LuxEdgeLogo';
 import Button from '@/components/CustomElements/StyledButton';
 import { forgotPassword } from '@/api/authApi';
-import { AxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 import { z } from 'zod';
 import useAuth from '@/hooks/useAuth';
 
@@ -38,7 +38,7 @@ const ForgotPasswordPage: React.FC = () => {
                 return;
             }
         } catch (err: unknown) {
-            if (err instanceof AxiosError) {
+            if (isAxiosError(err)) {
                 setResult(err.response?.data.message || 'An error occurred while sending the email.');
                 throw err;
             } else if (typeof err === 'string') {

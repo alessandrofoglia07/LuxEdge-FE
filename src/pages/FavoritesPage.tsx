@@ -7,7 +7,7 @@ import toUrl from '@/utils/toUrl';
 import useAuth from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import authAxios from '@/api/authAxios';
-import { AxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 import Spinner from '@/components/Spinner';
 import { CheckIcon, XMarkIcon, XCircleIcon } from '@heroicons/react/20/solid';
 import toPrice from '@/utils/toPrice';
@@ -88,7 +88,7 @@ const FavoritesPage: React.FC = () => {
 
                 setProducts(favsList.data);
             } catch (err: unknown) {
-                if (err instanceof AxiosError) {
+                if (isAxiosError(err)) {
                     throw err.response?.data;
                 } else if (err instanceof Error) {
                     throw err;
@@ -109,7 +109,7 @@ const FavoritesPage: React.FC = () => {
 
             setProducts((prev) => prev.filter((product) => product._id !== id));
         } catch (err: unknown) {
-            if (err instanceof AxiosError) {
+            if (isAxiosError(err)) {
                 throw err.response?.data;
             } else if (err instanceof Error) {
                 throw err;

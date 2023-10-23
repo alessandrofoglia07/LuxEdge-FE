@@ -3,7 +3,7 @@ import LuxEdge from './LuxEdgeLogo';
 import { categories } from '@/components/Navbar';
 import { PlayIcon } from '@heroicons/react/20/solid';
 import { z } from 'zod';
-import axios, { AxiosError } from 'axios';
+import axios, { isAxiosError } from 'axios';
 
 interface Item {
     name: string;
@@ -78,7 +78,7 @@ const Footer: React.FC<FooterProps> = ({ className }: FooterProps) => {
                 setHelperText('Please enter a valid email address.');
             }
         } catch (err: unknown) {
-            if (err instanceof AxiosError) {
+            if (isAxiosError(err)) {
                 if (err.response?.status === 409) {
                     setHelperText('This email address is already subscribed.');
                     throw err;

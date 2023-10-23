@@ -8,7 +8,7 @@ import { register } from '@/api/authApi';
 import { z } from 'zod';
 import { detect } from 'curse-filter';
 import Notification from '@/components/Notification';
-import { AxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 import { motion } from 'framer-motion';
 import useAuth from '@/hooks/useAuth';
 import { NotificationMessage } from '@/types';
@@ -146,7 +146,7 @@ const RegisterPage: React.FC = () => {
                 message: { title: 'Registration completed.', content: message }
             });
         } catch (err: unknown) {
-            if (err instanceof AxiosError) {
+            if (isAxiosError(err)) {
                 setResult({
                     success: false,
                     message: { title: 'Unexpected error.', content: err.response ? err.response.data.message : 'An unknown error occurred.' }

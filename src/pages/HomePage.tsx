@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar';
 import { HomeIcon, CubeIcon, BanknotesIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import Highlight from '@/components/Highlight';
 import Benefit from '@/components/Benefit';
-import axios, { AxiosError } from 'axios';
+import axios, { isAxiosError } from 'axios';
 import ProductCard from '@/components/ProductCard';
 import Testimonial from '@/components/Testimonial';
 import Img from '@/components/CustomElements/CustomImg';
@@ -158,7 +158,7 @@ const HomePage: React.FC = () => {
                     setFavsList(favsList);
                 }
             } catch (err: unknown) {
-                if (err instanceof AxiosError) {
+                if (isAxiosError(err)) {
                     throw err.response?.data;
                 } else if (typeof err === 'string') {
                     throw new Error(err);
