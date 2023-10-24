@@ -205,7 +205,7 @@ const HomePage: React.FC = () => {
                                     y: 0,
                                     transition: {
                                         duration: 0.7,
-                                        delay: 1
+                                        delay: 0.8
                                     }
                                 }}
                                 viewport={{ once: true }}
@@ -224,7 +224,7 @@ const HomePage: React.FC = () => {
                                     opacity: 1,
                                     transition: {
                                         duration: 0.7,
-                                        delay: 1.5
+                                        delay: 1.2
                                     }
                                 }}
                                 viewport={{ once: true }}
@@ -243,7 +243,7 @@ const HomePage: React.FC = () => {
                                             opacity: 1,
                                             transition: {
                                                 duration: 0.8,
-                                                delay: 2 + i * 0.8
+                                                delay: 2 + i * 0.4
                                             }
                                         }}
                                         viewport={{ once: true }}
@@ -294,7 +294,7 @@ const HomePage: React.FC = () => {
                                     y: 0,
                                     transition: {
                                         duration: 0.7,
-                                        delay: 0.8
+                                        delay: 0.1
                                     }
                                 }}
                                 viewport={{ once: true }}
@@ -310,7 +310,7 @@ const HomePage: React.FC = () => {
                                     opacity: 1,
                                     transition: {
                                         duration: 0.7,
-                                        delay: 1.2
+                                        delay: 0.4
                                     }
                                 }}
                                 viewport={{ once: true }}
@@ -327,7 +327,7 @@ const HomePage: React.FC = () => {
                                     opacity: 1,
                                     transition: {
                                         duration: 0.7,
-                                        delay: 1.6
+                                        delay: 0.8
                                     }
                                 }}
                                 viewport={{ once: true }}
@@ -344,7 +344,7 @@ const HomePage: React.FC = () => {
                                     opacity: 1,
                                     transition: {
                                         duration: 0.7,
-                                        delay: 2
+                                        delay: 1.2
                                     }
                                 }}
                                 viewport={{ once: true }}
@@ -360,7 +360,7 @@ const HomePage: React.FC = () => {
                                     opacity: 1,
                                     transition: {
                                         duration: 0.7,
-                                        delay: 2.4
+                                        delay: 1.6
                                     }
                                 }}
                                 viewport={{ once: true }}

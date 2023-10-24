@@ -126,7 +126,7 @@ const FavoritesPage: React.FC = () => {
             <Navbar />
             <main className='py-16 min-h-page'>
                 {loading ? (
-                    <div className='absolute right-1/2 -translate-x-1/2'>
+                    <div className='absolute left-1/2 -translate-x-1/2'>
                         <Spinner className='mt-[20vh]' />
                     </div>
                 ) : (

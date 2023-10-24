@@ -99,7 +99,7 @@ const Footer: React.FC<FooterProps> = ({ className }: FooterProps) => {
     return (
         <footer className={`relative bottom-0 flex flex-col w-full items-center ${className}`}>
             <div className='bg-slate-700 flex justify-evenly flex-wrap gap-4 w-full py-8 px-4'>
-                <List title={<LuxEdge className='select-none text-3xl pb-4 text-slate-200' />} items={items1} />
+                <List title={<LuxEdge className='select-none text-3xl pb-4 text-slate-200 [&>*]:text-slate-200' />} items={items1} />
                 <List title='Products' items={items2} />
                 <div id='subscribe-to-newsletter'>
                     <h1 className='py-1 font-bold text-white text-2xl capitalize tracking-tight select-none'>Don't miss out.</h1>
