@@ -40,7 +40,7 @@ export interface NotificationMessage {
 export interface Review {
     _id: string;
     productId: string;
-    userId: string;
+    user: string;
     rating: number;
     comment: string;
     createdAt: Date;

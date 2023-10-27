@@ -23,6 +23,45 @@ interface Notification {
     type: 'success' | 'error';
 }
 
+const mockReviews = [
+    {
+        _id: '1',
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
+        rating: 5,
+        user: 'John Doe',
+        productId: '',
+        createdAt: new Date(),
+        updatedAt: new Date()
+    },
+    {
+        _id: '2',
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
+        rating: 5,
+        user: 'John Doe',
+        productId: '',
+        createdAt: new Date(),
+        updatedAt: new Date()
+    },
+    {
+        _id: '3',
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
+        rating: 5,
+        user: 'John Doe',
+        productId: '',
+        createdAt: new Date(),
+        updatedAt: new Date()
+    },
+    {
+        _id: '4',
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
+        rating: 5,
+        user: 'John Doe',
+        productId: '',
+        createdAt: new Date(),
+        updatedAt: new Date()
+    }
+];
+
 const DetailsPage: React.FC = () => {
     const navigate = useNavigate();
     const isAuth = useAuth();
@@ -161,9 +200,15 @@ const DetailsPage: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                        {product.reviews.length > 0 && (
-                            <div className='lg:w-fit w-full relative left-1/2 -translate-x-1/2 flex -md:flex-col lg:gap-16 gap-8 justify-center lg:px-8 px-4 mt-8 h-max'>
-                                {product.reviews.map((review) => (
+                        {mockReviews.length > 0 && (
+                            <div className='lg:w-1/2 w-full relative left-1/2 -translate-x-1/2 flex flex-col -md:flex-col lg:gap-8 gap-8 justify-center lg:px-8 px-4 mt-8 h-max pb-32'>
+                                <div className='w-full flex justify-between items-center lg:mb-4 lg:mt-8'>
+                                    <h2 className='text-3xl font-extrabold tracking-tight'>Product Reviews</h2>
+                                    <button className='px-4 h-12 bg-primary-base hover:bg-primary-hover rounded-lg text-white font-semibold hover:shadow-xl transition-all'>
+                                        Write your review
+                                    </button>
+                                </div>
+                                {mockReviews.map((review) => (
                                     <Review review={review} key={review._id} />
                                 ))}
                             </div>
