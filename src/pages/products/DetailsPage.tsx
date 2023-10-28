@@ -16,6 +16,7 @@ import authAxios from '@/api/authAxios';
 import Favorites from '@/redux/persist/Favorites';
 import Notification from '@/components/Notification';
 import Review from '@/components/Review';
+import RatingButton from '@/components/RatingButton';
 
 interface Notification {
     message: NotificationMessage;
@@ -167,7 +168,6 @@ const DetailsPage: React.FC = () => {
                         {productName}
                     </a>
                 </h4>
-                {/* TODO: add reviews */}
                 {product && !loading ? (
                     <>
                         <div className='lg:w-fit w-full relative left-1/2 -translate-x-1/2 flex -md:flex-col lg:gap-16 gap-8 justify-center lg:px-8 px-4 mt-8 h-max'>
@@ -207,6 +207,15 @@ const DetailsPage: React.FC = () => {
                                     <button className='px-4 h-12 bg-primary-base hover:bg-primary-hover rounded-lg text-white font-semibold hover:shadow-xl transition-all'>
                                         Write your review
                                     </button>
+                                </div>
+                                <div id='review-editor'>
+                                    <textarea className='w-full h-40 bg-slate-100 border-2 border-slate-100 rounded-md p-4' placeholder='Write your review here...' />
+                                    <div className='flex justify-between items-center'>
+                                        <RatingButton init={0} />
+                                        <button className='px-4 h-12 bg-primary-base hover:bg-primary-hover rounded-lg text-white font-semibold hover:shadow-xl transition-all'>
+                                            Submit
+                                        </button>
+                                    </div>
                                 </div>
                                 {mockReviews.map((review) => (
                                     <Review review={review} key={review._id} />
