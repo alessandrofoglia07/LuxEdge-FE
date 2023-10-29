@@ -17,6 +17,7 @@ import Favorites from '@/redux/persist/Favorites';
 import { FunnelIcon } from '@heroicons/react/24/outline';
 import { toSingular } from '@/utils/singularPlural';
 import { categories } from '@/components/Navbar';
+import { motion } from 'framer-motion';
 
 const sortOptions = [
     { id: 1, name: 'Recommend' },
@@ -42,7 +43,7 @@ interface PriceRangeInputProps extends React.InputHTMLAttributes<HTMLInputElemen
 
 const PriceRangeInput: React.FC<PriceRangeInputProps> = (props: PriceRangeInputProps) => {
     return (
-        <div className='w-2/3 bg-slate-200 my-2 rounded-md flex items-center focus-within:outline focus-within:outline-blue-500 focus-within:outline-offset-1'>
+        <div className='w-2/3 bg-slate-200 my-2 rounded-md flex items-center'>
             <p className='pr-2 pl-4'>$</p>
             <input type='number' className='w-full bg-slate-200 p-2 rounded-md leading-3 outline-none tracking-tight' max={1000000} min={0} {...props} />
         </div>
@@ -330,12 +331,14 @@ const ProductsPage: React.FC = () => {
                         <div className='-md:w-full -md:flex justify-center gap-2'>
                             <Listbox value={selectedSort} onChange={setSelectedSort}>
                                 <div className='relative z-10'>
-                                    <Listbox.Button className='relative w-64 h-11 md:h-auto -md:w-[40vw] -md:text-center rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-lg border border-slate-300 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light sm:text-sm'>
-                                        <span className='block truncate font-semibold'>{selectedSort.name}</span>
-                                        <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
-                                            <ChevronUpDownIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
-                                        </span>
-                                    </Listbox.Button>
+                                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                                        <Listbox.Button className='relative w-64 h-11 md:h-auto -md:w-[40vw] -md:text-center rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-lg border border-slate-300 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light sm:text-sm'>
+                                            <span className='block truncate font-semibold'>{selectedSort.name}</span>
+                                            <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
+                                                <ChevronUpDownIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
+                                            </span>
+                                        </Listbox.Button>
+                                    </motion.div>
                                     <Transition as={Fragment} leave='transition ease-in duration-100' leaveFrom='opacity-100' leaveTo='opacity-0'>
                                         <Listbox.Options className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
                                             {sortOptions.map((sortOption, idx) => (

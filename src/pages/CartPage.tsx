@@ -13,6 +13,7 @@ import { CheckIcon, XMarkIcon, XCircleIcon, MinusCircleIcon } from '@heroicons/r
 import toPrice from '@/utils/toPrice';
 import Pagination from '@/components/Pagination';
 import { toPlural } from '@/utils/singularPlural';
+import { motion } from 'framer-motion';
 
 interface ProductCardProps {
     product: Product;
@@ -24,10 +25,10 @@ interface ProductCardProps {
 const ProductCardDesktop = ({ product, handleAdd, handleRemove, quantity = 1 }: ProductCardProps) => (
     <div className='[&>*]:font-semibold [&>*]:tracking-wide [&>*]:text-start flex items-center'>
         <div className='w-5/12 flex items-center'>
-            <a className='rounded-lg' href={`/products/${toPlural(product.category)}/${product.name}`}>
-                <Img src={toUrl(product.imagePath)} alt={product.name} className='w-48 min-w-[6rem] aspect-square rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300' />
+            <a className='rounded-lg w-1/3' href={`/products/${toPlural(product.category)}/${product.name}`}>
+                <Img src={toUrl(product.imagePath)} alt={product.name} className='w-full aspect-square rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300' />
             </a>
-            <a href={`/products/${toPlural(product.category)}/${product.name}`} className='px-8 text-xl tracking-wide'>
+            <a href={`/products/${toPlural(product.category)}/${product.name}`} className='px-4 text-xl tracking-wide w-2/3'>
                 {product.name}
             </a>
         </div>
@@ -46,13 +47,13 @@ const ProductCardDesktop = ({ product, handleAdd, handleRemove, quantity = 1 }: 
         </div>
         <div className='w-2/12 flex items-center justify-center'>
             <div className='w-full flex flex-col items-center'>
-                <button className='rounded-full focus:outline-none' onClick={() => handleAdd(product._id)}>
+                <motion.button whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }} className='rounded-full focus:outline-none' onClick={() => handleAdd(product._id)}>
                     <XCircleIcon aria-label='Add item to cart' className='w-8 -rotate-45' />
-                </button>
+                </motion.button>
                 <h6 className='text-center font-extrabold'>{quantity}</h6>
-                <button className='rounded-full focus:outline-none' onClick={() => handleRemove(product._id)}>
+                <motion.button whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }} className='rounded-full focus:outline-none' onClick={() => handleRemove(product._id)}>
                     <MinusCircleIcon aria-label='Remove from cart' className='w-8' />
-                </button>
+                </motion.button>
             </div>
         </div>
     </div>
@@ -72,13 +73,13 @@ const ProductCardMobile = ({ product, handleAdd, handleRemove, quantity = 1 }: P
         </div>
         <div className='w-2/12 flex items-center justify-center'>
             <div className='w-full flex flex-col items-center'>
-                <button className='rounded-full focus:outline-none' onClick={() => handleAdd(product._id)}>
+                <motion.button whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }} className='rounded-full focus:outline-none' onClick={() => handleAdd(product._id)}>
                     <XCircleIcon aria-label='Add item to cart' className='w-8 -rotate-45' />
-                </button>
+                </motion.button>
                 <h6 className='text-center font-extrabold'>{quantity}</h6>
-                <button className='rounded-full focus:outline-none' onClick={() => handleRemove(product._id)}>
+                <motion.button whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }} className='rounded-full focus:outline-none' onClick={() => handleRemove(product._id)}>
                     <MinusCircleIcon aria-label='Remove from cart' className='w-8' />
-                </button>
+                </motion.button>
             </div>
         </div>
     </div>
