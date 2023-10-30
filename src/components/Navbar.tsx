@@ -5,8 +5,7 @@ import { StarIcon } from '@heroicons/react/24/outline';
 import useWindowWidth from '@/hooks/useWindowWidth';
 import useAuth from '@/hooks/useAuth';
 import Button from './CustomElements/StyledButton';
-
-export const categories = ['Beds', 'Bookshelves', 'Chairs', 'Desks', 'Drawers', 'Sofas', 'Tables', 'Bedrooms', 'Living rooms'];
+import categories from '@/utils/categories';
 
 interface CategoryProps {
     children: string;
@@ -147,7 +146,7 @@ const Navbar: React.FC = () => {
                                                 open ? 'bg-blue-200 text-primary-hover rounded-xl' : ''
                                             }`}
                                         >
-                                            Categories <ChevronDownIcon className={`${open ? 'rotate-180 transform' : ''} w-8 ml-2`} />
+                                            Categories <ChevronDownIcon className={`${open ? 'rotate-180 transform' : ''} w-8 ml-2 transition-transform`} />
                                         </Popover.Button>
                                         <Transition
                                             as={Fragment}
@@ -183,16 +182,16 @@ const Navbar: React.FC = () => {
                             <a
                                 href='/favorites'
                                 id='Favorites'
-                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-100 p-2 text-primary-base hover:text-primary-hover hover:border-primary-base border-opacity-70 transition-all mr-4'
+                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-100 p-2 text-primary-base hover:text-primary-hover hover:border-primary-base border-opacity-70 transition-all mr-4 group'
                             >
-                                <HeartIcon className='w-6' />
+                                <HeartIcon className='w-6 group-hover:scale-[1.2] transition-transform duration-200' />
                             </a>
                             <a
                                 href='/cart'
                                 id='Cart'
-                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-100 p-2 text-primary-base hover:text-primary-hover hover:border-primary-base border-opacity-70 transition-all mr-8'
+                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-100 p-2 text-primary-base hover:text-primary-hover hover:border-primary-base border-opacity-70 transition-all mr-8 group'
                             >
-                                <ShoppingCartIcon className='w-6' />
+                                <ShoppingCartIcon className='w-6 group-hover:scale-[1.2] transition-transform duration-200' />
                             </a>
                         </>
                     ) : (

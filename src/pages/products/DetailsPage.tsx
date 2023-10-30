@@ -17,6 +17,7 @@ import Favorites from '@/redux/persist/Favorites';
 import Notification from '@/components/Notification';
 import Review from '@/components/Review';
 import RatingButton from '@/components/RatingButton';
+import { motion } from 'framer-motion';
 
 interface Notification {
     message: NotificationMessage;
@@ -189,12 +190,13 @@ const DetailsPage: React.FC = () => {
                                             <ShoppingCartIcon className='w-8 h-8' />
                                             Add to Cart
                                         </button>
-                                        <button
+                                        <motion.button
+                                            whileTap={{ scale: 0.8 }}
                                             className='bg-white text-primary-base hover:text-primary-hover border-2 hover:bg-slate-100 transition-colors p-3 rounded-md mr-2 group'
                                             onClick={handleAddToFavs}
                                         >
                                             <HeartIcon className={`w-10 h-10 transition-colors ${favorite && 'text-red-500 group-hover:text-red-600'}`} />
-                                        </button>
+                                        </motion.button>
                                     </div>
                                     <h3 className='text-3xl font-extrabold text-primary-base whitespace-nowrap -md:mt-8 tracking-wide'>{toPrice(product.price)}</h3>
                                 </div>
@@ -209,9 +211,12 @@ const DetailsPage: React.FC = () => {
                                     </button>
                                 </div>
                                 <div id='review-editor'>
-                                    <textarea className='w-full h-40 bg-slate-100 border-2 border-slate-100 rounded-md p-4' placeholder='Write your review here...' />
+                                    <textarea
+                                        className='w-full h-40 bg-slate-100 border-2 border-slate-100 rounded-md p-4 mt-8 mb-6 resize-none focus:outline-none focus:elevate transition-all outline-none'
+                                        placeholder='Write your review here...'
+                                    />
                                     <div className='flex justify-between items-center'>
-                                        <RatingButton init={0} />
+                                        <RatingButton init={4} />
                                         <button className='px-4 h-12 bg-primary-base hover:bg-primary-hover rounded-lg text-white font-semibold hover:shadow-xl transition-all'>
                                             Submit
                                         </button>

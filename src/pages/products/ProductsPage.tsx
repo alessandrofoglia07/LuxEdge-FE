@@ -16,7 +16,7 @@ import Spinner from '@/components/Spinner';
 import Favorites from '@/redux/persist/Favorites';
 import { FunnelIcon } from '@heroicons/react/24/outline';
 import { toSingular } from '@/utils/singularPlural';
-import { categories } from '@/components/Navbar';
+import categories from '@/utils/categories';
 import { motion } from 'framer-motion';
 
 const sortOptions = [
