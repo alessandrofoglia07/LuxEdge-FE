@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { NotificationMessage, Product } from '@/types';
+import { NotificationMessage, Product, Review as ReviewT } from '@/types';
 import { toPlural, toSingular } from '@/utils/singularPlural';
 import toUrl from '@/utils/toUrl';
 import Img from '@/components/CustomElements/CustomImg';
@@ -18,6 +18,7 @@ import Notification from '@/components/Notification';
 import Review from '@/components/Review';
 import RatingButton from '@/components/RatingButton';
 import { motion } from 'framer-motion';
+import useSelector from '@/hooks/useSelector';
 
 interface Notification {
     message: NotificationMessage;
@@ -30,7 +31,7 @@ const mockReviews = [
         _id: '1',
         comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
         rating: 5,
-        user: 'John Doe',
+        user: 'Alexxino',
         productId: '',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -69,11 +70,15 @@ const DetailsPage: React.FC = () => {
     const isAuth = useAuth();
     const productName = useParams<{ productName: string }>().productName;
     const productCategory = toSingular(useParams<{ productCategory: string }>().productCategory || '');
+    const { userInfo } = useSelector((state) => state.auth);
 
     const [product, setProduct] = useState<Product | null>(null);
     const [favorite, setFavorite] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
     const [notification, setNotification] = useState<Notification | undefined>(undefined);
+
+    const [reviews, setReviews] = useState<ReviewT[]>([]);
+    const [ownReview, setOwnReview] = useState<null | ReviewT>(null);
 
     useEffect(() => {
         try {
@@ -88,6 +93,17 @@ const DetailsPage: React.FC = () => {
                     favs = Favorites.get() || [];
                 }
                 if (products.category !== productCategory) throw new Error('Product not found');
+                // const reviewsFromServer: ReviewT[] = (await axios.get(`${import.meta.env.VITE_API_URL}/api/reviews/get-reviews/${products._id}`)).data.reviews;
+                const reviewsFromServer = [...mockReviews];
+                if (isAuth && reviewsFromServer.some((review) => review.user === userInfo?.username)) {
+                    setOwnReview(reviewsFromServer.find((review) => review.user === userInfo?.username) || null);
+                    reviewsFromServer.splice(
+                        reviewsFromServer.findIndex((review) => review.user === userInfo?.username),
+                        1
+                    );
+                }
+                // setReviews(reviewsFromServer);
+                setReviews(reviewsFromServer);
                 setProduct(products);
                 setFavorite(favs.includes(products._id));
             })();
@@ -202,27 +218,28 @@ const DetailsPage: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                        {mockReviews.length > 0 && (
+                        {reviews.length > 0 && (
                             <div className='lg:w-1/2 w-full relative left-1/2 -translate-x-1/2 flex flex-col -md:flex-col lg:gap-8 gap-8 justify-center lg:px-8 px-4 mt-8 h-max pb-32'>
                                 <div className='w-full flex justify-between items-center lg:mb-4 lg:mt-8'>
                                     <h2 className='text-3xl font-extrabold tracking-tight'>Product Reviews</h2>
-                                    <button className='px-4 h-12 bg-primary-base hover:bg-primary-hover rounded-lg text-white font-semibold hover:shadow-xl transition-all'>
-                                        Write your review
-                                    </button>
                                 </div>
-                                <div id='review-editor'>
-                                    <textarea
-                                        className='w-full h-40 bg-slate-100 border-2 border-slate-100 rounded-md p-4 mt-8 mb-6 resize-none focus:outline-none focus:elevate transition-all outline-none'
-                                        placeholder='Write your review here...'
-                                    />
-                                    <div className='flex justify-between items-center'>
-                                        <RatingButton init={4} />
-                                        <button className='px-4 h-12 bg-primary-base hover:bg-primary-hover rounded-lg text-white font-semibold hover:shadow-xl transition-all'>
-                                            Submit
-                                        </button>
+                                {ownReview ? (
+                                    <Review review={ownReview} key={ownReview._id} modifiable />
+                                ) : (
+                                    <div id='review-editor'>
+                                        <textarea
+                                            className='w-full h-40 bg-slate-100 border-2 border-slate-100 rounded-md p-4 mt-8 mb-6 resize-none focus:outline-none focus:elevate transition-all outline-none'
+                                            placeholder='Write your review here...'
+                                        />
+                                        <div className='flex justify-between items-center'>
+                                            <RatingButton init={4} />
+                                            <button className='px-4 h-12 bg-primary-base hover:bg-primary-hover rounded-lg text-white font-semibold hover:shadow-xl transition-all'>
+                                                Submit
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                                {mockReviews.map((review) => (
+                                )}
+                                {reviews.map((review) => (
                                     <Review review={review} key={review._id} />
                                 ))}
                             </div>
