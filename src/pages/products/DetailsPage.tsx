@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '@/api/axios';
+import { isAxiosError } from 'axios';
 import { NotificationMessage, Product, Review as ReviewT } from '@/types';
 import { toPlural, toSingular } from '@/utils/singularPlural';
 import toUrl from '@/utils/toUrl';
@@ -26,45 +27,6 @@ interface Notification {
     type: 'success' | 'error';
 }
 
-const mockReviews = [
-    {
-        _id: '1',
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
-        rating: 5,
-        user: 'Alexxino',
-        productId: '',
-        createdAt: new Date(),
-        updatedAt: new Date()
-    },
-    {
-        _id: '2',
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
-        rating: 5,
-        user: 'John Doe',
-        productId: '',
-        createdAt: new Date(),
-        updatedAt: new Date()
-    },
-    {
-        _id: '3',
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
-        rating: 5,
-        user: 'John Doe',
-        productId: '',
-        createdAt: new Date(),
-        updatedAt: new Date()
-    },
-    {
-        _id: '4',
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
-        rating: 5,
-        user: 'John Doe',
-        productId: '',
-        createdAt: new Date(),
-        updatedAt: new Date()
-    }
-];
-
 const DetailsPage: React.FC = () => {
     const navigate = useNavigate();
     const isAuth = useAuth();
@@ -79,36 +41,44 @@ const DetailsPage: React.FC = () => {
 
     const [reviews, setReviews] = useState<ReviewT[]>([]);
     const [ownReview, setOwnReview] = useState<null | ReviewT>(null);
+    const [newReview, setNewReview] = useState<null | { text: string; rating: number }>(null);
+
+    const fetchReviews = async (specificProduct?: Product) => {
+        if (!product && !specificProduct) return;
+        const reviewsFromServer: ReviewT[] = (await axios.get(`/reviews/get-reviews/${(specificProduct || product!)._id}`)).data.reviews;
+        // check if user has already reviewed this product
+        if (isAuth && reviewsFromServer.some((review) => review.user.username === userInfo?.username)) {
+            setOwnReview(reviewsFromServer.find((review) => review.user.username === userInfo?.username) || null);
+            reviewsFromServer.splice(
+                reviewsFromServer.findIndex((review) => review.user.username === userInfo?.username),
+                1
+            );
+        } else {
+            setNewReview({ text: '', rating: 4 });
+            setOwnReview(null);
+        }
+        setReviews(reviewsFromServer);
+    };
 
     useEffect(() => {
         try {
             setLoading(true);
 
             (async () => {
-                const products = (await axios.get(`${import.meta.env.VITE_API_URL}/api/products/details/name/${productName}`)).data;
+                const product = (await axios.get(`/products/details/name/${productName}`)).data;
                 let favs: string[] = [];
                 if (isAuth) {
                     favs = (await getFavsList()) || [];
                 } else {
                     favs = Favorites.get() || [];
                 }
-                if (products.category !== productCategory) throw new Error('Product not found');
-                // const reviewsFromServer: ReviewT[] = (await axios.get(`${import.meta.env.VITE_API_URL}/api/reviews/get-reviews/${products._id}`)).data.reviews;
-                const reviewsFromServer = [...mockReviews];
-                if (isAuth && reviewsFromServer.some((review) => review.user === userInfo?.username)) {
-                    setOwnReview(reviewsFromServer.find((review) => review.user === userInfo?.username) || null);
-                    reviewsFromServer.splice(
-                        reviewsFromServer.findIndex((review) => review.user === userInfo?.username),
-                        1
-                    );
-                }
-                // setReviews(reviewsFromServer);
-                setReviews(reviewsFromServer);
-                setProduct(products);
-                setFavorite(favs.includes(products._id));
+                if (product.category !== productCategory) throw new Error('Product not found');
+                await fetchReviews(product);
+                setProduct(product);
+                setFavorite(favs.includes(product._id));
             })();
         } catch (err) {
-            if (axios.isAxiosError(err)) {
+            if (isAxiosError(err)) {
                 console.log(err.response?.data);
             } else {
                 console.log(err);
@@ -134,7 +104,7 @@ const DetailsPage: React.FC = () => {
                 type: 'success'
             });
         } catch (err: unknown) {
-            if (axios.isAxiosError(err)) {
+            if (isAxiosError(err)) {
                 console.log(err.response?.data);
             } else {
                 console.log(err);
@@ -161,13 +131,83 @@ const DetailsPage: React.FC = () => {
                 Favorites.add(product._id);
             }
         } catch (err: unknown) {
-            if (axios.isAxiosError(err)) {
+            if (isAxiosError(err)) {
                 console.log(err.response?.data);
             } else {
                 console.log(err);
             }
         } finally {
             setFavorite(!favorite);
+        }
+    };
+
+    const handleAddReview = async () => {
+        if (!newReview) return;
+        if (!product) return;
+        const { text, rating } = newReview;
+        try {
+            await authAxios.post(`/reviews/add/${product._id}`, { comment: text, rating: rating + 1 });
+            await fetchReviews();
+            setNotification({
+                message: {
+                    title: 'Review added.',
+                    content: `Your review has been successfully added!`
+                },
+                open: true,
+                type: 'success'
+            });
+        } catch (err: unknown) {
+            if (isAxiosError(err)) {
+                console.log(err.response?.data);
+            } else {
+                console.log(err);
+            }
+        }
+    };
+
+    const handleEditReview = async (text: string, rating: number) => {
+        if (!ownReview) return;
+        if (!product) return;
+        try {
+            await authAxios.patch(`/reviews/edit/${ownReview._id}`, { comment: text, rating: rating + 1 });
+            await fetchReviews();
+            setNotification({
+                message: {
+                    title: 'Review edited.',
+                    content: `Your review has been successfully edited!`
+                },
+                open: true,
+                type: 'success'
+            });
+        } catch (err: unknown) {
+            if (isAxiosError(err)) {
+                console.log(err.response?.data);
+            } else {
+                console.log(err);
+            }
+        }
+    };
+
+    const handleDeleteReview = async () => {
+        if (!ownReview) return;
+        if (!product) return;
+        try {
+            await authAxios.delete(`/reviews/delete/${ownReview._id}`);
+            await fetchReviews();
+            setNotification({
+                message: {
+                    title: 'Review deleted.',
+                    content: `Your review has been successfully deleted!`
+                },
+                open: true,
+                type: 'success'
+            });
+        } catch (err: unknown) {
+            if (isAxiosError(err)) {
+                console.log(err.response?.data);
+            } else {
+                console.log(err);
+            }
         }
     };
 
@@ -218,32 +258,36 @@ const DetailsPage: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                        {reviews.length > 0 && (
-                            <div className='lg:w-1/2 w-full relative left-1/2 -translate-x-1/2 flex flex-col -md:flex-col lg:gap-8 gap-8 justify-center lg:px-8 px-4 mt-8 h-max pb-32'>
-                                <div className='w-full flex justify-between items-center lg:mb-4 lg:mt-8'>
-                                    <h2 className='text-3xl font-extrabold tracking-tight'>Product Reviews</h2>
-                                </div>
-                                {ownReview ? (
-                                    <Review review={ownReview} key={ownReview._id} modifiable />
-                                ) : (
-                                    <div id='review-editor'>
-                                        <textarea
-                                            className='w-full h-40 bg-slate-100 border-2 border-slate-100 rounded-md p-4 mt-8 mb-6 resize-none focus:outline-none focus:elevate transition-all outline-none'
-                                            placeholder='Write your review here...'
-                                        />
-                                        <div className='flex justify-between items-center'>
-                                            <RatingButton init={4} />
-                                            <button className='px-4 h-12 bg-primary-base hover:bg-primary-hover rounded-lg text-white font-semibold hover:shadow-xl transition-all'>
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </div>
-                                )}
-                                {reviews.map((review) => (
-                                    <Review review={review} key={review._id} />
-                                ))}
+                        <div className='lg:w-1/2 w-full relative left-1/2 -translate-x-1/2 flex flex-col -md:flex-col lg:gap-8 gap-8 justify-center lg:px-8 px-4 mt-8 h-max pb-32'>
+                            <div className='w-full flex justify-between items-center lg:mb-4 lg:mt-8'>
+                                <h2 className='text-3xl font-extrabold tracking-tight'>Product Reviews</h2>
                             </div>
-                        )}
+                            {ownReview ? (
+                                <Review review={ownReview} key={ownReview._id} modifiable onConfirm={handleEditReview} onDelete={handleDeleteReview} />
+                            ) : (
+                                <div id='review-editor'>
+                                    <textarea
+                                        className='w-full h-40 bg-slate-100 border-2 border-slate-100 rounded-md p-4 mt-8 mb-6 resize-none focus:outline-none focus:elevate transition-all outline-none'
+                                        placeholder='Write your review here...'
+                                        value={newReview?.text}
+                                        onChange={(e) => setNewReview({ text: e.target.value, rating: newReview?.rating || 0 })}
+                                    />
+                                    <div className='flex justify-between items-center'>
+                                        <RatingButton init={newReview?.rating || 4} onChange={(rating) => setNewReview({ text: newReview?.text || '', rating: rating })} />
+                                        <button
+                                            onClick={handleAddReview}
+                                            className='px-4 h-12 bg-primary-base hover:bg-primary-hover rounded-lg text-white font-semibold hover:shadow-xl transition-all'
+                                        >
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                            {reviews.length === 0 && <h3 className='text-3xl font-bold opacity-70 mt-8'>No reviews yet.</h3>}
+                            {reviews.map((review) => (
+                                <Review review={review} key={review._id} />
+                            ))}
+                        </div>
                     </>
                 ) : null}
             </main>

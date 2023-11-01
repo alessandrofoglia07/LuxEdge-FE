@@ -6,15 +6,17 @@ interface Props {
     init: number;
     max?: number;
     className?: string;
+    onChange: (rating: number) => void;
 }
 
-const RatingButton: React.FC<Props> = ({ init, max = 5, className = '' }: Props) => {
+const RatingButton: React.FC<Props> = ({ init, max = 5, className = '', onChange }: Props) => {
     const [selectedRating, setSelectedRating] = useState(init);
     const [hoveredRating, setHoveredRating] = useState(init);
     const [hovering, setHovering] = useState(false);
 
     const handleRatingClick = (newRating: number) => {
         setSelectedRating(newRating);
+        onChange(newRating);
     };
 
     return (

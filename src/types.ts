@@ -28,8 +28,8 @@ export interface Product {
     available: boolean;
     reviews: Review[];
     rating: number;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface NotificationMessage {
@@ -40,11 +40,14 @@ export interface NotificationMessage {
 export interface Review {
     _id: string;
     productId: string;
-    user: string;
+    user: {
+        _id: string;
+        username: string;
+    };
     rating: number;
     comment: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface Testimonial {
