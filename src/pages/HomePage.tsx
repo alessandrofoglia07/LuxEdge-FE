@@ -80,9 +80,9 @@ const HomePage: React.FC = () => {
         let scrollAmount = 0;
 
         if (width < 768) {
-            scrollAmount = 300;
+            scrollAmount = 400;
         } else {
-            scrollAmount = 500;
+            scrollAmount = 600;
         }
 
         if (direction === 'left') {
@@ -209,10 +209,10 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-4xl -md:text-xl tracking-tight'
+                                className='text-4xl -md:text-xl tracking-tighter font-medium'
                                 id='hero-subtitle'
                             >
-                                <LuxEdge className='font-normal' /> takes care of your{' '}
+                                <LuxEdge className='font-medium' /> takes care of your{' '}
                                 <Highlight effect lighter>
                                     home
                                 </Highlight>{' '}
@@ -229,7 +229,7 @@ const HomePage: React.FC = () => {
                                 }}
                                 viewport={{ once: true }}
                                 href='products'
-                                className='tracking-tighter transition-color duration-200 font-bold inline-block text-2xl capitalize px-10 py-3 rounded-xl text-white bg-primary-base hover:bg-primary-hover mt-12'
+                                className='transition-all duration-200 font-bold inline-block text-2xl capitalize px-10 py-3 rounded-3xl hover:rounded-2xl text-white bg-primary-base hover:bg-primary-hover mt-12'
                             >
                                 our products
                             </motion.a>
@@ -298,7 +298,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='font-extrabold text-5xl my-8 -md:text-3xl tracking-tight'
+                                className='font-extrabold text-5xl my-12 -md:text-3xl tracking-tight'
                             >
                                 The problem
                             </motion.h2>
@@ -314,7 +314,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-2xl -md:text-lg mb-8 font-semibold'
+                                className='text-2xl -md:text-lg mb-6 font-medium'
                             >
                                 Today it is nearly impossible to find <Highlight>modern</Highlight> and <Highlight>luxurious</Highlight> furniture that is also{' '}
                                 <Highlight>affordable</Highlight> and <Highlight>comfortable</Highlight>.
@@ -331,7 +331,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-2xl -md:text-lg mb-2 font-semibold'
+                                className='text-2xl -md:text-lg mb-6 font-medium'
                             >
                                 How much time have you searched the internet for the perfect piece of furniture for the space you spend <Highlight lighter>most of your time</Highlight>{' '}
                                 in?
@@ -348,7 +348,7 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-2xl -md:text-lg mb-8 font-semibold'
+                                className='text-2xl -md:text-lg mb-6 font-medium'
                             >
                                 How many times have you found the perfect piece of furniture only to find out that it is <Highlight lighter>way out of your budget</Highlight>?
                             </motion.p>
@@ -364,10 +364,11 @@ const HomePage: React.FC = () => {
                                     }
                                 }}
                                 viewport={{ once: true }}
-                                className='text-2xl -md:text-lg font-semibold'
+                                className='text-2xl -md:text-lg font-medium'
                             >
-                                Now with <LuxEdge />, that long and frustrating is <Highlight lighter>only a bad memory</Highlight>. We offer the best quality furniture, with both a{' '}
-                                <Highlight lighter>modern look</Highlight> and the nice old <Highlight lighter>comfort</Highlight> at a <Highlight lighter>lower price</Highlight>.
+                                Now with <LuxEdge className='font-bold' />, that long and frustrating is <Highlight lighter>only a bad memory</Highlight>. We offer the best quality
+                                furniture, with both a <Highlight lighter>modern look</Highlight> and the nice old <Highlight lighter>comfort</Highlight> at a{' '}
+                                <Highlight lighter>lower price</Highlight>.
                             </motion.p>
                         </div>
                     </div>
@@ -490,9 +491,9 @@ const HomePage: React.FC = () => {
                         }}
                         viewport={{ once: true }}
                         href='/products'
-                        className='transition-colors shadow-xl duration-200 capitalize inline-block py-4 my-4 bg-primary-base hover:bg-primary-hover text-white rounded-lg md:px-48 px-[20vw] font-extrabold text-4xl'
+                        className='shadow-xl duration-200 capitalize inline-block py-4 my-4 bg-primary-base hover:bg-primary-hover text-white rounded-3xl hover:rounded-xl transition-all md:px-48 px-[20vw] font-extrabold text-4xl'
                     >
-                        See more
+                        Learn more
                     </motion.a>
                 </section>
                 <Footer />

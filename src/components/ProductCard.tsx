@@ -48,12 +48,12 @@ const ProductCard: React.FC<Props> = (_: Props) => {
                 </a>
                 <button
                     id='favs'
-                    className={`w-10 aspect-square grid place-items-center bg-black bg-opacity-20 hover:bg-opacity-30 transition-all duration-200 rounded-lg ${
+                    className={`w-10 aspect-square group/btn grid place-items-center bg-black bg-opacity-20 hover:bg-opacity-30 transition-all duration-200 rounded-lg ${
                         _.isFavorite ? 'text-red-500 hover:text-red-600' : 'text-slate-200 hover:text-slate-50'
                     }`}
                     onClick={handleFavorite}
                 >
-                    <HeartIcon className='w-6 h-6' />
+                    <HeartIcon className='w-6 h-6 group-hover/btn:scale-110 transition-transform group-active/btn:scale-95' />
                 </button>
             </div>
         </div>

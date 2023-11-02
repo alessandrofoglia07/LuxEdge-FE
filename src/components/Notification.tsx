@@ -31,17 +31,17 @@ const Notification: React.FC<Props> = ({ message, severity = 'success', open, on
     return (
         <div
             id='Notification'
-            className={`fixed md:w-[36rem] w-[calc(100vw-8rem)] h-max bottom-6 right-6 rounded-lg elevate p-4 z-50
+            className={`fixed md:max-w-[36rem] md:w-fit w-[calc(100vw-8rem)] h-max bottom-6 right-6 rounded-2xl elevate py-6 px-6 z-50
                 bg-gradient-to-bl bg-white
                 flex items-center justify-between gap-8
-                ${open ? 'translate-x-0' : 'translate-x-[calc(100%+2rem)]'} transition-[transform] duration-100 ease-in-out`}
+                ${open ? 'translate-x-0' : 'translate-x-[calc(100%+2rem)]'} transition-transform duration-100 ease-in-out`}
         >
             <div className='flex flex-col gap-2'>
-                <h2 className='text-2xl font-extrabold tracking-tight'>{messageState.title}</h2>
-                <p className={`text-md ${severity === 'error' ? 'text-red-800' : 'text-black'} font-semibold hyphens-auto`}>{messageState.content}</p>
+                <h2 className='text-lg font-medium leading-6 text-gray-900'>{messageState.title}</h2>
+                <p className={`text-sm ${severity === 'error' ? 'text-red-800' : 'text-gray-500'} hyphens-auto`}>{messageState.content}</p>
             </div>
-            <button onClick={onClose} className='w-12 h-12 aspect-square hover:bg-slate-200 rounded-md grid place-items-center mr-4'>
-                <XMarkIcon className='w-10 h-10 text-black' />
+            <button onClick={onClose} className='w-12 h-12 aspect-square hover:bg-slate-200 rounded-lg grid place-items-center mr-4'>
+                <XMarkIcon className='w-8 h-8 text-black' />
             </button>
         </div>
     );

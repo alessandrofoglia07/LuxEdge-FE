@@ -158,7 +158,7 @@ const Navbar: React.FC = () => {
                                             leaveTo='opacity-0 translate-y-0'
                                         >
                                             <Popover.Panel className='absolute z-20'>
-                                                <div className='flex flex-col pl-6 justify-center w-48 h-fit gap-1 bg-white rounded-md shadow-lg border-2 border-slate-300 py-4'>
+                                                <div className='flex flex-col pl-6 justify-center w-48 h-fit gap-1 bg-white rounded-lg shadow-lg border-2 border-slate-300 py-4'>
                                                     {categories.map((category, i) => {
                                                         return (
                                                             <div key={i}>
@@ -182,16 +182,18 @@ const Navbar: React.FC = () => {
                             <a
                                 href='/favorites'
                                 id='Favorites'
-                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-100 p-2 text-primary-base hover:text-primary-hover hover:border-primary-base border-opacity-70 transition-all mr-4 group'
+                                className='flex items-center gap-2 text-xl rounded-lg border-2 hover:bg-slate-100 p-2 text-primary-base hover:text-primary-hover hover:border-primary-base border-opacity-70 transition-all mr-4 group'
+                                draggable={false}
                             >
-                                <HeartIcon className='w-6 group-hover:scale-[1.2] transition-transform duration-200' />
+                                <HeartIcon className='w-6 group-hover:scale-[1.2] group-active:scale-95 transition-transform duration-200' />
                             </a>
                             <a
                                 href='/cart'
                                 id='Cart'
-                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-100 p-2 text-primary-base hover:text-primary-hover hover:border-primary-base border-opacity-70 transition-all mr-8 group'
+                                className='flex items-center gap-2 text-xl rounded-lg border-2 hover:bg-slate-100 p-2 text-primary-base hover:text-primary-hover hover:border-primary-base border-opacity-70 transition-all mr-8 group'
+                                draggable={false}
                             >
-                                <ShoppingCartIcon className='w-6 group-hover:scale-[1.2] transition-transform duration-200' />
+                                <ShoppingCartIcon className='w-6 group-hover:scale-[1.2] group-active:scale-95 transition-transform duration-200' />
                             </a>
                         </>
                     ) : (
@@ -199,7 +201,7 @@ const Navbar: React.FC = () => {
                             <a
                                 href='/favorites'
                                 id='Favorites'
-                                className='flex items-center gap-2 text-xl rounded-md border-2 hover:bg-slate-200 p-2 text-primary-base hover:text-primary-hover hover:border-primary-base border-opacity-70 transition-all'
+                                className='flex items-center gap-2 text-xl rounded-lg border-2 hover:bg-slate-200 p-2 text-primary-base hover:text-primary-hover hover:border-primary-base border-opacity-70 transition-all'
                             >
                                 <LoginIcon className='w-6' />
                             </a>
@@ -209,7 +211,7 @@ const Navbar: React.FC = () => {
                         </>
                     )}
                 </div>
-                <div id='mobile-btn' className={`flex ${width > 932 ? 'hidden' : ''} mx-12 inline-flex items-center justify-center rounded-md text-gray-700`}>
+                <div id='mobile-btn' className={`flex ${width > 932 ? 'hidden' : ''} mx-12 inline-flex items-center justify-center rounded-lg text-gray-700`}>
                     <button onClick={handleOpen} className='group'>
                         <span className='sr-only'>Open main menu</span>
                         <Bars3Icon className='h-6 w-6 text-primary-base group-focus:text-primary-hover' />
