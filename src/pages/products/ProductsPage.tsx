@@ -293,6 +293,9 @@ const ProductsPage: React.FC = () => {
         if (validate.success) {
             setPriceRange((prev) => {
                 const newPriceRange = [...prev];
+                if (parseInt(validate.data) > 100000000000000000000 || parseInt(validate.data) < -100000000000000000000) {
+                    return newPriceRange as [string, string];
+                }
                 newPriceRange[i] = validate.data;
                 return newPriceRange as [string, string];
             });

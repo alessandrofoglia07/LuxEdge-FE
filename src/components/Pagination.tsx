@@ -36,18 +36,18 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
         <ul className={`flex items-center gap-2 my-8 ${className}`}>
             <li
                 id='arrow-left-container'
-                className={`w-10 h-10 border-2 rounded-sm border-primary-base group transition-colors mr-2 ${
+                className={`w-10 h-10 border-2 rounded-md border-primary-base group transition-colors mr-2 ${
                     currentPage === 1 ? 'opacity-40' : 'hover:border-primary-hover hover:bg-primary-base'
                 }`}
             >
-                <button onClick={onPrevious} disabled={currentPage === 1} className='w-full h-full grid place-items-center rounded-sm'>
+                <button onClick={onPrevious} disabled={currentPage === 1} className='w-full h-full grid place-items-center rounded-md'>
                     <ArrowLeftIcon className={`w-6 h-6 text-primary-base transition-colors ${currentPage !== 1 && 'group-hover:text-white'}`} />
                 </button>
             </li>
             {paginationRange?.map((pageNumber: number | string, i: number) => {
                 if (pageNumber === dots) {
                     return (
-                        <li key={i} className='w-10 h-10 grid rounded-sm place-items-center pb-2 text-xl font-semibold border-2 border-primary-base pointer-events-none select-none'>
+                        <li key={i} className='w-10 h-10 grid rounded-md place-items-center pb-2 text-xl font-semibold border-2 border-primary-base pointer-events-none select-none'>
                             &#8230;
                         </li>
                     );
@@ -55,7 +55,7 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
                 return (
                     <li
                         key={i}
-                        className={`w-10 h-10 border-2 rounded-sm border-primary-base hover:border-primary-hover hover:bg-primary-base transition-colors group ${
+                        className={`w-10 h-10 border-2 rounded-md border-primary-base hover:border-primary-hover hover:bg-primary-base transition-colors group ${
                             currentPage === pageNumber && 'bg-primary-base'
                         }`}
                     >
@@ -70,11 +70,11 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
             })}
             <li
                 id='arrow-right-container'
-                className={`w-10 h-10 border-2 rounded-sm border-primary-base group transition-colors ml-2 ${
+                className={`w-10 h-10 border-2 rounded-md border-primary-base group transition-colors ml-2 ${
                     currentPage === lastPage ? 'opacity-40' : 'hover:border-primary-hover hover:bg-primary-base'
                 }`}
             >
-                <button onClick={onNext} disabled={currentPage === lastPage} className='w-full h-full grid place-items-center rounded-sm'>
+                <button onClick={onNext} disabled={currentPage === lastPage} className='w-full h-full grid place-items-center rounded-md'>
                     <ArrowRightIcon className={`w-6 h-6 text-primary-base group-hover:text-primary-hover transition-colors ${currentPage !== lastPage && 'group-hover:text-white'}`} />
                 </button>
             </li>
