@@ -11,9 +11,15 @@ interface Props {
     open: boolean;
     /** Function to close the notification. */
     onClose: () => void;
+    /** Custom class name for the notification. */
+    className?: string;
+    /** Custom styles for the notification. */
+    custom?: boolean;
+    /** Custom ID for the notification */
+    id?: string;
 }
 
-const Notification: React.FC<Props> = ({ message, severity = 'success', open, onClose }: Props) => {
+const Notification: React.FC<Props> = ({ message, severity = 'success', open, onClose, className, custom, id }: Props) => {
     const [messageState, setMessageState] = useState<NotificationMessage>(message);
 
     useEffect(() => {
@@ -30,11 +36,11 @@ const Notification: React.FC<Props> = ({ message, severity = 'success', open, on
 
     return (
         <div
-            id='Notification'
+            id={id ? id : 'Notification'}
             className={`fixed md:max-w-[36rem] md:w-fit w-[calc(100vw-8rem)] h-max bottom-6 right-6 rounded-2xl elevate py-6 px-6 z-50
                 bg-gradient-to-bl bg-white
                 flex items-center justify-between gap-8
-                ${open ? 'translate-x-0' : 'translate-x-[calc(100%+2rem)]'} transition-transform duration-100 ease-in-out`}
+                ${!custom && (open ? 'translate-x-0' : 'translate-x-[calc(100%+2rem)]')} transition-transform duration-100 ease-in-out ${className}`}
         >
             <div className='flex flex-col gap-2'>
                 <h2 className='text-lg font-medium leading-6 text-gray-900'>{messageState.title}</h2>

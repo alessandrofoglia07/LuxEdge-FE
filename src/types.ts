@@ -37,6 +37,10 @@ export interface NotificationMessage {
     content: string;
 }
 
+export interface Notification extends NotificationMessage {
+    id: number;
+}
+
 export interface Review {
     _id: string;
     productId: string;
