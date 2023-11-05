@@ -1,12 +1,18 @@
 import Cookies from 'js-cookie';
 
+const generateExpirationDate = () => {
+    const date = new Date();
+    date.setDate(date.getDate() + 30);
+    return date;
+};
+
 /** RefreshToken class (Located in cookies) */
 class RefreshToken {
     /** Set `refreshToken` (cookies)
      * @important Don't use this function outside of Redux reducers
      */
     public static set(refreshToken: string) {
-        Cookies.set('refresh_token', refreshToken, { expires: 30 }); // 30 days
+        Cookies.set('refresh_token', refreshToken, { expires: generateExpirationDate() }); // 30 days
     }
 
     /** Get `refreshToken` (cookies)

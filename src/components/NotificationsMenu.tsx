@@ -7,17 +7,14 @@ import { removeNotificationByIndex } from '@/redux/slices/notificationSlice';
 const NotificationsMenu: React.FC = () => {
     const dispatch = useDispatch();
 
-    // TODO: Fix this
-
     const notifications = useSelector((state) => state.notifications);
 
     const alignNotifications = () => {
-        console.log(notifications);
         notifications.forEach((notification, i) => {
             const el = document.getElementById(`notification-${notification.id}`);
             if (!el) return;
             setTimeout(() => {
-                el.style.transform = `translateY(-${8 * (i + 1)}rem)`;
+                el.style.transform = `translateY(-${8 * i}rem)`;
             }, 0);
             el.style.zIndex = (-i).toString();
         });
@@ -27,19 +24,6 @@ const NotificationsMenu: React.FC = () => {
         alignNotifications();
     }, [notifications]);
 
-    const handleClose = (id: number) => {
-        const el = document.getElementById(`notification-${id}`);
-        if (el) {
-            el.style.transform = `translateY(0)`;
-            setTimeout(() => {
-                dispatch(removeNotificationByIndex(id));
-            }, 200);
-        } else {
-            dispatch(removeNotificationByIndex(id));
-        }
-        alignNotifications();
-    };
-
     return (
         <div id='NotificationsMenu'>
             {notifications.map((notification) => (
@@ -48,7 +32,7 @@ const NotificationsMenu: React.FC = () => {
                     key={notification.id}
                     open
                     message={{ ...notification }}
-                    onClose={() => handleClose(notification.id)}
+                    onClose={() => dispatch(removeNotificationByIndex(notification.id))}
                     custom
                     className={'-bottom-28'}
                 />

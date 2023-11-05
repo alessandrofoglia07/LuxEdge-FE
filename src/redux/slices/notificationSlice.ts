@@ -16,9 +16,11 @@ const notificationSlice = createSlice({
                 state.splice(index, 1);
             }
         },
-        // TODO: fix this
         removeNotificationByIndex: (state, action) => {
-            state.filter((notification) => notification.id !== action.payload);
+            const index = state.findIndex((notification) => notification.id === action.payload);
+            if (index !== -1) {
+                state.splice(index, 1);
+            }
         }
     }
 });
