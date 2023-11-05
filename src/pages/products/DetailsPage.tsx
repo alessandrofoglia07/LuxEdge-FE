@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '@/api/axios';
 import { isAxiosError } from 'axios';
-import { NotificationMessage, Product, Review as ReviewT } from '@/types';
+import { Product, Review as ReviewT } from '@/types';
 import { toPlural, toSingular } from '@/utils/singularPlural';
 import toUrl from '@/utils/toUrl';
 import Img from '@/components/CustomElements/CustomImg';
@@ -15,20 +15,17 @@ import getFavsList from '@/utils/getFavsList';
 import useAuth from '@/hooks/useAuth';
 import authAxios from '@/api/authAxios';
 import Favorites from '@/redux/persist/Favorites';
-import Notification from '@/components/Notification';
 import Review from '@/components/Review';
 import RatingButton from '@/components/RatingButton';
 import { motion } from 'framer-motion';
 import useSelector from '@/hooks/useSelector';
 import { Dialog, Transition } from '@headlessui/react';
-
-interface Notification {
-    message: NotificationMessage;
-    open: boolean;
-    type: 'success' | 'error';
-}
+import NotificationsMenu from '@/components/NotificationsMenu';
+import { useDispatch } from 'react-redux';
+import { addNotification } from '@/redux/slices/notificationSlice';
 
 const DetailsPage: React.FC = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const isAuth = useAuth();
     const productName = useParams<{ productName: string }>().productName;
@@ -38,7 +35,6 @@ const DetailsPage: React.FC = () => {
     const [product, setProduct] = useState<Product | null>(null);
     const [favorite, setFavorite] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
-    const [notification, setNotification] = useState<Notification | undefined>(undefined);
     const [modalOpen, setModalOpen] = useState(false);
 
     const [reviews, setReviews] = useState<ReviewT[]>([]);
@@ -97,14 +93,11 @@ const DetailsPage: React.FC = () => {
         }
         try {
             await authAxios.patch(`/lists/cart/add/${product._id}`);
-            setNotification({
-                message: {
-                    title: 'Product added to cart.',
-                    content: `${product.name} has been successfully added to your cart.`
-                },
-                open: true,
-                type: 'success'
-            });
+            const notification = {
+                title: 'Product added to cart.',
+                content: `${product.name} has been successfully added to your cart.`
+            };
+            dispatch(addNotification(notification));
         } catch (err: unknown) {
             if (isAxiosError(err)) {
                 console.log(err.response?.data);
@@ -150,14 +143,11 @@ const DetailsPage: React.FC = () => {
         try {
             await authAxios.post(`/reviews/add/${product._id}`, { comment: text, rating: rating + 1 });
             await fetchReviews();
-            setNotification({
-                message: {
-                    title: 'Review added.',
-                    content: `Your review has been successfully added.`
-                },
-                open: true,
-                type: 'success'
-            });
+            const notification = {
+                title: 'Review added.',
+                content: `Your review has been successfully added.`
+            };
+            dispatch(addNotification(notification));
         } catch (err: unknown) {
             if (isAxiosError(err)) {
                 console.log(err.response?.data);
@@ -173,14 +163,11 @@ const DetailsPage: React.FC = () => {
         try {
             await authAxios.patch(`/reviews/edit/${ownReview._id}`, { comment: text, rating: rating + 1 });
             await fetchReviews();
-            setNotification({
-                message: {
-                    title: 'Review edited.',
-                    content: `Your review has been successfully edited.`
-                },
-                open: true,
-                type: 'success'
-            });
+            const notification = {
+                title: 'Review edited.',
+                content: `Your review has been successfully edited.`
+            };
+            dispatch(addNotification(notification));
         } catch (err: unknown) {
             if (isAxiosError(err)) {
                 console.log(err.response?.data);
@@ -203,14 +190,11 @@ const DetailsPage: React.FC = () => {
             await authAxios.delete(`/reviews/delete/${ownReview._id}`);
             await fetchReviews();
             setModalOpen(false);
-            setNotification({
-                message: {
-                    title: 'Review deleted.',
-                    content: `Your review has been successfully deleted.`
-                },
-                open: true,
-                type: 'success'
-            });
+            const notification = {
+                title: 'Review deleted.',
+                content: `Your review has been successfully deleted.`
+            };
+            dispatch(addNotification(notification));
         } catch (err: unknown) {
             if (isAxiosError(err)) {
                 console.log(err.response?.data);
@@ -301,12 +285,7 @@ const DetailsPage: React.FC = () => {
                 ) : null}
             </main>
             <Footer />
-            <Notification
-                message={notification?.message || { title: '', content: '' }}
-                onClose={() => setNotification(undefined)}
-                open={!!notification?.open}
-                severity={notification?.type}
-            />
+            <NotificationsMenu />
             <Transition appear show={modalOpen} as={Fragment}>
                 <Dialog as='div' className='relative z-50' onClose={() => setModalOpen(false)}>
                     <Transition.Child

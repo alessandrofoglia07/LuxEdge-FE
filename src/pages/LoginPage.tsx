@@ -7,12 +7,13 @@ import Button from '@/components/CustomElements/StyledButton';
 import { login } from '@/api/authApi';
 import { setToken, setRefreshToken, setUserInfo } from '@/redux/slices/authSlice';
 import { useDispatch } from 'react-redux';
-import { UserInfo, NotificationMessage } from '@/types';
-import Notification from '@/components/Notification';
+import { UserInfo } from '@/types';
 import { isAxiosError } from 'axios';
 import { motion } from 'framer-motion';
 import useAuth from '@/hooks/useAuth';
 import Favorites from '@/redux/persist/Favorites';
+import NotificationsMenu from '@/components/NotificationsMenu';
+import { addNotification } from '@/redux/slices/notificationSlice';
 
 const LoginPage: React.FC = () => {
     const isAuth = useAuth();
@@ -23,7 +24,6 @@ const LoginPage: React.FC = () => {
         email: '',
         password: ''
     });
-    const [error, setError] = useState<NotificationMessage>({ title: 'Unexpected error.', content: '' });
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -45,13 +45,28 @@ const LoginPage: React.FC = () => {
             navigate('/products');
         } catch (err: unknown) {
             if (isAxiosError(err)) {
-                setError({ ...error, content: err.response?.data.message || 'An error occurred while logging in.' });
+                const notification = {
+                    title: 'Error',
+                    content: err.response?.data.message || 'An error occurred while logging in.',
+                    severity: 'error'
+                };
+                dispatch(addNotification(notification));
                 throw err;
             } else if (typeof err === 'string') {
-                setError({ ...error, content: err });
+                const notification = {
+                    title: 'Error',
+                    content: err,
+                    severity: 'error'
+                };
+                dispatch(addNotification(notification));
                 throw new Error(err);
             } else {
-                setError({ ...error, content: 'An error occurred while logging in.' });
+                const notification = {
+                    title: 'Error',
+                    content: 'An error occurred while logging in.',
+                    severity: 'error'
+                };
+                dispatch(addNotification(notification));
                 console.log(err);
             }
         }
@@ -137,7 +152,7 @@ const LoginPage: React.FC = () => {
                     </form>
                 </div>
             </main>
-            <Notification severity='error' message={error} onClose={() => setError({ ...error, content: '' })} open={error.content.length > 0} />
+            <NotificationsMenu />
         </div>
     );
 };

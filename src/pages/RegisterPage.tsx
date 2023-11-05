@@ -7,11 +7,12 @@ import Button from '@/components/CustomElements/StyledButton';
 import { register } from '@/api/authApi';
 import { z } from 'zod';
 import { detect } from 'curse-filter';
-import Notification from '@/components/Notification';
 import { isAxiosError } from 'axios';
 import { motion } from 'framer-motion';
 import useAuth from '@/hooks/useAuth';
-import { NotificationMessage } from '@/types';
+import NotificationsMenu from '@/components/NotificationsMenu';
+import { useDispatch } from 'react-redux';
+import { addNotification } from '@/redux/slices/notificationSlice';
 
 const bannedUsernames = ['post', 'comment', 'admin', 'administrator', 'moderator', 'mod', 'user', 'users'];
 
@@ -19,11 +20,6 @@ interface HelperTexts {
     username: string | undefined;
     email: string | undefined;
     password: string | undefined;
-}
-
-interface Result {
-    success: boolean;
-    message: NotificationMessage;
 }
 
 const userLengthErr = 'Username must be 3-20 characters long';
@@ -34,6 +30,7 @@ const passCharsErr = 'Password cannot contain spaces';
 
 const RegisterPage: React.FC = () => {
     const isAuth = useAuth();
+    const dispatch = useDispatch();
 
     const [form, setForm] = useState({
         username: '',
@@ -45,7 +42,6 @@ const RegisterPage: React.FC = () => {
         email: undefined,
         password: undefined
     });
-    const [result, setResult] = useState<Result | undefined>(undefined);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -141,28 +137,36 @@ const RegisterPage: React.FC = () => {
 
         try {
             const message = await register(username, email, password);
-            setResult({
-                success: true,
-                message: { title: 'Registration completed.', content: message }
-            });
+            const notification = {
+                title: 'Registration completed.',
+                content: message,
+                severity: 'success'
+            };
+            dispatch(addNotification(notification));
         } catch (err: unknown) {
             if (isAxiosError(err)) {
-                setResult({
-                    success: false,
-                    message: { title: 'Unexpected error.', content: err.response ? err.response.data.message : 'An unknown error occurred.' }
-                });
+                const notification = {
+                    title: 'Unexpected error',
+                    content: err.response ? err.response.data.message : 'An unknown error occurred.',
+                    severity: 'error'
+                };
+                dispatch(addNotification(notification));
                 throw err;
             } else if (typeof err === 'string') {
-                setResult({
-                    success: false,
-                    message: { title: 'Unexpected error.', content: err }
-                });
+                const notification = {
+                    title: 'Unexpected error',
+                    content: err,
+                    severity: 'error'
+                };
+                dispatch(addNotification(notification));
                 throw new Error(err);
             } else {
-                setResult({
-                    success: false,
-                    message: { title: 'Unexpected error.', content: 'An unknown error occurred.' }
-                });
+                const notification = {
+                    title: 'Unexpected error',
+                    content: 'An unknown error occurred.',
+                    severity: 'error'
+                };
+                dispatch(addNotification(notification));
                 console.log(err);
             }
         }
@@ -263,14 +267,7 @@ const RegisterPage: React.FC = () => {
                     </form>
                 </div>
             </main>
-            <Notification
-                open={!!result?.message.content.length && result?.message.content.length > 0}
-                message={result?.message || { title: '', content: '' }}
-                severity={result?.success ? 'success' : 'error'}
-                onClose={() => {
-                    setResult(undefined);
-                }}
-            />
+            <NotificationsMenu />
         </div>
     );
 };

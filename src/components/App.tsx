@@ -13,7 +13,6 @@ import ForgotPasswordPage from '@/pages/user/ForgotPassword';
 import ResetPasswordPage from '@/pages/user/ResetPasswordPage';
 import UnsubscribePage from '@/pages/user/UnsubscribePage';
 import useAuth from '@/hooks/useAuth';
-import TestPage from '@/pages/TestPage';
 
 function App() {
     const isAuth = useAuth();
@@ -43,8 +42,6 @@ function App() {
                 <Route path='/checkout' element={<CheckoutPage />} />
                 <Route path='/favorites' element={<FavoritesPage />} />
             </Route>
-
-            <Route path='/test' element={<TestPage />} />
         </Routes>
     );
 }

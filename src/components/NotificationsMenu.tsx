@@ -14,9 +14,13 @@ const NotificationsMenu: React.FC = () => {
             const el = document.getElementById(`notification-${notification.id}`);
             if (!el) return;
             setTimeout(() => {
-                el.style.transform = `translateY(-${8 * i}rem)`;
+                el.style.transform = `translateY(-${8 * (i + 1)}rem)`;
             }, 0);
-            el.style.zIndex = (-i).toString();
+            const initZ = '1000';
+            el.style.zIndex = initZ;
+            setTimeout(() => {
+                el.style.zIndex = (parseInt(initZ) - i).toString();
+            }, 0);
         });
     };
 
@@ -30,11 +34,8 @@ const NotificationsMenu: React.FC = () => {
                 <Notification
                     id={`notification-${notification.id}`}
                     key={notification.id}
-                    open
                     message={{ ...notification }}
                     onClose={() => dispatch(removeNotificationByIndex(notification.id))}
-                    custom
-                    className={'-bottom-28'}
                 />
             ))}
         </div>
