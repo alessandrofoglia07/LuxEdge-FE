@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '@/components/Navbar';
 import Spinner from '@/components/Spinner';
+import NotificationsMenu from '@/components/NotificationsMenu';
 
 type State = 'subscribed' | 'unsubscribed' | 'resubscribed' | 'loading';
 
@@ -96,6 +97,7 @@ const UnsubscribePage: React.FC = () => {
         <div id='UnsubscribePage'>
             <Navbar />
             <main className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center md:w-1/2 w-full'>{render()}</main>
+            <NotificationsMenu />
         </div>
     );
 };

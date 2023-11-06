@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { isAxiosError } from 'axios';
 import { resetPassword } from '@/api/authApi';
 import useAuth from '@/hooks/useAuth';
+import NotificationsMenu from '@/components/NotificationsMenu';
 
 const ResetPasswordPage: React.FC = () => {
     const { userId, token } = useParams();
@@ -110,6 +111,7 @@ const ResetPasswordPage: React.FC = () => {
                     <h6 className='font-semibold text-lg mt-4 text-gray-500'>{result}</h6>
                 </form>
             </main>
+            <NotificationsMenu />
         </div>
     );
 };

@@ -18,6 +18,7 @@ import { FunnelIcon } from '@heroicons/react/24/outline';
 import { toSingular } from '@/utils/singularPlural';
 import categories from '@/utils/categories';
 import { motion } from 'framer-motion';
+import NotificationsMenu from '@/components/NotificationsMenu';
 
 const sortOptions = [
     { id: 1, name: 'Recommend' },
@@ -499,6 +500,7 @@ const ProductsPage: React.FC = () => {
                     </div>
                 </Dialog.Panel>
             </Dialog>
+            <NotificationsMenu />
         </div>
     );
 };

@@ -5,6 +5,7 @@ import LuxEdge from '@/components/LuxEdgeLogo';
 import Navbar from '@/components/Navbar';
 import { useParams } from 'react-router-dom';
 import { isAxiosError } from 'axios';
+import NotificationsMenu from '@/components/NotificationsMenu';
 
 const ActivatePage: React.FC = () => {
     const { userId } = useParams<{ userId: string }>();
@@ -67,6 +68,7 @@ const ActivatePage: React.FC = () => {
                 </Button>
                 <h4 className='font-semibold text-2xl'>{result}</h4>
             </main>
+            <NotificationsMenu />
         </div>
     );
 };

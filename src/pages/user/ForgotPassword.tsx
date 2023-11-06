@@ -8,6 +8,7 @@ import { forgotPassword } from '@/api/authApi';
 import { isAxiosError } from 'axios';
 import { z } from 'zod';
 import useAuth from '@/hooks/useAuth';
+import NotificationsMenu from '@/components/NotificationsMenu';
 
 const ForgotPasswordPage: React.FC = () => {
     const isAuth = useAuth();
@@ -74,6 +75,7 @@ const ForgotPasswordPage: React.FC = () => {
                     <h6 className='font-semibold text-lg mt-4 text-gray-500'>{result}</h6>
                 </form>
             </main>
+            <NotificationsMenu />
         </div>
     );
 };

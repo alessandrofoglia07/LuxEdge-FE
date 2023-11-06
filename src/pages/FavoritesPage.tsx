@@ -13,6 +13,7 @@ import { CheckIcon, XMarkIcon, XCircleIcon } from '@heroicons/react/20/solid';
 import toPrice from '@/utils/toPrice';
 import { toPlural } from '@/utils/singularPlural';
 import { motion } from 'framer-motion';
+import NotificationsMenu from '@/components/NotificationsMenu';
 
 interface ProductCardProps {
     product: Product;
@@ -168,6 +169,7 @@ const FavoritesPage: React.FC = () => {
                 )}
             </main>
             <Footer />
+            <NotificationsMenu />
         </div>
     );
 };

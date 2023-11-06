@@ -14,6 +14,7 @@ import toPrice from '@/utils/toPrice';
 import Pagination from '@/components/Pagination';
 import { toPlural } from '@/utils/singularPlural';
 import { motion } from 'framer-motion';
+import NotificationsMenu from '@/components/NotificationsMenu';
 
 interface ProductCardProps {
     product: Product;
@@ -335,6 +336,7 @@ const CartPage: React.FC = () => {
             </main>
             <TotalPriceMobile products={products} />
             <Footer />
+            <NotificationsMenu />
         </div>
     );
 };

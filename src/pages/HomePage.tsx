@@ -16,6 +16,7 @@ import useAuth from '@/hooks/useAuth';
 import getFavsList from '@/utils/getFavsList';
 import Spinner from '@/components/Spinner';
 import Favorites from '@/redux/persist/Favorites';
+import NotificationsMenu from '@/components/NotificationsMenu';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
     <li className='font-bold text-2xl -md:text-md'>
@@ -498,6 +499,7 @@ const HomePage: React.FC = () => {
                 </section>
                 <Footer />
             </main>
+            <NotificationsMenu />
         </div>
     );
 };
