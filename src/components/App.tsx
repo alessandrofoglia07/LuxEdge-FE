@@ -6,13 +6,15 @@ import RegisterPage from '@/pages/RegisterPage';
 import ProductsPage from '@/pages/products/ProductsPage';
 import DetailsPage from '@/pages/products/DetailsPage';
 import CartPage from '@/pages/CartPage';
-import CheckoutPage from '@/pages/CheckoutPage';
 import FavoritesPage from '@/pages/FavoritesPage';
 import ActivatePage from '@/pages/user/ActivatePage';
 import ForgotPasswordPage from '@/pages/user/ForgotPassword';
 import ResetPasswordPage from '@/pages/user/ResetPasswordPage';
 import UnsubscribePage from '@/pages/user/UnsubscribePage';
 import useAuth from '@/hooks/useAuth';
+import CheckoutSuccessPage from '@/pages/checkout/CheckoutSuccessPage';
+import CheckoutCancelPage from '@/pages/checkout/CheckoutCancelPage';
+import OrdersPage from '@/pages/user/OrdersPage';
 
 function App() {
     const isAuth = useAuth();
@@ -23,7 +25,6 @@ function App() {
             <Route path='/' element={<HomePage />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
-            <Route path='/contact' element={<></>} />
             <Route path='*' element={<Navigate to='/' />} />
 
             {/* /products */}
@@ -39,8 +40,14 @@ function App() {
             {/* Private Routes */}
             <Route element={<PrivateRoutes isAuth={isAuth} />}>
                 <Route path='/cart' element={<CartPage />} />
-                <Route path='/checkout' element={<CheckoutPage />} />
                 <Route path='/favorites' element={<FavoritesPage />} />
+
+                {/* /user */}
+                <Route path='/user/orders' element={<OrdersPage />} />
+
+                {/* /checkout */}
+                <Route path='/checkout/success' element={<CheckoutSuccessPage />} />
+                <Route path='/checkout/cancel' element={<CheckoutCancelPage />} />
             </Route>
         </Routes>
     );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { Product } from '@/types';
@@ -15,6 +15,7 @@ import Pagination from '@/components/Pagination';
 import { toPlural } from '@/utils/singularPlural';
 import { motion } from 'framer-motion';
 import NotificationsMenu from '@/components/NotificationsMenu';
+import { Dialog, Transition } from '@headlessui/react';
 
 interface ProductCardProps {
     product: Product;
@@ -100,7 +101,7 @@ const TotalPriceItemMobile = ({ children, price, className = '', bold }: { child
     </div>
 );
 
-const TotalPrice = ({ products }: { products: Product[] }) => {
+const TotalPrice = ({ products, onCheckout }: { products: Product[]; onCheckout: () => void }) => {
     const [subtotal, setSubtotal] = useState<number>(0);
     const [shipping, setShipping] = useState<number>(0);
     const [tax, setTax] = useState<number>(0);
@@ -133,13 +134,15 @@ const TotalPrice = ({ products }: { products: Product[] }) => {
                     <h4 className='font-bold text-xl'>Total</h4>
                     <h4 className='font-extrabold text-2xl'>{toPrice(totalPrice)}</h4>
                 </div>
-                <button className='w-1/2 h-12 bg-primary-light rounded-lg text-white font-semibold hover:shadow-xl transition-shadow'>Proceed to checkout</button>
+                <button onClick={onCheckout} className='w-1/2 h-12 bg-primary-light rounded-lg text-white font-semibold hover:shadow-xl transition-shadow'>
+                    Proceed to checkout
+                </button>
             </div>
         </div>
     );
 };
 
-const TotalPriceMobile = ({ products }: { products: Product[] }) => {
+const TotalPriceMobile = ({ products, onCheckout }: { products: Product[]; onCheckout: () => void }) => {
     const [subtotal, setSubtotal] = useState<number>(0);
     const [shipping, setShipping] = useState<number>(0);
     const [tax, setTax] = useState<number>(0);
@@ -169,7 +172,9 @@ const TotalPriceMobile = ({ products }: { products: Product[] }) => {
             <TotalPriceItemMobile bold className='pt-3' price={totalPrice}>
                 Total
             </TotalPriceItemMobile>
-            <button className='w-full h-12 my-12 shadow-xl bg-primary-light rounded-lg text-white font-semibold'>Proceed to checkout</button>
+            <button onClick={onCheckout} className='w-full h-12 my-12 shadow-xl bg-primary-light rounded-lg text-white font-semibold'>
+                Proceed to checkout
+            </button>
         </div>
     );
 };
@@ -184,6 +189,7 @@ const CartPage: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(1);
+    const [waiting, setWaiting] = useState<boolean>(false);
 
     const groupedProducts = products.reduce((acc: AccumulatorType, product) => {
         const existingProduct = acc.find((p) => p._id === product._id);
@@ -269,6 +275,24 @@ const CartPage: React.FC = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    const handleCheckout = async () => {
+        setWaiting(true);
+        try {
+            const res = await authAxios.post('/payment/create-checkout-session');
+            window.location.href = res.data.url;
+        } catch (err: unknown) {
+            if (isAxiosError(err)) {
+                throw err.response?.data;
+            } else if (err instanceof Error) {
+                throw err;
+            } else if (typeof err === 'string') {
+                throw new Error(err);
+            } else {
+                console.log(err);
+            }
+        }
+    };
+
     return (
         <div id='CartPage'>
             <Navbar />
@@ -312,7 +336,7 @@ const CartPage: React.FC = () => {
                                     )}
                                 </div>
                             </div>
-                            <TotalPrice products={products} />
+                            <TotalPrice products={products} onCheckout={handleCheckout} />
                         </div>
                         {/* MOBILE */}
                         <div className='w-full flex lg:hidden'>
@@ -334,8 +358,25 @@ const CartPage: React.FC = () => {
                     <Pagination className='justify-center' currentPage={page} onPageChange={handlePageChange} pageSize={PRODUCTS_PER_PAGE} totalCount={groupedProducts.length} />
                 )}
             </main>
-            <TotalPriceMobile products={products} />
+            <TotalPriceMobile products={products} onCheckout={handleCheckout} />
             <Footer />
+            <Dialog open={waiting} onClose={() => {}}>
+                <Transition
+                    show={waiting}
+                    as={Fragment}
+                    enter='ease-out duration-300'
+                    enterFrom='opacity-0'
+                    enterTo='opacity-100'
+                    leave='ease-in duration-200'
+                    leaveFrom='opacity-100'
+                    leaveTo='opacity-0'
+                >
+                    <div className='fixed z-50 inset-0 bg-black/25' />
+                </Transition>
+                <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
+                    <Spinner className='w-16 h-16' />
+                </div>
+            </Dialog>
             <NotificationsMenu />
         </div>
     );
