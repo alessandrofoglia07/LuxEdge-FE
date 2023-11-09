@@ -17,6 +17,11 @@ import getFavsList from '@/utils/getFavsList';
 import Spinner from '@/components/Spinner';
 import Favorites from '@/redux/persist/Favorites';
 import NotificationsMenu from '@/components/NotificationsMenu';
+import homePageBed from '@/static/homepageBed.jpg';
+import homePageDesk from '@/static/homepageDesk.jpg';
+import testimonial1 from '@/static/testimonials/testimonial1.jpg';
+import testimonial2 from '@/static/testimonials/testimonial2.jpg';
+import testimonial3 from '@/static/testimonials/testimonial3.jpg';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
     <li className='font-bold text-2xl -md:text-md'>
@@ -44,19 +49,19 @@ const benefits = [
 
 const mockTestimonials: TestimonialT[] = [
     {
-        pfpPath: '/testimonials/testimonial1.jpg',
+        pfpPath: testimonial1,
         rating: 4.5,
         author: 'John Doe',
         text: 'The craftsmanship of the bedroom set is superb, and it has transformed my bedroom into a cozy and stylish oasis.'
     },
     {
-        pfpPath: '/testimonials/testimonial2.jpg',
+        pfpPath: testimonial2,
         rating: 5,
         author: 'Jane Doe',
         text: 'I found the perfect sofa for my living room, and it far exceeded my expectations in terms of quality and comfort. It looks and feels like a luxurious piece, yet it fits well within my budget.'
     },
     {
-        pfpPath: '/testimonials/testimonial3.jpg',
+        pfpPath: testimonial3,
         rating: 4.5,
         author: 'Johnny Doe',
         text: 'The quality of the furniture is top-notch, and the designs are absolutely stunning. The chairs are not only comfortable but also add a touch of elegance to my dining area.'
@@ -268,7 +273,7 @@ const HomePage: React.FC = () => {
                         viewport={{ once: true }}
                         className='-lg:w-full lg:w-1/2 lg:right-0 -lg:mt-4 lg:relative lg:h-[calc(100vh-4rem)] flex items-center justify-center'
                     >
-                        <Img src='/homepageBed.jpg' alt='hero-img' className='homepage-limit:hidden transition-all mb-16 lg:w-[50vw] -lg:h-[50vw] lg:h-[50vh] -lg:w-screen' />
+                        <Img src={homePageBed} alt='hero-img' className='homepage-limit:hidden transition-all mb-16 lg:w-[50vw] -lg:h-[50vw] lg:h-[50vh] -lg:w-screen' />
                     </motion.div>
                 </section>
                 <section id='problem-solution' className='bg-slate-200 py-8 flex -lg:flex-col border-t-2 border-b-2 border-slate-300'>
@@ -284,7 +289,7 @@ const HomePage: React.FC = () => {
                         viewport={{ once: true }}
                         className='-lg:w-full lg:w-1/2 flex items-center justify-center'
                     >
-                        <Img id='hero-img' src='/homepageDesk.jpg' alt='desk' className='mb-16 lg:w-[50vw] -lg:h-[70vw] lg:h-[70vh] -lg:w-screen' />
+                        <Img id='hero-img' src={homePageDesk} alt='desk' className='mb-16 lg:w-[50vw] -lg:h-[70vw] lg:h-[70vh] -lg:w-screen' />
                     </motion.div>
                     <div className='-lg:w-full lg:w-1/2 flex items-center'>
                         <div className='flex flex-col -lg:px-8 lg:pr-8 mb-16'>
