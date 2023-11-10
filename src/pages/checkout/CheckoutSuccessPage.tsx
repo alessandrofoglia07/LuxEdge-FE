@@ -62,28 +62,28 @@ const CheckoutSuccessPage: React.FC = () => {
         switch (state) {
             case 'loading':
                 return (
-                    <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-                        <Spinner className='w-16 h-16' />
+                    <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
+                        <Spinner className='h-16 w-16' />
                     </div>
                 );
             case 'error':
                 return (
-                    <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center'>
-                        <div id='animation' className='w-44 h-44 -mt-20 select-none' />
-                        <h2 className='text-4xl font-extrabold tracking-tight pt-4'>Payment failed!</h2>
-                        <h4 className='font-normal text-gray-700 pt-2'>Please try again later.</h4>
-                        <a href='/' className='font-normal pt-4 underline underline-offset-2'>
+                    <div className='absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center'>
+                        <div id='animation' className='-mt-20 h-44 w-44 select-none' />
+                        <h2 className='pt-4 text-4xl font-extrabold tracking-tight'>Payment failed!</h2>
+                        <h4 className='pt-2 font-normal text-gray-700'>Please try again later.</h4>
+                        <a href='/' className='pt-4 font-normal underline underline-offset-2'>
                             Go back to LuxEdge
                         </a>
                     </div>
                 );
             case 'success':
                 return (
-                    <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center text-center'>
-                        <div id='animation' className='w-44 h-44 -mt-20 select-none' />
-                        <h2 className='text-4xl font-extrabold tracking-tight pt-4'>Payment completed!</h2>
-                        <h4 className='font-normal text-gray-700 pt-2'>Thanks for choosing LuxEdge. We hope to see you again soon!</h4>
-                        <a href='/' className='font-normal pt-4 underline underline-offset-2'>
+                    <div className='absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center'>
+                        <div id='animation' className='-mt-20 h-44 w-44 select-none' />
+                        <h2 className='pt-4 text-4xl font-extrabold tracking-tight'>Payment completed!</h2>
+                        <h4 className='pt-2 font-normal text-gray-700'>Thanks for choosing LuxEdge. We hope to see you again soon!</h4>
+                        <a href='/' className='pt-4 font-normal underline underline-offset-2'>
                             Go back to LuxEdge
                         </a>
                     </div>
@@ -94,7 +94,7 @@ const CheckoutSuccessPage: React.FC = () => {
     return (
         <div id='CheckoutSuccessPage'>
             <Navbar />
-            <main className='pt-16 mx-auto w-[calc(100vw - 9px)]'>{render()}</main>
+            <main className='w-[calc(100vw - 9px)] mx-auto pt-16'>{render()}</main>
         </div>
     );
 };

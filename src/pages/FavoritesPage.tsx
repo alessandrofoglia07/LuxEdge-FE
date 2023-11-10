@@ -21,29 +21,29 @@ interface ProductCardProps {
 }
 
 const ProductCardDesktop = ({ product, handleRemove }: ProductCardProps) => (
-    <div className='[&>*]:font-semibold [&>*]:tracking-wide [&>*]:text-start flex items-center'>
-        <div className='w-5/12 flex items-center'>
-            <a className='rounded-lg w-1/3' href={`/products/${toPlural(product.category)}/${product.name}`}>
-                <Img src={toUrl(product.imagePath)} alt={product.name} className='w-full aspect-square rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300' />
+    <div className='flex items-center [&>*]:text-start [&>*]:font-semibold [&>*]:tracking-wide'>
+        <div className='flex w-5/12 items-center'>
+            <a className='w-1/3 rounded-lg' href={`/products/${toPlural(product.category)}/${product.name}`}>
+                <Img src={toUrl(product.imagePath)} alt={product.name} className='aspect-square w-full rounded-lg shadow-md transition-shadow duration-300 hover:shadow-xl' />
             </a>
-            <a href={`/products/${toPlural(product.category)}/${product.name}`} className='px-8 text-xl tracking-wide w-2/3'>
+            <a href={`/products/${toPlural(product.category)}/${product.name}`} className='w-2/3 px-8 text-xl tracking-wide'>
                 {product.name}
             </a>
         </div>
-        <div className='flex items-center justify-evenly w-5/12 [&>*]:font-normal'>
-            <h6 className='capitalize text-start w-2/4'>{product.category}</h6>
+        <div className='flex w-5/12 items-center justify-evenly [&>*]:font-normal'>
+            <h6 className='w-2/4 text-start capitalize'>{product.category}</h6>
             {product.available ? (
-                <div className='flex items-center justify-center w-1/6'>
+                <div className='flex w-1/6 items-center justify-center'>
                     <CheckIcon className='w-8' />
                 </div>
             ) : (
-                <div className='flex items-center justify-center w-1/6'>
+                <div className='flex w-1/6 items-center justify-center'>
                     <XMarkIcon className='w-8' />
                 </div>
             )}
-            <h6 className='text-end w-2/6'>{toPrice(product.price)}</h6>
+            <h6 className='w-2/6 text-end'>{toPrice(product.price)}</h6>
         </div>
-        <div className='w-2/12 flex items-center justify-center'>
+        <div className='flex w-2/12 items-center justify-center'>
             <motion.button whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }} className='rounded-full' onClick={() => handleRemove(product._id)}>
                 <XCircleIcon aria-label='Remove from favorites' className='w-8' />
             </motion.button>
@@ -52,18 +52,18 @@ const ProductCardDesktop = ({ product, handleRemove }: ProductCardProps) => (
 );
 
 const ProductCardMobile = ({ product, handleRemove }: ProductCardProps) => (
-    <div className='[&>*]:font-semibold [&>*]:tracking-wide [&>*]:text-start flex items-center'>
-        <a className='rounded-lg w-4/12' href={`/products/${toPlural(product.category)}/${product.name}`}>
-            <Img src={toUrl(product.imagePath)} alt={product.name} className='w-full aspect-square rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300' />
+    <div className='flex items-center [&>*]:text-start [&>*]:font-semibold [&>*]:tracking-wide'>
+        <a className='w-4/12 rounded-lg' href={`/products/${toPlural(product.category)}/${product.name}`}>
+            <Img src={toUrl(product.imagePath)} alt={product.name} className='aspect-square w-full rounded-lg shadow-md transition-shadow duration-300 hover:shadow-xl' />
         </a>
-        <div className='w-6/12 flex flex-col pl-8'>
+        <div className='flex w-6/12 flex-col pl-8'>
             <a href={`/products/${toPlural(product.category)}/${product.name}`} className='text-lg tracking-tight'>
                 {product.name}
             </a>
-            <h6 className='capitalize text-start opacity-70'>{product.category}</h6>
+            <h6 className='text-start capitalize opacity-70'>{product.category}</h6>
             <h6 className='text-end'>{toPrice(product.price)}</h6>
         </div>
-        <div className='w-2/12 flex items-center justify-center'>
+        <div className='flex w-2/12 items-center justify-center'>
             <motion.button whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }} className='rounded-full' onClick={() => handleRemove(product._id)}>
                 <XCircleIcon aria-label='Remove from favorites' className='w-8' />
             </motion.button>
@@ -126,39 +126,39 @@ const FavoritesPage: React.FC = () => {
     return (
         <div id='FavoritesPage'>
             <Navbar />
-            <main className='py-16 min-h-page'>
+            <main className='min-h-page py-16'>
                 {loading ? (
                     <div className='absolute left-1/2 -translate-x-1/2'>
                         <Spinner className='mt-[20vh]' />
                     </div>
                 ) : (
                     <>
-                        <h2 className='font-extrabold text-5xl -md:text-3xl tracking-tight mt-6 ml-10'>Favorites</h2>
-                        <div className='w-full px-10 mt-8 -md:hidden'>
+                        <h2 className='ml-10 mt-6 text-5xl font-extrabold tracking-tight -md:text-3xl'>Favorites</h2>
+                        <div className='mt-8 w-full px-10 -md:hidden'>
                             <div id='table-header' className='border-b-2 pb-3'>
-                                <div className='[&>*]:font-semibold [&>*]:tracking-wide [&>*]:text-start flex items-center'>
+                                <div className='flex items-center [&>*]:text-start [&>*]:font-semibold [&>*]:tracking-wide'>
                                     <h6 className='w-5/12'>Added Items</h6>
-                                    <div className='flex items-center justify-evenly w-5/12'>
-                                        <h6 className='text-start w-2/4'>Category</h6>
-                                        <h6 className='text-center w-1/6'>Available</h6>
-                                        <h6 className='text-end w-2/6'>Price</h6>
+                                    <div className='flex w-5/12 items-center justify-evenly'>
+                                        <h6 className='w-2/4 text-start'>Category</h6>
+                                        <h6 className='w-1/6 text-center'>Available</h6>
+                                        <h6 className='w-2/6 text-end'>Price</h6>
                                     </div>
                                     <div className='w-2/12' />
                                 </div>
                             </div>
                             <div id='table-body' className='flex flex-col gap-8'>
                                 {products.length === 0 ? (
-                                    <h3 className='absolute left-1/2 -translate-x-1/2 pt-[20vh] text-center font-bold text-2xl'>No products found</h3>
+                                    <h3 className='absolute left-1/2 -translate-x-1/2 pt-[20vh] text-center text-2xl font-bold'>No products found</h3>
                                 ) : (
                                     products.map((products) => <ProductCardDesktop handleRemove={handleRemoveProduct} product={products} key={products._id} />)
                                 )}
                             </div>
                         </div>
-                        <div className='w-full px-2 mt-4 pt-4 border-t-2 md:hidden'>
+                        <div className='mt-4 w-full border-t-2 px-2 pt-4 md:hidden'>
                             {products.length === 0 ? (
-                                <h3 className='text-center font-bold text-2xl -md:text-xl'>No products found</h3>
+                                <h3 className='text-center text-2xl font-bold -md:text-xl'>No products found</h3>
                             ) : (
-                                <div className='flex items-center flex-col gap-6'>
+                                <div className='flex flex-col items-center gap-6'>
                                     {products.map((products) => (
                                         <ProductCardMobile handleRemove={handleRemoveProduct} product={products} key={products._id} />
                                     ))}

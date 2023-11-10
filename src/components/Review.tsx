@@ -50,56 +50,55 @@ const Review: React.FC<Props> = ({ review, modifiable, onConfirm, onDelete }: Pr
     };
 
     return (
-        <div id='Review' className='bg-slate-100 border shadow-xl w-full p-6 rounded-md'>
+        <div id='Review' className='w-full rounded-md border bg-slate-100 p-6 shadow-xl'>
             <div className='flex items-center justify-between'>
                 <p className='text-xl font-bold'>{user.username}</p>
                 {modifiable && (
                     <div className='flex items-center'>
-                        <button onClick={enableEditing} className='w-6 h-6 p-2 mx-2 group text-primary-base hover:text-primary-hover'>
-                            <EditIcon className='w-6 h-6 group-hover:scale-110 transition-all' />
+                        <button onClick={enableEditing} className='group mx-2 h-6 w-6 p-2 text-primary-base hover:text-primary-hover'>
+                            <EditIcon className='h-6 w-6 transition-all group-hover:scale-110' />
                         </button>
-                        <button onClick={handleDelete} className='w-6 h-6 p-2 mx-2 group text-primary-base hover:text-primary-hover'>
-                            <DeleteIcon className='w-6 h-6 group-hover:scale-110 transition-all' />
+                        <button onClick={handleDelete} className='group mx-2 h-6 w-6 p-2 text-primary-base hover:text-primary-hover'>
+                            <DeleteIcon className='h-6 w-6 transition-all group-hover:scale-110' />
                         </button>
                     </div>
                 )}
             </div>
             <Rating rating={rating} className='py-2' />
-            <p id='content' className='pt-2 text-md focus-visible:outline-none'>
+            <p id='content' className='text-md pt-2 focus-visible:outline-none'>
                 {comment}
             </p>
             <p className='pt-4 opacity-60'>Reviewed on {new Date(updatedAt).toUTCString().slice(0, -13) /* E.g. "Fri, 27 Oct 2023" (exclude timezone, hour and minute) */}</p>
             {isEditing && (
-                <div className='mt-12 mb-4'>
+                <div className='mb-4 mt-12'>
                     <h3 className='text-lg font-bold tracking-tight'>Edit your review</h3>
                     <textarea
-                        className='w-full h-40 bg-slate-100 border-2 border-slate-100 rounded-md p-4 mb-6 resize-none focus:outline-none focus:shadow-xl transition-all outline-none'
+                        className='mb-6 h-40 w-full resize-none rounded-md border-2 border-slate-100 bg-slate-100 p-4 outline-none transition-all focus:shadow-xl focus:outline-none'
                         placeholder='Write your review here...'
                         spellCheck='false'
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                     />
-                    <div className='flex justify-between items-center'>
+                    <div className='flex items-center justify-between'>
                         <div className='flex flex-col gap-2'>
-                            <div className='flex md:items-center -md:flex-col gap-3'>
+                            <div className='flex gap-3 md:items-center -md:flex-col'>
                                 <p>Old rating: </p>
                                 <Rating rating={rating} />
                             </div>
-                            <div className='flex md:items-center -md:flex-col gap-3'>
+                            <div className='flex gap-3 md:items-center -md:flex-col'>
                                 <p>New rating: </p>
                                 <RatingButton init={rating - 1} onChange={(rating) => setNewRating(rating)} />
                             </div>
                         </div>
                         <div className='flex items-center gap-3'>
-                            <div className='w-8 h-8 p-6 flex items-center justify-center border-2 rounded-lg'>
-                                <button onClick={resetEdit} className='w-8 h-8 group'>
-                                    <XMarkIcon className='w-8 h-8 group-hover:scale-110 transition-transform' />
+                            <div className='flex h-8 w-8 items-center justify-center rounded-lg border-2 p-6'>
+                                <button onClick={resetEdit} className='group h-8 w-8'>
+                                    <XMarkIcon className='h-8 w-8 transition-transform group-hover:scale-110' />
                                 </button>
                             </div>
                             <button
                                 onClick={handleConfirm}
-                                className='px-4 h-12 bg-primary-base hover:bg-primary-hover rounded-lg text-white font-semibold hover:shadow-xl transition-all'
-                            >
+                                className='h-12 rounded-lg bg-primary-base px-4 font-semibold text-white transition-all hover:bg-primary-hover hover:shadow-xl'>
                                 Confirm
                             </button>
                         </div>

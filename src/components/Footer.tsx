@@ -41,9 +41,9 @@ const items2 = categories.map((category) => ({
 
 const List: React.FC<ListProps> = ({ title, items }: ListProps) => (
     <div className='flex flex-col gap-[0.1rem]'>
-        {typeof title === 'string' ? <h3 className='font-bold text-2xl pt-1 text-slate-200 select-none pb-3'>{title}</h3> : title}
+        {typeof title === 'string' ? <h3 className='select-none pb-3 pt-1 text-2xl font-bold text-slate-200'>{title}</h3> : title}
         {items.map(({ name, url }: Item, i) => (
-            <a key={i} href={url} className='transition-all font-semibold w-max tracking-tight text-lg text-slate-500 hover:text-slate-400'>
+            <a key={i} href={url} className='w-max text-lg font-semibold tracking-tight text-slate-500 transition-all hover:text-slate-400'>
                 {name}
             </a>
         ))}
@@ -97,16 +97,16 @@ const Footer: React.FC<FooterProps> = ({ className }: FooterProps) => {
     };
 
     return (
-        <footer className={`relative bottom-0 flex flex-col w-full items-center ${className}`}>
-            <div className='bg-slate-700 flex justify-evenly flex-wrap gap-4 w-full py-8 px-4'>
-                <List title={<LuxEdge className='select-none text-3xl pb-4 text-slate-200 [&>*]:text-slate-200' />} items={items1} />
+        <footer className={`relative bottom-0 flex w-full flex-col items-center ${className}`}>
+            <div className='flex w-full flex-wrap justify-evenly gap-4 bg-slate-700 px-4 py-8'>
+                <List title={<LuxEdge className='select-none pb-4 text-3xl text-slate-200 [&>*]:text-slate-200' />} items={items1} />
                 <List title='Products' items={items2} />
                 <div id='subscribe-to-newsletter'>
-                    <h1 className='py-1 font-bold text-white text-2xl capitalize tracking-tight select-none'>Don't miss out.</h1>
+                    <h1 className='select-none py-1 text-2xl font-bold capitalize tracking-tight text-white'>Don't miss out.</h1>
                     <h3 className='py-2 text-xl font-bold text-slate-500'>Sign up for our Newsletter</h3>
-                    <form onSubmit={handleNewsletterSubmit} className='py-3 flex items-center'>
+                    <form onSubmit={handleNewsletterSubmit} className='flex items-center py-3'>
                         <input
-                            className='w-full h-12 pl-4 py-2 pr-2 rounded-l-sm focus:outline-none font-semibold placeholder:font-normal text-slate-800'
+                            className='h-12 w-full rounded-l-sm py-2 pl-4 pr-2 font-semibold text-slate-800 placeholder:font-normal focus:outline-none'
                             required
                             autoComplete='off'
                             autoCorrect='off'
@@ -119,18 +119,17 @@ const Footer: React.FC<FooterProps> = ({ className }: FooterProps) => {
                         />
                         <button
                             type='submit'
-                            className='aspect-square h-12 p-2 rounded-r-sm border-2 border-white grid place-items-center hover:bg-slate-800 transition-colors duration-200'
-                        >
+                            className='grid aspect-square h-12 place-items-center rounded-r-sm border-2 border-white p-2 transition-colors duration-200 hover:bg-slate-800'>
                             <PlayIcon className='w-6 text-slate-100' />
                         </button>
                     </form>
-                    <h6 id='helperText' className='text-slate-50 font-semibold text-xl -md:max-w-full -md:w-fit'>
+                    <h6 id='helperText' className='text-xl font-semibold text-slate-50 -md:w-fit -md:max-w-full'>
                         {helperText}
                     </h6>
                 </div>
             </div>
-            <div id='copyright' className='w-full h-max bg-slate-800'>
-                <p className='text-slate-500 py-2 text-center tracking-tight'> Copyright&copy; {new Date().getFullYear()} LuxEdge Furnitures. All rights reserved.</p>
+            <div id='copyright' className='h-max w-full bg-slate-800'>
+                <p className='py-2 text-center tracking-tight text-slate-500'> Copyright&copy; {new Date().getFullYear()} LuxEdge Furnitures. All rights reserved.</p>
             </div>
         </footer>
     );

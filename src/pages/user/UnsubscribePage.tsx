@@ -44,12 +44,11 @@ const UnsubscribePage: React.FC = () => {
             case 'subscribed':
                 return (
                     <>
-                        <h1 className='font-extrabold text-4xl tracking-tight mb-16'>Unsubscribe from LuxEdge's Newsletter</h1>
-                        <p className='font-semibold text-2xl'>Are you sure you want to unsubscribe?</p>
+                        <h1 className='mb-16 text-4xl font-extrabold tracking-tight'>Unsubscribe from LuxEdge's Newsletter</h1>
+                        <p className='text-2xl font-semibold'>Are you sure you want to unsubscribe?</p>
                         <button
-                            className='mb-24 mt-8 bg-primary-base hover:bg-primary-hover w-1/2 md:w-auto md:px-8 py-3 text-white rounded-md shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out font-semibold'
-                            onClick={handleUnsubscribe}
-                        >
+                            className='mb-24 mt-8 w-1/2 rounded-md bg-primary-base py-3 font-semibold text-white shadow-xl transition-all duration-300 ease-in-out hover:bg-primary-hover hover:shadow-2xl md:w-auto md:px-8'
+                            onClick={handleUnsubscribe}>
                             Unsubscribe
                         </button>
                     </>
@@ -57,12 +56,11 @@ const UnsubscribePage: React.FC = () => {
             case 'unsubscribed':
                 return (
                     <>
-                        <h1 className='font-extrabold text-4xl tracking-tight mb-16'>You have been successfully unsubscribed</h1>
-                        <p className='font-semibold text-2xl'>We're sorry to see you go. If you change your mind, you can always resubscribe in the future.</p>
+                        <h1 className='mb-16 text-4xl font-extrabold tracking-tight'>You have been successfully unsubscribed</h1>
+                        <p className='text-2xl font-semibold'>We're sorry to see you go. If you change your mind, you can always resubscribe in the future.</p>
                         <button
-                            className='mb-24 mt-8 bg-primary-base hover:bg-primary-hover w-1/2 md:w-auto md:px-8 py-3 text-white rounded-md shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out font-semibold'
-                            onClick={handleSubscribeBack}
-                        >
+                            className='mb-24 mt-8 w-1/2 rounded-md bg-primary-base py-3 font-semibold text-white shadow-xl transition-all duration-300 ease-in-out hover:bg-primary-hover hover:shadow-2xl md:w-auto md:px-8'
+                            onClick={handleSubscribeBack}>
                             Resubscribe
                         </button>
                     </>
@@ -70,12 +68,11 @@ const UnsubscribePage: React.FC = () => {
             case 'resubscribed':
                 return (
                     <>
-                        <h1 className='font-extrabold text-4xl tracking-tight mb-16'>You have been successfully resubscribed</h1>
-                        <p className='font-semibold text-2xl mb-8'>Thank you for resubscribing to our newsletter.</p>
+                        <h1 className='mb-16 text-4xl font-extrabold tracking-tight'>You have been successfully resubscribed</h1>
+                        <p className='mb-8 text-2xl font-semibold'>Thank you for resubscribing to our newsletter.</p>
                         <a
-                            className='mb-24 bg-primary-base hover:bg-primary-hover w-1/2 md:w-auto md:px-8 py-3 text-white rounded-md shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out font-semibold'
-                            href='/'
-                        >
+                            className='mb-24 w-1/2 rounded-md bg-primary-base py-3 font-semibold text-white shadow-xl transition-all duration-300 ease-in-out hover:bg-primary-hover hover:shadow-2xl md:w-auto md:px-8'
+                            href='/'>
                             Continue to LuxEdge
                         </a>
                     </>
@@ -96,7 +93,7 @@ const UnsubscribePage: React.FC = () => {
     return (
         <div id='UnsubscribePage'>
             <Navbar />
-            <main className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center md:w-1/2 w-full'>{render()}</main>
+            <main className='absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 text-center md:w-1/2'>{render()}</main>
             <NotificationsMenu />
         </div>
     );

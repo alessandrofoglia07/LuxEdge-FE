@@ -207,8 +207,8 @@ const DetailsPage: React.FC = () => {
     return (
         <div id='DetailsPage'>
             <Navbar />
-            <main className='pt-16 mx-auto w-[calc(100vw - 9px)] flex flex-col min-h-page'>
-                <h4 className='py-8 md:px-12 px-4 md:text-lg text-md font-medium tracking-tight [&>a]:text-gray-600 [&>span]:text-gray-400 [&>span]:select-none'>
+            <main className='w-[calc(100vw - 9px)] mx-auto flex min-h-page flex-col pt-16'>
+                <h4 className='text-md px-4 py-8 font-medium tracking-tight md:px-12 md:text-lg [&>a]:text-gray-600 [&>span]:select-none [&>span]:text-gray-400'>
                     <a href='/products'>Products</a> <span className='px-2'>/</span>{' '}
                     <a href={`/products?tags=${toPlural(productCategory) === 'Living rooms' ? 'livingrooms' : toPlural(productCategory).toLowerCase()}`} className='capitalize'>
                         {toPlural(productCategory)}
@@ -220,39 +220,37 @@ const DetailsPage: React.FC = () => {
                 </h4>
                 {product && !loading ? (
                     <>
-                        <div className='lg:w-fit w-full relative left-1/2 -translate-x-1/2 flex -md:flex-col lg:gap-16 gap-8 justify-center lg:px-8 px-4 mt-8 h-max'>
+                        <div className='relative left-1/2 mt-8 flex h-max w-full -translate-x-1/2 justify-center gap-8 px-4 lg:w-fit lg:gap-16 lg:px-8 -md:flex-col'>
                             <Img
                                 src={toUrl(product.imagePath)}
                                 alt={product.name}
-                                className='max-w-xl md:w-1/3 md:h-1/3 sm:w-1/2 sm:h-1/2 w-full h-full self-center aspect-square rounded-md'
+                                className='aspect-square h-full w-full max-w-xl self-center rounded-md sm:h-1/2 sm:w-1/2 md:h-1/3 md:w-1/3'
                             />
-                            <div className='md:w-1/2 w-full -md:px-8 h-full md:py-16 pb-32 -md:flex -md:flex-col items-center'>
-                                <h1 className='font-extrabold text-5xl mb-8 h-fit -md:text-center tracking-tight'>{product.name}</h1>
-                                <h4 className='text-xl h-fit -md:text-center tracking-wide'>{product.description}</h4>
+                            <div className='h-full w-full items-center pb-32 md:w-1/2 md:py-16 -md:flex -md:flex-col -md:px-8'>
+                                <h1 className='mb-8 h-fit text-5xl font-extrabold tracking-tight -md:text-center'>{product.name}</h1>
+                                <h4 className='h-fit text-xl tracking-wide -md:text-center'>{product.description}</h4>
                                 {product.rating > 0 && <Rating rating={product.rating} />}
-                                <div className='flex items-center -md:flex-col justify-between mt-16'>
+                                <div className='mt-16 flex items-center justify-between -md:flex-col'>
                                     <div className='flex items-center'>
                                         <button
-                                            className='text-xl flex items-center gap-4 text-white bg-primary-base hover:bg-primary-hover transition-all py-4 px-6 rounded-md mr-2 whitespace-nowrap tracking-tight hover:shadow-xl'
-                                            onClick={handleAddToCart}
-                                        >
-                                            <ShoppingCartIcon className='w-8 h-8' />
+                                            className='mr-2 flex items-center gap-4 whitespace-nowrap rounded-md bg-primary-base px-6 py-4 text-xl tracking-tight text-white transition-all hover:bg-primary-hover hover:shadow-xl'
+                                            onClick={handleAddToCart}>
+                                            <ShoppingCartIcon className='h-8 w-8' />
                                             Add to Cart
                                         </button>
                                         <motion.button
                                             whileTap={{ scale: 0.8 }}
-                                            className='bg-white text-gray-700 hover:text-primary-hover border-2 hover:bg-slate-100 transition-colors p-3 rounded-md mr-2 group'
-                                            onClick={handleAddToFavs}
-                                        >
-                                            <HeartIcon className={`w-10 h-10 transition-colors ${favorite && 'text-red-500 group-hover:text-red-600'}`} />
+                                            className='group mr-2 rounded-md border-2 bg-white p-3 text-gray-700 transition-colors hover:bg-slate-100 hover:text-primary-hover'
+                                            onClick={handleAddToFavs}>
+                                            <HeartIcon className={`h-10 w-10 transition-colors ${favorite && 'text-red-500 group-hover:text-red-600'}`} />
                                         </motion.button>
                                     </div>
-                                    <h3 className='text-3xl font-extrabold text-gray-700 whitespace-nowrap -md:mt-8 tracking-wide'>{toPrice(product.price)}</h3>
+                                    <h3 className='whitespace-nowrap text-3xl font-extrabold tracking-wide text-gray-700 -md:mt-8'>{toPrice(product.price)}</h3>
                                 </div>
                             </div>
                         </div>
-                        <div className='lg:w-1/2 w-full relative left-1/2 -translate-x-1/2 flex flex-col -md:flex-col lg:gap-8 gap-8 justify-center lg:px-8 px-4 mt-8 h-max pb-32'>
-                            <div className='w-full flex justify-between items-center lg:mb-4 lg:mt-8'>
+                        <div className='relative left-1/2 mt-8 flex h-max w-full -translate-x-1/2 flex-col justify-center gap-8 px-4 pb-32 lg:w-1/2 lg:gap-8 lg:px-8 -md:flex-col'>
+                            <div className='flex w-full items-center justify-between lg:mb-4 lg:mt-8'>
                                 <h2 className='text-3xl font-extrabold tracking-tight'>Product Reviews</h2>
                             </div>
                             {ownReview ? (
@@ -260,23 +258,22 @@ const DetailsPage: React.FC = () => {
                             ) : (
                                 <div id='review-editor'>
                                     <textarea
-                                        className='w-full h-40 bg-slate-100 border-2 border-slate-100 rounded-xl p-4 mt-8 mb-6 resize-none focus:outline-none focus:elevate transition-all outline-none'
+                                        className='focus:elevate mb-6 mt-8 h-40 w-full resize-none rounded-xl border-2 border-slate-100 bg-slate-100 p-4 outline-none transition-all focus:outline-none'
                                         placeholder='Write your review here...'
                                         value={newReview?.text}
                                         onChange={(e) => setNewReview({ text: e.target.value, rating: newReview?.rating || 0 })}
                                     />
-                                    <div className='flex justify-between items-center'>
+                                    <div className='flex items-center justify-between'>
                                         <RatingButton init={newReview?.rating || 4} onChange={(rating) => setNewReview({ text: newReview?.text || '', rating: rating })} />
                                         <button
                                             onClick={handleAddReview}
-                                            className='px-4 h-12 bg-primary-base hover:bg-primary-hover rounded-lg text-white font-semibold hover:shadow-xl transition-all'
-                                        >
+                                            className='h-12 rounded-lg bg-primary-base px-4 font-semibold text-white transition-all hover:bg-primary-hover hover:shadow-xl'>
                                             Submit
                                         </button>
                                     </div>
                                 </div>
                             )}
-                            {reviews.length === 0 && <h3 className='text-2xl font-medium tracking-tight text-gray-800 mt-8'>No reviews on this product yet.</h3>}
+                            {reviews.length === 0 && <h3 className='mt-8 text-2xl font-medium tracking-tight text-gray-800'>No reviews on this product yet.</h3>}
                             {reviews.map((review) => (
                                 <Review review={review} key={review._id} />
                             ))}
@@ -295,8 +292,7 @@ const DetailsPage: React.FC = () => {
                         enterTo='opacity-100'
                         leave='ease-in duration-200'
                         leaveFrom='opacity-100'
-                        leaveTo='opacity-0'
-                    >
+                        leaveTo='opacity-0'>
                         <div className='fixed inset-0 bg-black/25' />
                     </Transition.Child>
                     <div className='fixed inset-0 overflow-y-auto'>
@@ -308,8 +304,7 @@ const DetailsPage: React.FC = () => {
                                 enterTo='opacity-100 scale-100'
                                 leave='ease-in duration-200'
                                 leaveFrom='opacity-100 scale-100'
-                                leaveTo='opacity-0 scale-95'
-                            >
+                                leaveTo='opacity-0 scale-95'>
                                 <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
                                     <Dialog.Title as='h3' className='text-xl font-bold leading-6 text-gray-900'>
                                         Are you sure?
@@ -321,15 +316,13 @@ const DetailsPage: React.FC = () => {
                                         <button
                                             type='button'
                                             className='inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2'
-                                            onClick={handleConfirmDeletion}
-                                        >
+                                            onClick={handleConfirmDeletion}>
                                             Delete it
                                         </button>
                                         <button
                                             type='button'
-                                            className='inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ml-2'
-                                            onClick={() => setModalOpen(false)}
-                                        >
+                                            className='ml-2 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
+                                            onClick={() => setModalOpen(false)}>
                                             Cancel
                                         </button>
                                     </div>

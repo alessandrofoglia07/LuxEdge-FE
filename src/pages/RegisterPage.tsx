@@ -183,17 +183,16 @@ const RegisterPage: React.FC = () => {
     ) : (
         <div id='LoginPage'>
             <Navbar />
-            <main className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center w-min h-min rounded-lg'>
+            <main className='absolute left-1/2 top-1/2 flex h-min w-min -translate-x-1/2 -translate-y-1/2 items-center rounded-lg'>
                 <div
                     id='presentation'
-                    className={`w-96 h-[36rem] rounded-lg rounded-r-none -md:hidden select-none bg-gradient-to-bl from-blue-500 to-blue-700
-                        flex flex-col justify-between
-                        before:bg-white before:opacity-0 before:absolute before:w-96 before:h-full`}
-                >
+                    className={`flex h-[36rem] w-96 select-none flex-col justify-between rounded-lg rounded-r-none bg-gradient-to-bl
+                        from-blue-500 to-blue-700 before:absolute
+                        before:h-full before:w-96 before:bg-white before:opacity-0 -md:hidden`}>
                     <div id='top' className='h-12 w-max px-4 py-2'>
                         <LuxEdge version='white' id='logo' className='text-4xl' />
                     </div>
-                    <div id='center' className='h-max w-full flex items-center'>
+                    <div id='center' className='flex h-max w-full items-center'>
                         <motion.h2
                             initial={{ opacity: 0 }}
                             animate={{
@@ -203,25 +202,24 @@ const RegisterPage: React.FC = () => {
                                 }
                             }}
                             viewport={{ once: true }}
-                            className='text-center text-[2.7rem] font-bold text-white px-6 tracking-tight'
-                        >
+                            className='px-6 text-center text-[2.7rem] font-bold tracking-tight text-white'>
                             Get started.
                         </motion.h2>
                         <div
-                            className='w-0 h-0 ml-auto'
+                            className='ml-auto h-0 w-0'
                             style={{ borderTop: '30px solid transparent', borderBottom: '30px solid transparent', borderRight: '30px solid rgb(255 255 255)' }}
                         />
                     </div>
                     <div id='bottom' className='h-12 w-max px-4 py-2'>
-                        <p className='text-sm text-white font-semibold'>{new Date().getFullYear()} LuxEdge Furnitures.</p>
+                        <p className='text-sm font-semibold text-white'>{new Date().getFullYear()} LuxEdge Furnitures.</p>
                     </div>
                 </div>
-                <div id='form' className='w-96 h-[36rem] rounded-lg md:rounded-l-none bg-white flex flex-col items-center'>
+                <div id='form' className='flex h-[36rem] w-96 flex-col items-center rounded-lg bg-white md:rounded-l-none'>
                     <div id='top' className='py-12'>
-                        <h2 className='font-extrabold text-center text-[2.7rem] tracking-tight select-none'>Register</h2>
+                        <h2 className='select-none text-center text-[2.7rem] font-extrabold tracking-tight'>Register</h2>
                     </div>
                     <form autoComplete='off' spellCheck='false' onSubmit={handleRegister}>
-                        <div id='center' className='h-max w-full flex flex-col gap-8 items-center mt-4'>
+                        <div id='center' className='mt-4 flex h-max w-full flex-col items-center gap-8'>
                             <Input
                                 type='text'
                                 helperText={helperTexts.username}
@@ -253,11 +251,11 @@ const RegisterPage: React.FC = () => {
                                 containerClassName='w-3/4'
                             />
                         </div>
-                        <div id='bottom' className='w-full flex flex-col mt-16 items-center'>
+                        <div id='bottom' className='mt-16 flex w-full flex-col items-center'>
                             <Button type='submit' className='w-3/4'>
                                 Register
                             </Button>
-                            <p className='mt-4 text-sm text-gray-500 font-semibold'>
+                            <p className='mt-4 text-sm font-semibold text-gray-500'>
                                 Already have an account?{' '}
                                 <a className='text-primary-base hover:text-primary-hover' href='/login'>
                                     Login

@@ -9,7 +9,7 @@ interface Props {
 
 const Rating: React.FC<Props> = ({ rating, max = 5, className = '' }: Props) => {
     return (
-        <div className={`flex items-centers ${className}`}>
+        <div className={`items-centers flex ${className}`}>
             {Array.from({ length: Math.floor(rating) }, (_, i) => (
                 <Star key={i} variant='filled' />
             ))}

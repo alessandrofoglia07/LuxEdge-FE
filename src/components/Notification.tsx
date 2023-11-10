@@ -31,14 +31,13 @@ const Notification: React.FC<Props> = ({ message, severity = 'success', onClose,
     return (
         <div
             id={id ? id : 'Notification'}
-            className='fixed md:max-w-[36rem] md:w-fit w-[calc(100vw-8rem)] h-max right-6 rounded-2xl elevate py-6 px-6 z-50 bg-gradient-to-bl bg-white flex items-center justify-between gap-8 transition-transform duration-100 ease-in-out -bottom-28'
-        >
+            className='elevate fixed -bottom-28 right-6 z-50 flex h-max w-[calc(100vw-8rem)] items-center justify-between gap-8 rounded-2xl bg-white bg-gradient-to-bl px-6 py-6 transition-transform duration-100 ease-in-out md:w-fit md:max-w-[36rem]'>
             <div className='flex flex-col gap-2'>
                 <h2 className='text-lg font-medium leading-6 text-gray-900'>{messageState.title}</h2>
                 <p className={`text-sm ${severity === 'error' ? 'text-red-800' : 'text-gray-500'} hyphens-auto`}>{messageState.content}</p>
             </div>
-            <button onClick={onClose} className='w-12 h-12 aspect-square hover:bg-slate-200 rounded-lg grid place-items-center mr-4'>
-                <XMarkIcon className='w-8 h-8 text-black' />
+            <button onClick={onClose} className='mr-4 grid aspect-square h-12 w-12 place-items-center rounded-lg hover:bg-slate-200'>
+                <XMarkIcon className='h-8 w-8 text-black' />
             </button>
         </div>
     );

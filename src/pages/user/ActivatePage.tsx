@@ -60,13 +60,13 @@ const ActivatePage: React.FC = () => {
     return (
         <div id='ActivatePage'>
             <Navbar />
-            <main className='absolute top-1/2 left-1/2 w-max -translate-x-1/2 -translate-y-1/2 text-center flex flex-col items-center gap-8'>
+            <main className='absolute left-1/2 top-1/2 flex w-max -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-8 text-center'>
                 <LuxEdge className='text-5xl -md:text-4xl' />
-                <h2 className='text-4xl -md:text-3xl font-bold mb-8'>Activate your account.</h2>
-                <Button disabled={loading || !!result} onClick={handleActivate} className={`w-64 h-16 text-xl ${(loading || !!result) && 'bg-primary-light hover:bg-primary-light'}`}>
+                <h2 className='mb-8 text-4xl font-bold -md:text-3xl'>Activate your account.</h2>
+                <Button disabled={loading || !!result} onClick={handleActivate} className={`h-16 w-64 text-xl ${(loading || !!result) && 'bg-primary-light hover:bg-primary-light'}`}>
                     Activate
                 </Button>
-                <h4 className='font-semibold text-2xl'>{result}</h4>
+                <h4 className='text-2xl font-semibold'>{result}</h4>
             </main>
             <NotificationsMenu />
         </div>

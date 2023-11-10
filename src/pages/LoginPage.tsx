@@ -87,18 +87,17 @@ const LoginPage: React.FC = () => {
     ) : (
         <div id='LoginPage'>
             <Navbar />
-            <main className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center w-min h-min rounded-lg'>
+            <main className='absolute left-1/2 top-1/2 flex h-min w-min -translate-x-1/2 -translate-y-1/2 items-center rounded-lg'>
                 <motion.div
                     id='presentation'
-                    className={`w-96 h-[36rem] rounded-lg rounded-r-none -md:hidden bg-gradient-to-br from-blue-500 to-blue-700
-                        flex flex-col justify-between
-                        before:bg-white before:opacity-0 before:absolute before:w-96 before:h-full`}
-                    viewport={{ once: true }}
-                >
+                    className={`flex h-[36rem] w-96 flex-col justify-between rounded-lg rounded-r-none bg-gradient-to-br
+                        from-blue-500 to-blue-700 before:absolute
+                        before:h-full before:w-96 before:bg-white before:opacity-0 -md:hidden`}
+                    viewport={{ once: true }}>
                     <div id='top' className='h-12 w-max px-4 py-2'>
                         <LuxEdge version='white' id='logo' className='text-4xl' />
                     </div>
-                    <div id='center' className='h-max w-full flex items-center'>
+                    <div id='center' className='flex h-max w-full items-center'>
                         <motion.h2
                             initial={{ opacity: 0 }}
                             animate={{
@@ -108,29 +107,28 @@ const LoginPage: React.FC = () => {
                                 }
                             }}
                             viewport={{ once: true }}
-                            className='text-center text-[2.7rem] font-bold text-white px-4 tracking-tight'
-                        >
+                            className='px-4 text-center text-[2.7rem] font-bold tracking-tight text-white'>
                             Welcome back.
                         </motion.h2>
                         <div
-                            className='w-0 h-0 ml-auto'
+                            className='ml-auto h-0 w-0'
                             style={{ borderTop: '30px solid transparent', borderBottom: '30px solid transparent', borderRight: '30px solid rgb(255 255 255)' }}
                         />
                     </div>
                     <div id='bottom' className='h-12 w-max px-4 py-2'>
-                        <p className='text-sm text-white font-semibold'>{new Date().getFullYear()} LuxEdge Furnitures.</p>
+                        <p className='text-sm font-semibold text-white'>{new Date().getFullYear()} LuxEdge Furnitures.</p>
                     </div>
                 </motion.div>
-                <div id='form' className='w-96 h-[36rem] rounded-lg md:rounded-l-none bg-white flex flex-col items-center'>
+                <div id='form' className='flex h-[36rem] w-96 flex-col items-center rounded-lg bg-white md:rounded-l-none'>
                     <div id='top' className='py-12'>
-                        <h2 className='font-extrabold text-center text-[2.7rem] tracking-tight select-none'>Login</h2>
+                        <h2 className='select-none text-center text-[2.7rem] font-extrabold tracking-tight'>Login</h2>
                     </div>
                     <form autoComplete='off' spellCheck='false' onSubmit={handleLogin}>
-                        <div id='center' className='h-max w-full flex flex-col gap-8 items-center mt-12'>
+                        <div id='center' className='mt-12 flex h-max w-full flex-col items-center gap-8'>
                             <Input type='email' placeholder='Email' name='email' value={form.email} onChange={handleChange} containerClassName='w-3/4' />
-                            <div className='w-full flex flex-col items-center gap-2'>
+                            <div className='flex w-full flex-col items-center gap-2'>
                                 <Input type='password' placeholder='Password' name='password' value={form.password} onChange={handleChange} containerClassName='w-3/4' />
-                                <p className='text-sm text-gray-500 font-semibold'>
+                                <p className='text-sm font-semibold text-gray-500'>
                                     Forgot your password?{' '}
                                     <a className='text-primary-base hover:text-primary-hover' href='/user/forgot-password'>
                                         Reset
@@ -138,11 +136,11 @@ const LoginPage: React.FC = () => {
                                 </p>
                             </div>
                         </div>
-                        <div id='bottom' className='w-full flex flex-col mt-16 items-center'>
+                        <div id='bottom' className='mt-16 flex w-full flex-col items-center'>
                             <Button type='submit' className='w-3/4'>
                                 Login
                             </Button>
-                            <p className='mt-4 text-sm text-gray-500 font-semibold'>
+                            <p className='mt-4 text-sm font-semibold text-gray-500'>
                                 New to LuxEdge?{' '}
                                 <a className='text-primary-base hover:text-primary-hover' href='/register'>
                                     Register

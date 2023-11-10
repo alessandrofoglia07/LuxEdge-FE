@@ -40,29 +40,28 @@ const ProductCard: React.FC<Props> = (_: Props) => {
     };
 
     return (
-        <div id='ProductCard' className='md:w-96 flex flex-col items-center md:min-w-[24rem] md:h-fit w-min bg-white rounded-lg p-4'>
-            <div id='top' className='md:w-full md:h-1/2 w-full h-64 group'>
-                <a draggable={false} className='w-full h-full md:pt-4' href={`/products/${toPlural(product.category)}/${product.name}`}>
-                    <Img className='w-full h-full rounded-md border-slate-200 drop-shadow-xl border-2' src={toUrl(product.imagePath)} alt={product.name} />
+        <div id='ProductCard' className='flex w-min flex-col items-center rounded-lg bg-white p-4 md:h-fit md:w-96 md:min-w-[24rem]'>
+            <div id='top' className='group h-64 w-full md:h-1/2 md:w-full'>
+                <a draggable={false} className='h-full w-full md:pt-4' href={`/products/${toPlural(product.category)}/${product.name}`}>
+                    <Img className='h-full w-full rounded-md border-2 border-slate-200 drop-shadow-xl' src={toUrl(product.imagePath)} alt={product.name} />
                 </a>
-                <div className='absolute flex group-hover:opacity-100 transition-opacity duration-300 md:opacity-0 p-2 flex-col -translate-y-full text-end items-end rounded-b-lg'>
+                <div className='absolute flex -translate-y-full flex-col items-end rounded-b-lg p-2 text-end transition-opacity duration-300 group-hover:opacity-100 md:opacity-0'>
                     <button
                         id='favs'
-                        className={`w-10 group/btn aspect-square grid place-items-center bg-black bg-opacity-60 transition-all duration-200 rounded-lg ${
+                        className={`group/btn grid aspect-square w-10 place-items-center rounded-lg bg-black bg-opacity-60 transition-all duration-200 ${
                             _.isFavorite ? 'text-red-500 hover:text-red-600' : 'text-slate-200 hover:text-slate-50'
                         }`}
-                        onClick={handleFavorite}
-                    >
-                        <HeartIcon className='w-6 h-6 group-hover/btn:scale-110 transition-transform group-active/btn:scale-95' />
+                        onClick={handleFavorite}>
+                        <HeartIcon className='h-6 w-6 transition-transform group-hover/btn:scale-110 group-active/btn:scale-95' />
                     </button>
                 </div>
             </div>
-            <div id='rows-container' className='md:w-full md:h-1/2 w-64 h-min flex flex-col md:pt-4 px-4 gap-1'>
+            <div id='rows-container' className='flex h-min w-64 flex-col gap-1 px-4 md:h-1/2 md:w-full md:pt-4'>
                 <div className='flex justify-between'>
                     {product.category && <p className='uppercase tracking-wide text-primary-light opacity-70'>{product.category}</p>}
                     {product.rating && <Rating rating={product.rating} />}
                 </div>
-                <a draggable={false} href={`/products/${toPlural(product.category)}/${product.name}`} className='capitalize font-bold tracking-wide'>
+                <a draggable={false} href={`/products/${toPlural(product.category)}/${product.name}`} className='font-bold capitalize tracking-wide'>
                     {product.name}
                 </a>
                 <h6 className='font-semibold tracking-wide'>{toPrice(product.price)}</h6>

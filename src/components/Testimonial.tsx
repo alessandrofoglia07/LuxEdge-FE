@@ -11,12 +11,11 @@ const Testimonial: React.FC<Props> = ({ testimonial }: Props) => {
     return (
         <div
             id='Testimonial'
-            className='max-w-sm -lg:w-2/3 h-max md:h-[26rem] bg-white shadow-xl flex flex-col items-center p-4 hover:shadow-2xl transition-all duration-300 ease-in-out'
-        >
-            <Img src={testimonial.pfpPath} alt='client-profile-pic' className='aspect-square rounded-full w-1/3' />
-            <h2 className='font-bold text-xl tracking-wide py-2'>{testimonial.author}</h2>
+            className='flex h-max max-w-sm flex-col items-center bg-white p-4 shadow-xl transition-all duration-300 ease-in-out hover:shadow-2xl md:h-[26rem] -lg:w-2/3'>
+            <Img src={testimonial.pfpPath} alt='client-profile-pic' className='aspect-square w-1/3 rounded-full' />
+            <h2 className='py-2 text-xl font-bold tracking-wide'>{testimonial.author}</h2>
             <Rating className='py-2' rating={testimonial.rating} />
-            <p className='py-4 opacity-50 font-semibold tracking-wide px-2 text-center'>{testimonial.text}</p>
+            <p className='px-2 py-4 text-center font-semibold tracking-wide opacity-50'>{testimonial.text}</p>
         </div>
     );
 };

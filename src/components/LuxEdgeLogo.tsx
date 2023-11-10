@@ -10,15 +10,15 @@ interface Props {
 
 const LuxEdge: React.FC<Props> = ({ className = '', id, style, version = 'standard' }: Props) =>
     version === 'white' ? (
-        <span id={id} style={style} className={`tracking-tighter font-extrabold text-slate-100 ${className}`}>
+        <span id={id} style={style} className={`font-extrabold tracking-tighter text-slate-100 ${className}`}>
             LuxEdge
         </span>
     ) : version === 'black' ? (
-        <span id={id} style={style} className={`tracking-tighter font-extrabold text-gray-900 ${className}`}>
+        <span id={id} style={style} className={`font-extrabold tracking-tighter text-gray-900 ${className}`}>
             LuxEdge
         </span>
     ) : (
-        <span id={id} style={style} className={`tracking-tighter font-extrabold ${className}`}>
+        <span id={id} style={style} className={`font-extrabold tracking-tighter ${className}`}>
             Lux
             <Highlight effect={true} lighter={version === 'lighter'}>
                 Edge

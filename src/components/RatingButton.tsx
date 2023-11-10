@@ -27,8 +27,7 @@ const RatingButton: React.FC<Props> = ({ init, max = 5, className = '', onChange
             onMouseLeave={() => {
                 setHovering(false);
             }}
-            className={`flex items-center ${className}`}
-        >
+            className={`flex items-center ${className}`}>
             {Array.from({ length: max }, (_, i) => (
                 <motion.button
                     whileHover={{ scale: 1.2 }}
@@ -37,8 +36,7 @@ const RatingButton: React.FC<Props> = ({ init, max = 5, className = '', onChange
                     onClick={() => handleRatingClick(i)}
                     onMouseEnter={() => {
                         setHoveredRating(i);
-                    }}
-                >
+                    }}>
                     <Star variant={!hovering ? (i <= selectedRating ? 'filled' : 'empty') : i <= hoveredRating ? 'filled' : 'empty'} />
                 </motion.button>
             ))}

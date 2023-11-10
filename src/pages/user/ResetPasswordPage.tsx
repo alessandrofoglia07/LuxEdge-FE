@@ -91,11 +91,11 @@ const ResetPasswordPage: React.FC = () => {
     ) : (
         <div id='ResetPasswordPage'>
             <Navbar />
-            <main className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center w-fit h-fit rounded-lg bg-white p-8'>
+            <main className='absolute left-1/2 top-1/2 flex h-fit w-fit -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-lg bg-white p-8'>
                 <LuxEdge className='text-5xl -md:text-4xl' />
-                <h1 className='text-4xl -md:text-3xl font-bold mt-10 mb-4 tracking-tight'>Forgot Password</h1>
-                <h2 className='text-2xl -md:text-xl font-semibold mb-10 tracking-wide'>Select your new password and press the button to confirm.</h2>
-                <form autoComplete='off' autoCapitalize='off' spellCheck='false' className='w-full flex flex-col items-center gap-4' onSubmit={handleConfirm}>
+                <h1 className='mb-4 mt-10 text-4xl font-bold tracking-tight -md:text-3xl'>Forgot Password</h1>
+                <h2 className='mb-10 text-2xl font-semibold tracking-wide -md:text-xl'>Select your new password and press the button to confirm.</h2>
+                <form autoComplete='off' autoCapitalize='off' spellCheck='false' className='flex w-full flex-col items-center gap-4' onSubmit={handleConfirm}>
                     <Input type='password' value={input.newPassword} onChange={handleChange} name='newPassword' placeholder='New password' containerClassName='w-1/2' />
                     <Input
                         type='password'
@@ -108,7 +108,7 @@ const ResetPasswordPage: React.FC = () => {
                     <Button type='submit' className='w-1/2'>
                         Confirm
                     </Button>
-                    <h6 className='font-semibold text-lg mt-4 text-gray-500'>{result}</h6>
+                    <h6 className='mt-4 text-lg font-semibold text-gray-500'>{result}</h6>
                 </form>
             </main>
             <NotificationsMenu />

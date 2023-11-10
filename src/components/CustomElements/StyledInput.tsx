@@ -24,22 +24,21 @@ const Input: React.FC<Props> = (props: Props) => {
     return (
         <div id='input' className={props.containerClassName}>
             <div
-                className={`bg-slate-200 transition-all duration-[20ms] px-6 py-3 flex items-center select-none gap-4 rounded-lg focus-within:outline focus-within:outline-blue-500 focus-within:outline-offset-1 ${
+                className={`flex select-none items-center gap-4 rounded-lg bg-slate-200 px-6 py-3 transition-all duration-[20ms] focus-within:outline focus-within:outline-offset-1 focus-within:outline-blue-500 ${
                     props.containerClassName?.includes('w-') && 'w-full [&>input]:w-full'
-                }`}
-            >
-                <input type={type} className={`bg-slate-200 text-lg tracking-tight py-[.25rem] leading-3 outline-none ${props.className}`} {...inputProps} />
+                }`}>
+                <input type={type} className={`bg-slate-200 py-[.25rem] text-lg leading-3 tracking-tight outline-none ${props.className}`} {...inputProps} />
                 {props.type === 'password' && type === 'password' ? (
-                    <button type='button' className='focus:outline-none focus:bg-slate-300 p-1 -m-1 rounded-full' onClick={() => setType('text')}>
-                        <ViewPass className='w-6 h-6 text-gray-500' />
+                    <button type='button' className='-m-1 rounded-full p-1 focus:bg-slate-300 focus:outline-none' onClick={() => setType('text')}>
+                        <ViewPass className='h-6 w-6 text-gray-500' />
                     </button>
                 ) : props.type === 'password' && type === 'text' ? (
-                    <button type='button' className='focus:outline-none focus:bg-slate-300 p-1 -m-1 rounded-full' onClick={() => setType('password')}>
-                        <NotViewPass className='w-6 h-6 text-gray-500' />
+                    <button type='button' className='-m-1 rounded-full p-1 focus:bg-slate-300 focus:outline-none' onClick={() => setType('password')}>
+                        <NotViewPass className='h-6 w-6 text-gray-500' />
                     </button>
                 ) : null}
             </div>
-            {props.error && <p className='text-sm text-primary-hover px-1 tracking-tight absolute'>{props.helperText}</p>}
+            {props.error && <p className='absolute px-1 text-sm tracking-tight text-primary-hover'>{props.helperText}</p>}
         </div>
     );
 };

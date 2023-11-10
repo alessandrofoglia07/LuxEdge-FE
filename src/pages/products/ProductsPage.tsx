@@ -44,9 +44,9 @@ interface PriceRangeInputProps extends React.InputHTMLAttributes<HTMLInputElemen
 
 const PriceRangeInput: React.FC<PriceRangeInputProps> = (props: PriceRangeInputProps) => {
     return (
-        <div className='w-2/3 bg-slate-200 my-2 rounded-md flex items-center'>
-            <p className='pr-2 pl-4'>$</p>
-            <input type='number' className='w-full bg-slate-200 p-2 rounded-md leading-3 outline-none tracking-tight' max={1000000} min={0} {...props} />
+        <div className='my-2 flex w-2/3 items-center rounded-md bg-slate-200'>
+            <p className='pl-4 pr-2'>$</p>
+            <input type='number' className='w-full rounded-md bg-slate-200 p-2 leading-3 tracking-tight outline-none' max={1000000} min={0} {...props} />
         </div>
     );
 };
@@ -323,20 +323,20 @@ const ProductsPage: React.FC = () => {
     return (
         <div id='ProductsPage'>
             <Navbar />
-            <main className='pt-16 mx-auto w-[calc(100vw - 9px)] flex flex-col items-center min-h-page'>
-                <div className='md:w-3/4 w-full flex flex-col mb-36'>
-                    <div id='mid' className='w-full self-center mt-8 h-max flex -md:flex-col -md:gap-4 items-center justify-between py-4 px-4'>
+            <main className='w-[calc(100vw - 9px)] mx-auto flex min-h-page flex-col items-center pt-16'>
+                <div className='mb-36 flex w-full flex-col md:w-3/4'>
+                    <div id='mid' className='mt-8 flex h-max w-full items-center justify-between self-center px-4 py-4 -md:flex-col -md:gap-4'>
                         <h6>
                             <span className='font-semibold'>
                                 Showing {!loading ? Math.min(1 + (page - 1) * 12, productsCount) : '...'} - {!loading ? Math.min(12 + (page - 1) * 12, productsCount) : '...'}
                             </span>{' '}
                             out of {!loading ? productsCount : '...'} products
                         </h6>
-                        <div className='-md:w-full -md:flex justify-center gap-2'>
+                        <div className='justify-center gap-2 -md:flex -md:w-full'>
                             <Listbox value={selectedSort} onChange={setSelectedSort}>
                                 <div className='relative z-10'>
                                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                        <Listbox.Button className='relative w-64 h-11 md:h-auto -md:w-[40vw] -md:text-center rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-lg border border-slate-300 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light sm:text-sm'>
+                                        <Listbox.Button className='relative h-11 w-64 rounded-lg border border-slate-300 bg-white py-2 pl-3 pr-10 text-left shadow-lg focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light sm:text-sm md:h-auto -md:w-[40vw] -md:text-center'>
                                             <span className='block truncate font-semibold'>{selectedSort.name}</span>
                                             <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
                                                 <ChevronUpDownIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
@@ -351,8 +351,7 @@ const ProductsPage: React.FC = () => {
                                                     className={({ active }) =>
                                                         `relative cursor-pointer select-none py-2 pl-10 pr-4 ${active ? 'bg-blue-100 text-gray-900' : 'text-gray-900'}`
                                                     }
-                                                    value={sortOption}
-                                                >
+                                                    value={sortOption}>
                                                     {({ selected }) => (
                                                         <>
                                                             <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>{sortOption.name}</span>
@@ -371,17 +370,16 @@ const ProductsPage: React.FC = () => {
                             </Listbox>
                             <button
                                 onClick={handleMobileFiltersOpen}
-                                className='md:hidden relative h-11 w-[40vw] rounded-lg font-semibold bg-white py-2 text-center shadow-lg border border-slate-300 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light sm:text-sm flex justify-center items-center gap-2'
-                            >
+                                className='relative flex h-11 w-[40vw] items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white py-2 text-center font-semibold shadow-lg focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-light sm:text-sm md:hidden'>
                                 Filter
                                 <FunnelIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
                             </button>
                         </div>
                     </div>
-                    <div id='main' className='w-full self-center h-max flex -md:flex-col'>
-                        <aside id='filters-menu-desktop' className='w-72 h-max -md:hidden'>
-                            <div className='ml-4 w-[calc(100% - 1rem)] h-max flex flex-col'>
-                                <h2 className='text-xl font-bold border-b py-4 border-b-slate-300 uppercase'>
+                    <div id='main' className='flex h-max w-full self-center -md:flex-col'>
+                        <aside id='filters-menu-desktop' className='h-max w-72 -md:hidden'>
+                            <div className='w-[calc(100% - 1rem)] ml-4 flex h-max flex-col'>
+                                <h2 className='border-b border-b-slate-300 py-4 text-xl font-bold uppercase'>
                                     <b>Filters</b>
                                 </h2>
                                 <div className='border-b border-b-slate-200 py-2'>
@@ -399,11 +397,11 @@ const ProductsPage: React.FC = () => {
                                         <b>Price</b>
                                     </h2>
                                     <div className='flex flex-col'>
-                                        <div className='flex justify-between items-center'>
+                                        <div className='flex items-center justify-between'>
                                             <p>From:</p>
                                             <PriceRangeInput value={priceRange[0]} placeholder='0' onChange={(e) => handlePriceRangeChange(0, e.target.value)} />
                                         </div>
-                                        <div className='flex justify-between items-center'>
+                                        <div className='flex items-center justify-between'>
                                             <p>To:</p>
                                             <PriceRangeInput value={priceRange[1]} placeholder='1000000' onChange={(e) => handlePriceRangeChange(1, e.target.value)} />
                                         </div>
@@ -421,12 +419,12 @@ const ProductsPage: React.FC = () => {
                                 </div>
                             </div>
                         </aside>
-                        <div className='w-full h-full flex flex-col items-center'>
+                        <div className='flex h-full w-full flex-col items-center'>
                             {loading ? (
                                 <Spinner className='mt-[20vh]' />
                             ) : (
                                 <>
-                                    <section id='products' className='grid place-items-center w-full'>
+                                    <section id='products' className='grid w-full place-items-center'>
                                         <div className='responsive-grid'>
                                             {products.map((product, i) => (
                                                 <ProductCard key={i} product={product} isFavorite={favsList.some((id) => id === product._id)} setIsFavorite={handleFavorite} />
@@ -445,23 +443,22 @@ const ProductsPage: React.FC = () => {
                 <div className='fixed inset-0 z-50' />
                 <Dialog.Panel
                     id='filters-menu-mobile'
-                    className='transition-transform duration-300 translate-x-full fixed inset-y-0 right-0 z-50 w-max overflow-y-auto bg-slate-50 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'
-                >
+                    className='fixed inset-y-0 right-0 z-50 w-max translate-x-full overflow-y-auto bg-slate-50 px-6 py-6 transition-transform duration-300 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
                     <Dialog.Title className='flex flex-col items-center border-b-2 border-b-slate-300 pb-4'>
-                        <div className='flex justify-between w-full'>
-                            <a href='/' className='w-fit h-fit'>
-                                <img src='/favicon.ico' className='w-12 h-12' />
+                        <div className='flex w-full justify-between'>
+                            <a href='/' className='h-fit w-fit'>
+                                <img src='/favicon.ico' className='h-12 w-12' />
                             </a>
                             <button onClick={handleMobileFiltersClose}>
                                 <span className='sr-only'>Close Menu</span>
                                 <XMarkIcon className='w-8' />
                             </button>
                         </div>
-                        <span className='text-xl font-bold uppercase mt-4'>
+                        <span className='mt-4 text-xl font-bold uppercase'>
                             <b>Filters</b>
                         </span>
                     </Dialog.Title>
-                    <div id='content' className='flow-root mt-4 pr-[10vw]'>
+                    <div id='content' className='mt-4 flow-root pr-[10vw]'>
                         <div className='border-b border-b-slate-200 py-2'>
                             <h2 className='text-md py-2 uppercase'>
                                 <b>Categories</b>
@@ -477,11 +474,11 @@ const ProductsPage: React.FC = () => {
                                 <b>Price</b>
                             </h2>
                             <div className='flex flex-col'>
-                                <div className='flex justify-between items-center'>
+                                <div className='flex items-center justify-between'>
                                     <p>From:</p>
                                     <PriceRangeInput value={priceRange[0]} placeholder='0' onChange={(e) => handlePriceRangeChange(0, e.target.value)} />
                                 </div>
-                                <div className='flex justify-between items-center'>
+                                <div className='flex items-center justify-between'>
                                     <p>To:</p>
                                     <PriceRangeInput value={priceRange[1]} placeholder='1000000' onChange={(e) => handlePriceRangeChange(1, e.target.value)} />
                                 </div>

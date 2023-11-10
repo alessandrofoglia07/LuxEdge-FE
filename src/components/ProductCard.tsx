@@ -38,22 +38,21 @@ const ProductCard: React.FC<Props> = (_: Props) => {
     }, [_]);
 
     return (
-        <div id='ProductCard' className='md:w-96 md:h-96 w-64 h-64 aspect-square group rounded-lg'>
-            <a className='w-full h-full rounded-lg' href={`/products/${toPlural(product.category)}/${product.name}`} draggable='false'>
-                <Img src={toUrl(product.imagePath)} alt={product.name} className='w-full aspect-square rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300' />
+        <div id='ProductCard' className='group aspect-square h-64 w-64 rounded-lg md:h-96 md:w-96'>
+            <a className='h-full w-full rounded-lg' href={`/products/${toPlural(product.category)}/${product.name}`} draggable='false'>
+                <Img src={toUrl(product.imagePath)} alt={product.name} className='aspect-square w-full rounded-lg shadow-md transition-shadow duration-300 hover:shadow-xl' />
             </a>
-            <div className='flex group-hover:opacity-100 transition-opacity duration-300 md:opacity-0 p-2 flex-col -translate-y-full text-end items-end w-full rounded-b-lg bg-black bg-opacity-25'>
-                <a className='text-2xl font-bold text-white mb-2 tracking-tight' href={`/products/${toPlural(product.category)}/${product.name}`}>
+            <div className='flex w-full -translate-y-full flex-col items-end rounded-b-lg bg-black bg-opacity-25 p-2 text-end transition-opacity duration-300 group-hover:opacity-100 md:opacity-0'>
+                <a className='mb-2 text-2xl font-bold tracking-tight text-white' href={`/products/${toPlural(product.category)}/${product.name}`}>
                     {product.name}
                 </a>
                 <button
                     id='favs'
-                    className={`w-10 aspect-square group/btn grid place-items-center bg-black bg-opacity-20 hover:bg-opacity-30 transition-all duration-200 rounded-lg ${
+                    className={`group/btn grid aspect-square w-10 place-items-center rounded-lg bg-black bg-opacity-20 transition-all duration-200 hover:bg-opacity-30 ${
                         _.isFavorite ? 'text-red-500 hover:text-red-600' : 'text-slate-200 hover:text-slate-50'
                     }`}
-                    onClick={handleFavorite}
-                >
-                    <HeartIcon className='w-6 h-6 group-hover/btn:scale-110 transition-transform group-active/btn:scale-95' />
+                    onClick={handleFavorite}>
+                    <HeartIcon className='h-6 w-6 transition-transform group-hover/btn:scale-110 group-active/btn:scale-95' />
                 </button>
             </div>
         </div>

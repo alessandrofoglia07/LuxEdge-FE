@@ -17,19 +17,18 @@ const Benefit: React.FC<Props> = ({ Icon, title, subtitle, i }: Props) => {
             initial={{ opacity: 0 }}
             viewport={{ once: true }}
             whileInView={{ opacity: 1, transition: { duration: 0.5, delay: 0.7 + i * 0.5 } }}
-            className='flex flex-col items-center lg:w-1/4 -lg:mt-4'
-        >
+            className='flex flex-col items-center lg:w-1/4 -lg:mt-4'>
             <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
                 <Highlight effect lighter force={hover}>
-                    <Icon className='w-16 h-16' />
+                    <Icon className='h-16 w-16' />
                 </Highlight>
             </div>
-            <h2 onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className='tracking-tight text-4xl -md:text-2xl font-extrabold py-3 select-none'>
+            <h2 onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className='select-none py-3 text-4xl font-extrabold tracking-tight -md:text-2xl'>
                 <Highlight effect force={hover}>
                     {title}
                 </Highlight>
             </h2>
-            <h6 className='text-xl -md:text-lg text-center font-semibold'>{subtitle}</h6>
+            <h6 className='text-center text-xl font-semibold -md:text-lg'>{subtitle}</h6>
         </motion.div>
     );
 };
