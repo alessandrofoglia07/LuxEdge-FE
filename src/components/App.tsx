@@ -15,6 +15,7 @@ import useAuth from '@/hooks/useAuth';
 import CheckoutSuccessPage from '@/pages/checkout/CheckoutSuccessPage';
 import CheckoutCancelPage from '@/pages/checkout/CheckoutCancelPage';
 import OrdersPage from '@/pages/user/OrdersPage';
+import OrderPage from '@/pages/OrderPage';
 
 function App() {
     const isAuth = useAuth();
@@ -48,6 +49,8 @@ function App() {
                 {/* /checkout */}
                 <Route path='/checkout/success' element={<CheckoutSuccessPage />} />
                 <Route path='/checkout/cancel' element={<CheckoutCancelPage />} />
+
+                <Route path='/order/:orderId' element={<OrderPage />} />
             </Route>
         </Routes>
     );

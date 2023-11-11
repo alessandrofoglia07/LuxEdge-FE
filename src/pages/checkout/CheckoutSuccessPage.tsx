@@ -6,6 +6,7 @@ import Spinner from '@/components/Spinner';
 import lottie from 'lottie-web';
 import successAnimation from '@/static/success.json';
 import errorAnimation from '@/static/error.json';
+import NotificationsMenu from '@/components/NotificationsMenu';
 
 type StateT = 'loading' | 'error' | 'success';
 
@@ -95,6 +96,7 @@ const CheckoutSuccessPage: React.FC = () => {
         <div id='CheckoutSuccessPage'>
             <Navbar />
             <main className='w-[calc(100vw - 9px)] mx-auto pt-16'>{render()}</main>
+            <NotificationsMenu />
         </div>
     );
 };

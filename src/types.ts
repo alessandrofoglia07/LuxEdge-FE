@@ -60,3 +60,15 @@ export interface Testimonial {
     text: string;
     rating: number;
 }
+
+export interface Order {
+    _id: string;
+    sessionId: string;
+    user: string; // user id
+    products: Product[] | string[]; // product ids or products
+    totalPrice: number;
+    paymentStatus: 'pending' | 'completed' | 'failed';
+    paymentType: 'card' | 'paypal';
+    createdAt: string;
+    updatedAt: string;
+}
