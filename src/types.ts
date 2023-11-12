@@ -35,6 +35,7 @@ export interface Product {
 export interface NotificationMessage {
     title: string;
     content: string;
+    severity?: 'success' | 'error';
 }
 
 export interface Notification extends NotificationMessage {
