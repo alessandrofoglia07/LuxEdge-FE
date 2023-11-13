@@ -8,17 +8,17 @@ import { login } from '@/api/authApi';
 import { setToken, setRefreshToken, setUserInfo } from '@/redux/slices/authSlice';
 import { useDispatch } from 'react-redux';
 import { UserInfo } from '@/types';
-import { isAxiosError } from 'axios';
 import { motion } from 'framer-motion';
 import useAuth from '@/hooks/useAuth';
 import Favorites from '@/redux/persist/Favorites';
 import NotificationsMenu from '@/components/NotificationsMenu';
-import { addNotification } from '@/redux/slices/notificationSlice';
+import useErrHandler from '@/hooks/useErrHandler';
 
 const LoginPage: React.FC = () => {
     const isAuth = useAuth();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const handleErr = useErrHandler();
 
     const [form, setForm] = useState({
         email: '',
@@ -44,31 +44,7 @@ const LoginPage: React.FC = () => {
             }
             navigate('/products');
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                const notification = {
-                    title: 'Error',
-                    content: err.response?.data.message || 'An error occurred while logging in.',
-                    severity: 'error'
-                };
-                dispatch(addNotification(notification));
-                throw err;
-            } else if (typeof err === 'string') {
-                const notification = {
-                    title: 'Error',
-                    content: err,
-                    severity: 'error'
-                };
-                dispatch(addNotification(notification));
-                throw new Error(err);
-            } else {
-                const notification = {
-                    title: 'Error',
-                    content: 'An error occurred while logging in.',
-                    severity: 'error'
-                };
-                dispatch(addNotification(notification));
-                console.log(err);
-            }
+            handleErr(err, 'An error occurred while logging in.');
         }
     };
 

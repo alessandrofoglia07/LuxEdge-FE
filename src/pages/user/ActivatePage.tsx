@@ -4,11 +4,12 @@ import Button from '@/components/CustomElements/StyledButton';
 import LuxEdge from '@/components/LuxEdgeLogo';
 import Navbar from '@/components/Navbar';
 import { useParams } from 'react-router-dom';
-import { isAxiosError } from 'axios';
 import NotificationsMenu from '@/components/NotificationsMenu';
+import useErrHandler from '@/hooks/useErrHandler';
 
 const ActivatePage: React.FC = () => {
     const { userId } = useParams<{ userId: string }>();
+    const handleErr = useErrHandler();
 
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState('');
@@ -28,16 +29,7 @@ const ActivatePage: React.FC = () => {
             const message = await activateAccount(userId);
             setResult(message);
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                setResult(err.response?.data.message || defaultErr);
-                throw err;
-            } else if (typeof err === 'string') {
-                setResult(err);
-                throw new Error(err);
-            } else {
-                setResult(defaultErr);
-                console.log(err);
-            }
+            setResult(handleErr(err, defaultErr));
         } finally {
             setLoading(false);
         }

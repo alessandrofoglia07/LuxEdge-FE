@@ -5,13 +5,14 @@ import Input from '@/components/CustomElements/StyledInput';
 import LuxEdge from '@/components/LuxEdgeLogo';
 import Button from '@/components/CustomElements/StyledButton';
 import { forgotPassword } from '@/api/authApi';
-import { isAxiosError } from 'axios';
 import { z } from 'zod';
 import useAuth from '@/hooks/useAuth';
 import NotificationsMenu from '@/components/NotificationsMenu';
+import useErrHandler from '@/hooks/useErrHandler';
 
 const ForgotPasswordPage: React.FC = () => {
     const isAuth = useAuth();
+    const handleErr = useErrHandler();
 
     const [email, setEmail] = useState('');
     const [result, setResult] = useState('');
@@ -36,19 +37,9 @@ const ForgotPasswordPage: React.FC = () => {
             const message = await forgotPassword(email);
             if (message) {
                 setResult('Email sent successfully. Check your email inbox.');
-                return;
             }
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                setResult(err.response?.data.message || 'An error occurred while sending the email.');
-                throw err;
-            } else if (typeof err === 'string') {
-                setResult(err);
-                throw new Error(err);
-            } else {
-                setResult('An error occurred while sending the email.');
-                console.log(err);
-            }
+            setResult(handleErr(err, 'An error occurred while sending the email.'));
         }
     };
 

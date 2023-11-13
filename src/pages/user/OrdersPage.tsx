@@ -4,9 +4,9 @@ import { Order } from '@/types';
 import Spinner from '@/components/Spinner';
 import Navbar from '@/components/Navbar';
 import NotificationsMenu from '@/components/NotificationsMenu';
-import { isAxiosError } from 'axios';
 import toPrice from '@/utils/toPrice';
 import Pagination from '@/components/Pagination';
+import useErrHandler from '@/hooks/useErrHandler';
 
 interface OrderProps {
     order: Order;
@@ -49,6 +49,8 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
 const ORDERS_PER_PAGE = 10;
 
 const OrdersPage: React.FC = () => {
+    const handleErr = useErrHandler();
+
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
@@ -59,15 +61,7 @@ const OrdersPage: React.FC = () => {
             const { data } = await authAxios.get('/payment/orders');
             setOrders(data);
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                throw err.response?.data;
-            } else if (err instanceof Error) {
-                throw err;
-            } else if (typeof err === 'string') {
-                throw new Error(err);
-            } else {
-                console.log(err);
-            }
+            handleErr(err);
         } finally {
             setLoading(false);
         }

@@ -5,14 +5,15 @@ import LuxEdge from '@/components/LuxEdgeLogo';
 import Input from '@/components/CustomElements/StyledInput';
 import Button from '@/components/CustomElements/StyledButton';
 import { z } from 'zod';
-import { isAxiosError } from 'axios';
 import { resetPassword } from '@/api/authApi';
 import useAuth from '@/hooks/useAuth';
 import NotificationsMenu from '@/components/NotificationsMenu';
+import useErrHandler from '@/hooks/useErrHandler';
 
 const ResetPasswordPage: React.FC = () => {
     const { userId, token } = useParams();
     const isAuth = useAuth();
+    const handleErr = useErrHandler();
 
     const [input, setInput] = useState({
         newPassword: '',
@@ -69,16 +70,7 @@ const ResetPasswordPage: React.FC = () => {
                 setResult('Password reset successfully. You can now log in with your new password.');
             }
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                setResult(err.response?.data.message || 'An error occurred while resetting your password.');
-                throw err;
-            } else if (typeof err === 'string') {
-                setResult(err);
-                throw new Error(err);
-            } else {
-                setResult('An error occurred while resetting your password.');
-                console.log(err);
-            }
+            setResult(handleErr(err, 'An error occurred while resetting your password.'));
         }
     };
 

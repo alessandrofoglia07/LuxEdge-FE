@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Navbar from '@/components/Navbar';
 import { Product } from '@/types';
-import axios, { isAxiosError } from 'axios';
+import axios from 'axios';
 import { Dialog, Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon, XMarkIcon } from '@heroicons/react/20/solid';
 import Footer from '@/components/Footer';
@@ -19,6 +19,7 @@ import { toSingular } from '@/utils/singularPlural';
 import categories from '@/utils/categories';
 import { motion } from 'framer-motion';
 import NotificationsMenu from '@/components/NotificationsMenu';
+import useErrHandler from '@/hooks/useErrHandler';
 
 const sortOptions = [
     { id: 1, name: 'Recommend' },
@@ -53,6 +54,7 @@ const PriceRangeInput: React.FC<PriceRangeInputProps> = (props: PriceRangeInputP
 
 const ProductsPage: React.FC = () => {
     const isAuth = useAuth();
+    const handleErr = useErrHandler();
 
     const [productsCount, setProductsCount] = useState<number>(0);
     const [page, setPage] = useState<number>(1);
@@ -123,13 +125,7 @@ const ProductsPage: React.FC = () => {
                     setFavsList(favsList);
                 }
             } catch (err: unknown) {
-                if (isAxiosError(err)) {
-                    throw err.response?.data;
-                } else if (typeof err === 'string') {
-                    throw new Error(err);
-                } else {
-                    console.log(err);
-                }
+                handleErr(err);
             } finally {
                 setLoading(false);
             }
@@ -227,13 +223,7 @@ const ProductsPage: React.FC = () => {
             setProducts(res.data.products);
             setProductsCount(res.data.count);
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                throw err.response?.data;
-            } else if (typeof err === 'string') {
-                throw new Error(err);
-            } else {
-                console.log(err);
-            }
+            handleErr(err);
         } finally {
             setLoading(false);
         }

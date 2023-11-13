@@ -7,12 +7,12 @@ import Button from '@/components/CustomElements/StyledButton';
 import { register } from '@/api/authApi';
 import { z } from 'zod';
 import { detect } from 'curse-filter';
-import { isAxiosError } from 'axios';
 import { motion } from 'framer-motion';
 import useAuth from '@/hooks/useAuth';
 import NotificationsMenu from '@/components/NotificationsMenu';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '@/redux/slices/notificationSlice';
+import useErrHandler from '@/hooks/useErrHandler';
 
 const bannedUsernames = ['post', 'comment', 'admin', 'administrator', 'moderator', 'mod', 'user', 'users'];
 
@@ -31,6 +31,7 @@ const passCharsErr = 'Password cannot contain spaces';
 const RegisterPage: React.FC = () => {
     const isAuth = useAuth();
     const dispatch = useDispatch();
+    const handleErr = useErrHandler();
 
     const [form, setForm] = useState({
         username: '',
@@ -141,34 +142,10 @@ const RegisterPage: React.FC = () => {
                 title: 'Registration completed.',
                 content: message,
                 severity: 'success'
-            };
+            } as const;
             dispatch(addNotification(notification));
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                const notification = {
-                    title: 'Unexpected error',
-                    content: err.response ? err.response.data.message : 'An unknown error occurred.',
-                    severity: 'error'
-                };
-                dispatch(addNotification(notification));
-                throw err;
-            } else if (typeof err === 'string') {
-                const notification = {
-                    title: 'Unexpected error',
-                    content: err,
-                    severity: 'error'
-                };
-                dispatch(addNotification(notification));
-                throw new Error(err);
-            } else {
-                const notification = {
-                    title: 'Unexpected error',
-                    content: 'An unknown error occurred.',
-                    severity: 'error'
-                };
-                dispatch(addNotification(notification));
-                console.log(err);
-            }
+            handleErr(err, 'An error occurred while registering.');
         }
     };
 

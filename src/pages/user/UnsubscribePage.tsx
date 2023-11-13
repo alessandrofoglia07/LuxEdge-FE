@@ -4,11 +4,14 @@ import axios from 'axios';
 import Navbar from '@/components/Navbar';
 import Spinner from '@/components/Spinner';
 import NotificationsMenu from '@/components/NotificationsMenu';
+import useErrHandler from '@/hooks/useErrHandler';
 
 type State = 'subscribed' | 'unsubscribed' | 'resubscribed' | 'loading';
 
 const UnsubscribePage: React.FC = () => {
     const { userId } = useParams();
+    const handleErr = useErrHandler();
+
     const [state, setState] = useState<State>('subscribed');
 
     const handleUnsubscribe = async () => {
@@ -17,11 +20,7 @@ const UnsubscribePage: React.FC = () => {
             await axios.post(`${import.meta.env.VITE_API_URL}/api/newsletter/unsubscribe/${userId}`);
             setState('unsubscribed');
         } catch (err: unknown) {
-            if (axios.isAxiosError(err)) {
-                throw err.response?.data;
-            } else {
-                console.log(err);
-            }
+            handleErr(err, 'An error occurred while unsubscribing from the newsletter.');
         }
     };
 
@@ -31,11 +30,7 @@ const UnsubscribePage: React.FC = () => {
             await axios.post(`${import.meta.env.VITE_API_URL}/api/newsletter/resubscribe/${userId}`);
             setState('resubscribed');
         } catch (err: unknown) {
-            if (axios.isAxiosError(err)) {
-                throw err.response?.data;
-            } else {
-                console.log(err);
-            }
+            handleErr(err, 'An error occurred while resubscribing to the newsletter.');
         }
     };
 

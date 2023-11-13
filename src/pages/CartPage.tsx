@@ -7,7 +7,6 @@ import toUrl from '@/utils/toUrl';
 import useAuth from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import authAxios from '@/api/authAxios';
-import { isAxiosError } from 'axios';
 import Spinner from '@/components/Spinner';
 import { CheckIcon, XMarkIcon, XCircleIcon, MinusCircleIcon } from '@heroicons/react/20/solid';
 import toPrice from '@/utils/toPrice';
@@ -16,6 +15,7 @@ import { toPlural } from '@/utils/singularPlural';
 import { motion } from 'framer-motion';
 import NotificationsMenu from '@/components/NotificationsMenu';
 import { Dialog, Transition } from '@headlessui/react';
+import useErrHandler from '@/hooks/useErrHandler';
 
 interface ProductCardProps {
     product: Product;
@@ -185,6 +185,7 @@ type AccumulatorType = (Product & { quantity: number })[];
 const CartPage: React.FC = () => {
     const isAuth = useAuth();
     const navigate = useNavigate();
+    const handleErr = useErrHandler();
 
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -215,15 +216,7 @@ const CartPage: React.FC = () => {
                 const cart = await authAxios.get('/lists/cart/products');
                 setProducts(cart.data);
             } catch (err: unknown) {
-                if (isAxiosError(err)) {
-                    throw err.response?.data;
-                } else if (err instanceof Error) {
-                    throw err;
-                } else if (typeof err === 'string') {
-                    throw new Error(err);
-                } else {
-                    console.log(err);
-                }
+                handleErr(err);
             } finally {
                 setLoading(false);
             }
@@ -236,15 +229,7 @@ const CartPage: React.FC = () => {
             const res = await authAxios.get('/lists/cart/products');
             setProducts(res.data);
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                throw err.response?.data;
-            } else if (err instanceof Error) {
-                throw err;
-            } else if (typeof err === 'string') {
-                throw new Error(err);
-            } else {
-                console.log(err);
-            }
+            handleErr(err);
         }
     };
 
@@ -258,15 +243,7 @@ const CartPage: React.FC = () => {
                 return [...prev];
             });
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                throw err.response?.data;
-            } else if (err instanceof Error) {
-                throw err;
-            } else if (typeof err === 'string') {
-                throw new Error(err);
-            } else {
-                console.log(err);
-            }
+            handleErr(err);
         }
     };
 
@@ -281,15 +258,7 @@ const CartPage: React.FC = () => {
             const res = await authAxios.post('/payment/create-checkout-session');
             window.location.href = res.data.url;
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                throw err.response?.data;
-            } else if (err instanceof Error) {
-                throw err;
-            } else if (typeof err === 'string') {
-                throw new Error(err);
-            } else {
-                console.log(err);
-            }
+            handleErr(err);
         }
     };
 
@@ -306,7 +275,7 @@ const CartPage: React.FC = () => {
                         <h2 className='ml-10 mt-6 text-5xl font-extrabold tracking-tight -md:text-3xl'>Shopping cart</h2>
                         {/* DESKTOP */}
                         <div className='flex w-full -lg:hidden'>
-                            <div className='mt-8 w-2/3 px-10'>
+                            <div className='mt-8 w-2/3 max-w-7xl px-10'>
                                 <div id='table-header' className='border-b-2 pb-3'>
                                     <div className='flex items-center [&>*]:text-start [&>*]:font-semibold [&>*]:tracking-wide'>
                                         <h6 className='w-5/12'>Added Items</h6>

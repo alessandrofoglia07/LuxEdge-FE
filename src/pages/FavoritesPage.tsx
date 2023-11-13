@@ -7,13 +7,13 @@ import toUrl from '@/utils/toUrl';
 import useAuth from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import authAxios from '@/api/authAxios';
-import { isAxiosError } from 'axios';
 import Spinner from '@/components/Spinner';
 import { CheckIcon, XMarkIcon, XCircleIcon } from '@heroicons/react/20/solid';
 import toPrice from '@/utils/toPrice';
 import { toPlural } from '@/utils/singularPlural';
 import { motion } from 'framer-motion';
 import NotificationsMenu from '@/components/NotificationsMenu';
+import useErrHandler from '@/hooks/useErrHandler';
 
 interface ProductCardProps {
     product: Product;
@@ -74,6 +74,7 @@ const ProductCardMobile = ({ product, handleRemove }: ProductCardProps) => (
 const FavoritesPage: React.FC = () => {
     const isAuth = useAuth();
     const navigate = useNavigate();
+    const handleErr = useErrHandler();
 
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -90,15 +91,7 @@ const FavoritesPage: React.FC = () => {
 
                 setProducts(favsList.data);
             } catch (err: unknown) {
-                if (isAxiosError(err)) {
-                    throw err.response?.data;
-                } else if (err instanceof Error) {
-                    throw err;
-                } else if (typeof err === 'string') {
-                    throw new Error(err);
-                } else {
-                    console.log(err);
-                }
+                handleErr(err);
             } finally {
                 setLoading(false);
             }
@@ -111,15 +104,7 @@ const FavoritesPage: React.FC = () => {
 
             setProducts((prev) => prev.filter((product) => product._id !== id));
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                throw err.response?.data;
-            } else if (err instanceof Error) {
-                throw err;
-            } else if (typeof err === 'string') {
-                throw new Error(err);
-            } else {
-                console.log(err);
-            }
+            handleErr(err);
         }
     };
 
@@ -134,7 +119,7 @@ const FavoritesPage: React.FC = () => {
                 ) : (
                     <>
                         <h2 className='ml-10 mt-6 text-5xl font-extrabold tracking-tight -md:text-3xl'>Favorites</h2>
-                        <div className='mt-8 w-full px-10 -md:hidden'>
+                        <div className='mt-8 w-full max-w-7xl px-10 -md:hidden'>
                             <div id='table-header' className='border-b-2 pb-3'>
                                 <div className='flex items-center [&>*]:text-start [&>*]:font-semibold [&>*]:tracking-wide'>
                                     <h6 className='w-5/12'>Added Items</h6>

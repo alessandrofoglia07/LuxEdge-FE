@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar';
 import { HomeIcon, CubeIcon, BanknotesIcon, ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import Highlight from '@/components/Highlight';
 import Benefit from '@/components/Benefit';
-import axios, { isAxiosError } from 'axios';
+import axios from 'axios';
 import ProductCard from '@/components/ProductCard';
 import Testimonial from '@/components/Testimonial';
 import Img from '@/components/CustomElements/CustomImg';
@@ -22,6 +22,7 @@ import homePageDesk from '@/static/homepageDesk.jpg';
 import testimonial1 from '@/static/testimonials/testimonial1.jpg';
 import testimonial2 from '@/static/testimonials/testimonial2.jpg';
 import testimonial3 from '@/static/testimonials/testimonial3.jpg';
+import useErrHandler from '@/hooks/useErrHandler';
 
 const CustomLi = ({ children }: { children: React.ReactNode }) => (
     <li className='-md:text-md text-2xl font-bold'>
@@ -68,10 +69,12 @@ const mockTestimonials: TestimonialT[] = [
     }
 ];
 
+const url = `${import.meta.env.VITE_API_URL}/api/products/search?sort=recommend&limit=8`;
+
 const HomePage: React.FC = () => {
-    const url = `${import.meta.env.VITE_API_URL}/api/products/search?sort=recommend&limit=8`;
     const width = useWindowWidth();
     const isAuth = useAuth();
+    const handleErr = useErrHandler();
 
     const [scroll, setScroll] = useState(0);
     const [maxScroll, setMaxScroll] = useState(0);
@@ -128,13 +131,7 @@ const HomePage: React.FC = () => {
                 const res = await axios.get(url);
                 setProducts(res.data.products);
             } catch (err: unknown) {
-                if (err instanceof Error) {
-                    throw err;
-                } else if (typeof err === 'string') {
-                    throw new Error(err);
-                } else {
-                    console.log(err);
-                }
+                handleErr(err);
             } finally {
                 setProductsLoading(false);
             }
@@ -164,13 +161,7 @@ const HomePage: React.FC = () => {
                     setFavsList(favsList);
                 }
             } catch (err: unknown) {
-                if (isAxiosError(err)) {
-                    throw err.response?.data;
-                } else if (typeof err === 'string') {
-                    throw new Error(err);
-                } else {
-                    console.log(err);
-                }
+                handleErr(err);
             } finally {
                 setProductsLoading(false);
             }

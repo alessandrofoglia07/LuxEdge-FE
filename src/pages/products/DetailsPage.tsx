@@ -3,7 +3,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '@/api/axios';
-import { isAxiosError } from 'axios';
 import { Product, Review as ReviewT } from '@/types';
 import { toPlural, toSingular } from '@/utils/singularPlural';
 import toUrl from '@/utils/toUrl';
@@ -23,11 +22,13 @@ import { Dialog, Transition } from '@headlessui/react';
 import NotificationsMenu from '@/components/NotificationsMenu';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '@/redux/slices/notificationSlice';
+import useErrHandler from '@/hooks/useErrHandler';
 
 const DetailsPage: React.FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const isAuth = useAuth();
+    const handleErr = useErrHandler();
     const productName = useParams<{ productName: string }>().productName;
     const productCategory = toSingular(useParams<{ productCategory: string }>().productCategory || '');
     const { userInfo } = useSelector((state) => state.auth);
@@ -76,11 +77,7 @@ const DetailsPage: React.FC = () => {
                 setFavorite(favs.includes(product._id));
             })();
         } catch (err) {
-            if (isAxiosError(err)) {
-                console.log(err.response?.data);
-            } else {
-                console.log(err);
-            }
+            handleErr(err);
         } finally {
             setLoading(false);
         }
@@ -99,11 +96,7 @@ const DetailsPage: React.FC = () => {
             };
             dispatch(addNotification(notification));
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                console.log(err.response?.data);
-            } else {
-                console.log(err);
-            }
+            handleErr(err);
         }
     };
 
@@ -126,11 +119,7 @@ const DetailsPage: React.FC = () => {
                 Favorites.add(product._id);
             }
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                console.log(err.response?.data);
-            } else {
-                console.log(err);
-            }
+            handleErr(err);
         } finally {
             setFavorite(!favorite);
         }
@@ -149,11 +138,7 @@ const DetailsPage: React.FC = () => {
             };
             dispatch(addNotification(notification));
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                console.log(err.response?.data);
-            } else {
-                console.log(err);
-            }
+            handleErr(err);
         }
     };
 
@@ -169,11 +154,7 @@ const DetailsPage: React.FC = () => {
             };
             dispatch(addNotification(notification));
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                console.log(err.response?.data);
-            } else {
-                console.log(err);
-            }
+            handleErr(err);
         }
     };
 
@@ -196,11 +177,7 @@ const DetailsPage: React.FC = () => {
             };
             dispatch(addNotification(notification));
         } catch (err: unknown) {
-            if (isAxiosError(err)) {
-                console.log(err.response?.data);
-            } else {
-                console.log(err);
-            }
+            handleErr(err);
         }
     };
 

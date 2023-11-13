@@ -11,7 +11,7 @@ const CheckoutCancelPage: React.FC = () => {
         try {
             await authAxios.delete(`/payment/cancel?session_id=${session_id}`);
         } catch (err: unknown) {
-            console.error(err);
+            console.log(err);
         }
     };
 
