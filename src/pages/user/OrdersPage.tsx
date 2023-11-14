@@ -38,7 +38,7 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
                 </h2>
             </div>
             <a
-                href={`/order/${order._id}`}
+                href={`/user/orders/${order._id}`}
                 className='whitespace-nowrap rounded-lg bg-primary-base px-6 py-4 font-semibold text-white transition-all hover:rounded-md hover:bg-primary-hover'>
                 View Details
             </a>

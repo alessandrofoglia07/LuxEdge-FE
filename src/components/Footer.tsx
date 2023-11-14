@@ -31,6 +31,10 @@ const items1 = [
     {
         name: 'Register',
         url: '/register'
+    },
+    {
+        name: 'Order History',
+        url: '/user/orders'
     }
 ];
 

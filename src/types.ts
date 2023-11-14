@@ -62,11 +62,15 @@ export interface Testimonial {
     rating: number;
 }
 
+export interface Item extends Product {
+    quantity: number;
+}
+
 export interface Order {
     _id: string;
     sessionId: string;
     user: string; // user id
-    products: Product[] | string[]; // product ids or products
+    products: Product[] | string[] | Item[]; // product ids or products
     totalPrice: number;
     paymentStatus: 'pending' | 'completed' | 'failed';
     paymentType: 'card' | 'paypal';
