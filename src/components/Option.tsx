@@ -19,7 +19,7 @@ const Option: React.FC<Props> = ({ round = false, checked, onClick, children, na
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 0.8 }}
                     onClick={() => onClick(name)}
-                    className={`relative mx-2 h-4 w-4 cursor-pointer border border-slate-500 bg-primary-base shadow-md ${round ? 'rounded-full' : 'rounded-md'}`}>
+                    className={`relative ml-2 h-4 w-4 cursor-pointer border border-slate-500 bg-primary-base shadow-md ${round ? 'rounded-full' : 'rounded-md'}`}>
                     <CheckIcon className='absolute inset-0 m-auto h-3 w-3 text-white' aria-hidden='true' />
                 </motion.div>
             ) : (
@@ -27,10 +27,12 @@ const Option: React.FC<Props> = ({ round = false, checked, onClick, children, na
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 0.8 }}
                     onClick={() => onClick(name)}
-                    className={`relative mx-2 h-4 w-4 cursor-pointer border border-slate-300 bg-slate-50 shadow-md ${round ? 'rounded-full' : 'rounded-md'}`}
+                    className={`relative ml-2 h-4 w-4 cursor-pointer border border-slate-300 bg-slate-50 shadow-md ${round ? 'rounded-full' : 'rounded-md'}`}
                 />
             )}
-            <h2 className='text-md select-none font-semibold'>{children}</h2>
+            <h2 onClick={() => onClick(name)} className='text-md cursor-pointer select-none pl-2 font-semibold'>
+                {children}
+            </h2>
         </div>
     );
 };
