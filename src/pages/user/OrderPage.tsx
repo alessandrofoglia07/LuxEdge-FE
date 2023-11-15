@@ -102,7 +102,6 @@ const OrderPage: React.FC = () => {
                                 <h3 className='mb-2 text-2xl font-bold'>
                                     Payment Method: <span className='font-extrabold capitalize'>{order.paymentType}</span>
                                 </h3>
-                                {/* TODO: make a show/hide button to show this (sessionId) */}
                                 <h3 className='mb-2 break-words text-2xl font-bold'>
                                     Payment Session ID:{' '}
                                     {showSessionId ? (
