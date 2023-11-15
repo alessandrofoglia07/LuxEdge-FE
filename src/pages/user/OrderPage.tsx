@@ -43,6 +43,7 @@ const OrderPage: React.FC = () => {
 
     const [order, setOrder] = useState<Order | null>();
     const [loading, setLoading] = useState(false);
+    const [showSessionId, setShowSessionId] = useState(false);
 
     const fetchOrder = async () => {
         setLoading(true);
@@ -103,7 +104,23 @@ const OrderPage: React.FC = () => {
                                 </h3>
                                 {/* TODO: make a show/hide button to show this (sessionId) */}
                                 <h3 className='mb-2 break-words text-2xl font-bold'>
-                                    Payment Session ID: <span className='font-extrabold'>${order.sessionId}</span>
+                                    Payment Session ID:{' '}
+                                    {showSessionId ? (
+                                        <span className='font-extrabold'>
+                                            ${order.sessionId}{' '}
+                                            <button
+                                                onClick={() => setShowSessionId(false)}
+                                                className='font-semibold text-gray-400 transition-colors hover:text-gray-500 hover:underline md:ml-2'>
+                                                Hide
+                                            </button>
+                                        </span>
+                                    ) : (
+                                        <button
+                                            onClick={() => setShowSessionId(true)}
+                                            className='font-semibold text-gray-400 transition-colors hover:text-gray-500 hover:underline md:ml-2'>
+                                            Show
+                                        </button>
+                                    )}
                                 </h3>
                                 <h3 className='mb-2 text-2xl font-bold'>
                                     Overall cost: <span className='font-extrabold'>${order.totalPrice}</span>
