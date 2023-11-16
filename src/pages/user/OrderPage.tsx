@@ -15,24 +15,43 @@ interface ProductCardProps {
     product: Item;
 }
 
-// TODO: fix this (make it responsive)
 const ProductCard = ({ product }: ProductCardProps) => (
-    <div className='flex items-center gap-16 [&>*]:text-start [&>*]:font-semibold [&>*]:tracking-wide'>
-        <div className='flex w-1/3 items-center'>
-            <a className='w-1/3 rounded-lg' href={`/products/${toPlural(product.category)}/${product.name}`}>
-                <Img src={toUrl(product.imagePath)} alt={product.name} className='aspect-square w-full rounded-lg shadow-md transition-shadow duration-300 hover:shadow-xl' />
-            </a>
-            <a href={`/products/${toPlural(product.category)}/${product.name}`} className='w-2/3 px-4 text-xl font-bold'>
-                {product.name}
-            </a>
+    <div className='flex items-center gap-16 -md:mb-12 [&>*]:text-start [&>*]:font-semibold [&>*]:tracking-wide'>
+        <div className='flex items-center -md:hidden'>
+            <div className='flex w-1/3 items-center'>
+                <a className='w-1/3 rounded-lg' href={`/products/${toPlural(product.category)}/${product.name}`}>
+                    <Img src={toUrl(product.imagePath)} alt={product.name} className='aspect-square w-full rounded-lg shadow-md transition-shadow duration-300 hover:shadow-xl' />
+                </a>
+                <a href={`/products/${toPlural(product.category)}/${product.name}`} className='w-2/3 px-4 text-xl font-bold'>
+                    {product.name}
+                </a>
+            </div>
+            <div className='flex w-1/3 items-center justify-evenly [&>*]:font-normal'>
+                <h6 className='w-2/4 text-start capitalize'>{product.category}</h6>
+                <h6 className='w-2/6 whitespace-nowrap text-end'>{toPrice(product.price)}</h6>
+            </div>
+            <div className='flex w-1/3 justify-evenly text-center'>
+                <h6 className='whitespace-nowrap'>×{product.quantity}</h6>
+                <h6>({toPrice(product.price * product.quantity)})</h6>
+            </div>
         </div>
-        <div className='flex w-1/3 items-center justify-evenly [&>*]:font-normal'>
-            <h6 className='w-2/4 text-start capitalize'>{product.category}</h6>
-            <h6 className='w-2/6 whitespace-nowrap text-end'>{toPrice(product.price)}</h6>
-        </div>
-        <div className='flex w-1/3 justify-evenly text-center'>
-            <h6 className='whitespace-nowrap'>×{product.quantity}</h6>
-            <h6>({toPrice(product.price * product.quantity)})</h6>
+        <div className='flex w-full flex-col gap-4 md:hidden'>
+            <div className='flex w-full items-center'>
+                <a className='w-1/3 rounded-lg' href={`/products/${toPlural(product.category)}/${product.name}`}>
+                    <Img src={toUrl(product.imagePath)} alt={product.name} className='aspect-square w-full rounded-lg shadow-md transition-shadow duration-300 hover:shadow-xl' />
+                </a>
+                <a href={`/products/${toPlural(product.category)}/${product.name}`} className='w-2/3 px-4 text-xl font-bold'>
+                    {product.name}
+                </a>
+                <h6 className='w-2/4 text-start capitalize'>{product.category}</h6>
+            </div>
+            <div className='flex w-full items-center justify-end gap-8'>
+                <h6 className='w-2/6 whitespace-nowrap text-end'>{toPrice(product.price)}</h6>
+                <div className='flex items-center'>
+                    <h6 className='whitespace-nowrap'>×{product.quantity}</h6>
+                    <h6>({toPrice(product.price * product.quantity)})</h6>
+                </div>
+            </div>
         </div>
     </div>
 );
