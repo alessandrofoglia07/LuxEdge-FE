@@ -80,7 +80,8 @@ const OrdersPage: React.FC = () => {
         <div id='OrdersPage'>
             <Navbar />
             <main className='w-[calc(100vw - 9px)] mx-auto py-16'>
-                <h1 className='ml-10 mt-6 text-5xl font-extrabold tracking-tight -md:text-3xl'>Orders</h1>
+                <h1 className='ml-10 mt-6 text-5xl font-extrabold tracking-tight -md:text-3xl'>Last Orders</h1>
+                <h4 className='ml-10 mt-2 text-xl font-semibold text-gray-600'>Check your entire order history here.</h4>
                 {loading ? (
                     <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
                         <Spinner className='h-16 w-16' />

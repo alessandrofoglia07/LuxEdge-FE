@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Popover, Transition, Dialog } from '@headlessui/react';
-import { ChevronDownIcon, Bars3Icon, XMarkIcon, HeartIcon, ShoppingCartIcon, ArrowRightOnRectangleIcon as LoginIcon } from '@heroicons/react/20/solid';
-import { StarIcon } from '@heroicons/react/24/outline';
+import { ChevronDownIcon, Bars3Icon, XMarkIcon, HeartIcon, ShoppingCartIcon, ArrowRightOnRectangleIcon as LoginIcon, CreditCardIcon } from '@heroicons/react/20/solid';
 import useWindowWidth from '@/hooks/useWindowWidth';
 import useAuth from '@/hooks/useAuth';
 import Button from './CustomElements/StyledButton';
@@ -187,9 +186,16 @@ const Navbar: React.FC = () => {
                             <a
                                 href='/cart'
                                 id='Cart'
-                                className='group mr-8 flex items-center gap-2 rounded-lg border-2 border-opacity-70 p-2 text-xl text-primary-base transition-all hover:border-primary-base hover:bg-slate-100 hover:text-primary-hover'
+                                className='group mr-4 flex items-center gap-2 rounded-lg border-2 border-opacity-70 p-2 text-xl text-primary-base transition-all hover:border-primary-base hover:bg-slate-100 hover:text-primary-hover'
                                 draggable={false}>
                                 <ShoppingCartIcon className='w-6 transition-transform duration-200 group-hover:scale-[1.2] group-active:scale-95' />
+                            </a>
+                            <a
+                                href='/user/orders'
+                                id='Orders'
+                                className='group mr-8 flex items-center gap-2 rounded-lg border-2 border-opacity-70 p-2 text-xl text-primary-base transition-all hover:border-primary-base hover:bg-slate-100 hover:text-primary-hover'
+                                draggable={false}>
+                                <CreditCardIcon className='w-6 transition-transform duration-200 group-hover:scale-[1.2] group-active:scale-95' />
                             </a>
                         </>
                     ) : (
@@ -259,11 +265,14 @@ const Navbar: React.FC = () => {
                         <ul id='account' className='mt-8 flex h-full w-full flex-col items-start gap-4 self-center'>
                             {loggedIn ? (
                                 <>
-                                    <Button id='Favorites' as='a' href='/favorites' secondary>
-                                        Favorites <StarIcon className='mb-1 w-6' />
+                                    <Button id='Orders' href='/user/orders' as='a' secondary className='group gap-2'>
+                                        Orders <CreditCardIcon className='w-[1.3rem] transition-transform group-hover:scale-110' />
                                     </Button>
-                                    <Button id='Cart' href='/cart' as='a' className='mx-0 mr-4 flex items-center gap-2'>
-                                        Cart <ShoppingCartIcon className='w-[1.3rem]' />
+                                    <Button id='Favorites' as='a' href='/favorites' secondary className='group flex items-center gap-2'>
+                                        Favorites <HeartIcon className='mb-1 w-6 transition-transform group-hover:scale-110' />
+                                    </Button>
+                                    <Button id='Cart' href='/cart' as='a' className='group mx-0 mr-4 flex items-center gap-2'>
+                                        Cart <ShoppingCartIcon className='w-[1.3rem] transition-transform group-hover:scale-110' />
                                     </Button>
                                 </>
                             ) : (

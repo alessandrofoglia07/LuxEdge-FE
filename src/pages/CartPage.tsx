@@ -273,6 +273,7 @@ const CartPage: React.FC = () => {
                 ) : (
                     <>
                         <h2 className='ml-10 mt-6 text-5xl font-extrabold tracking-tight -md:text-3xl'>Shopping cart</h2>
+                        <h4 className='ml-10 mt-2 text-xl font-semibold text-gray-600'>You can complete your order here.</h4>
                         {/* DESKTOP */}
                         <div className='flex w-full -lg:hidden'>
                             <div className='mt-8 w-2/3 max-w-7xl px-10'>

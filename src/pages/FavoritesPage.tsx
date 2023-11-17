@@ -119,6 +119,7 @@ const FavoritesPage: React.FC = () => {
                 ) : (
                     <>
                         <h2 className='ml-10 mt-6 text-5xl font-extrabold tracking-tight -md:text-3xl'>Favorites</h2>
+                        <h4 className='ml-10 mt-2 text-xl font-semibold text-gray-600'>If you really like a product, you can favorite it and list it here.</h4>
                         <div className='mt-8 w-full max-w-7xl px-10 -md:hidden'>
                             <div id='table-header' className='border-b-2 pb-3'>
                                 <div className='flex items-center [&>*]:text-start [&>*]:font-semibold [&>*]:tracking-wide'>

@@ -102,7 +102,7 @@ const OrderPage: React.FC = () => {
                     <div className='mt-12 flex flex-col items-center px-10'>
                         {order && (
                             <div className='flex w-full flex-col'>
-                                <h1 className='mb-6 text-3xl font-bold tracking-tight'>Order ID: {order._id}</h1>
+                                <h1 className='mb-6 break-words text-3xl font-bold tracking-tight'>Order ID: {order._id}</h1>
                                 <h3 className='mb-2 text-2xl font-bold'>
                                     Payment Status:{' '}
                                     <span
