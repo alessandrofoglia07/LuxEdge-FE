@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, useLayoutEffect, Fragment } from 'react';
 import Navbar from '@/components/Navbar';
 import { Product } from '@/types';
 import axios from 'axios';
@@ -230,7 +230,7 @@ const ProductsPage: React.FC = () => {
     };
 
     // On state change, update URL and fetch products
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (!ready) return;
 
         updateURL();
