@@ -33,6 +33,7 @@ export interface Product {
 }
 
 export interface NotificationMessage {
+    icon?: React.ReactNode;
     title: string;
     content: string;
     severity?: 'success' | 'error';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from '@/api/axios';
 import { Product, Review as ReviewT } from '@/types';
 import { toPlural, toSingular } from '@/utils/singularPlural';
@@ -23,10 +23,10 @@ import NotificationsMenu from '@/components/NotificationsMenu';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '@/redux/slices/notificationSlice';
 import useErrHandler from '@/hooks/useErrHandler';
+import { HandThumbDownIcon } from '@heroicons/react/24/outline';
 
 const DetailsPage: React.FC = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const isAuth = useAuth();
     const handleErr = useErrHandler();
     const productName = useParams<{ productName: string }>().productName;
@@ -86,7 +86,12 @@ const DetailsPage: React.FC = () => {
     const handleAddToCart = async () => {
         if (!product) return;
         if (!isAuth) {
-            navigate('/login');
+            const notification = {
+                title: 'Not logged in.',
+                content: `You need to be logged in to add products to your cart.`,
+                icon: <HandThumbDownIcon />
+            };
+            return dispatch(addNotification(notification));
         }
         try {
             await authAxios.patch(`/lists/cart/add/${product._id}`);
@@ -126,6 +131,14 @@ const DetailsPage: React.FC = () => {
     };
 
     const handleAddReview = async () => {
+        if (!isAuth) {
+            const notification = {
+                title: 'Not logged in.',
+                content: `You need to be logged in to add a review.`,
+                icon: <HandThumbDownIcon className='h-8 w-8' />
+            };
+            return dispatch(addNotification(notification));
+        }
         if (!newReview) return;
         if (!product) return;
         const { text, rating } = newReview;

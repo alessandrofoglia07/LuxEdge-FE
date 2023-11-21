@@ -13,6 +13,7 @@ import NotificationsMenu from '@/components/NotificationsMenu';
 import { useDispatch } from 'react-redux';
 import { addNotification } from '@/redux/slices/notificationSlice';
 import useErrHandler from '@/hooks/useErrHandler';
+import { HandThumbUpIcon } from '@heroicons/react/24/outline';
 
 const bannedUsernames = ['post', 'comment', 'admin', 'administrator', 'moderator', 'mod', 'user', 'users'];
 
@@ -141,7 +142,8 @@ const RegisterPage: React.FC = () => {
             const notification = {
                 title: 'Registration completed.',
                 content: message,
-                severity: 'success'
+                severity: 'success',
+                icon: <HandThumbUpIcon />
             } as const;
             dispatch(addNotification(notification));
         } catch (err: unknown) {

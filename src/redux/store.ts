@@ -8,7 +8,8 @@ const store = configureStore({
         auth: authReducer,
         cart: cartReducer,
         notifications: notificationReducer
-    }
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
 });
 
 export type RootState = ReturnType<typeof store.getState>;
