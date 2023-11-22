@@ -1,6 +1,8 @@
 {
     "name": "luxedge",
-    "private": true,
+    "author": "alessandrofoglia07",
+    "description": "LuxEdge is a furniture e-commerce made with React.js and Node.js.",
+    "license": "MIT",
     "version": "1.0.0",
     "type": "module",
     "scripts": {
