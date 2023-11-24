@@ -23,7 +23,7 @@ const useErrHandler = (): HandleErrType => {
             if (err.response) {
                 msg = err.response.data;
             } else if (err.request) {
-                msg = err.request;
+                msg = err.request.response || err.request.statusText || err.request.status || '';
             } else {
                 msg = err.message;
             }
@@ -39,7 +39,6 @@ const useErrHandler = (): HandleErrType => {
             severity: 'error'
         };
 
-        console.log('Error', msg);
         dispatch(addNotification(notification));
 
         return msg;
