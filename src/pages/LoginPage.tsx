@@ -66,9 +66,9 @@ const LoginPage: React.FC = () => {
             <main className='absolute left-1/2 top-1/2 flex h-min w-min -translate-x-1/2 -translate-y-1/2 items-center rounded-lg'>
                 <motion.div
                     id='presentation'
-                    className={`flex h-[36rem] w-96 flex-col justify-between rounded-lg rounded-r-none bg-gradient-to-br
-                        from-blue-500 to-blue-700 before:absolute
-                        before:h-full before:w-96 before:bg-white before:opacity-0 -md:hidden`}
+                    className={`flex h-[36rem] w-96 flex-col justify-between rounded-lg rounded-r-3xl
+                        bg-gradient-to-br from-blue-500 to-blue-700
+                        before:absolute before:-z-10 before:h-full before:w-96 before:bg-white -md:hidden`}
                     viewport={{ once: true }}>
                     <div id='top' className='h-12 w-max px-4 py-2'>
                         <LuxEdge version='white' id='logo' className='text-4xl' />
